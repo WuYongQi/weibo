@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'User',
+    'WeiboContent',
 ]
 
 MIDDLEWARE = [
@@ -80,14 +80,15 @@ WSGI_APPLICATION = 'weibo.wsgi.application'
 # }
 
 # 配置数据库
+from config import DBSetting
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'weiboDB',
-        'USER': 'root',
-        'PASSWORD': 'suoning',
-        'HOST': '',
-        'PORT': '',
+        'NAME': DBSetting['NAME'],
+        'USER': DBSetting['USER'],
+        'PASSWORD': DBSetting['PASSWORD'],
+        'HOST': DBSetting['HOST'],
+        'PORT': DBSetting['PORT'],
     }
 }
 

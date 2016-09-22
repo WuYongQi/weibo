@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from WeiboContent import views
+from WeiboContent import views as weibocontentviews
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', views.index),
-    url(r'^index/', views.index),
+    # url(r'', weibocontentviews.index),
+    url(r'^index/$', weibocontentviews.index),
+
+    url(r'^index/weibocontent\.html', weibocontentviews.weibocontent),
 ]

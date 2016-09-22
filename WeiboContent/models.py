@@ -97,7 +97,6 @@ class Tags(models.Model):
 
 class UserProfile(models.Model):
     '''用户信息'''
-
     user = models.OneToOneField(User, verbose_name="登录账号")
     name = models.CharField(max_length=64, verbose_name="用户名称")
     brief = models.CharField(max_length=140, blank=True, null=True, verbose_name="简介")

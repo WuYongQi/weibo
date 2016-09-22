@@ -11,22 +11,22 @@ from django.contrib.auth.models import User
 class Weibo(models.Model):
     '''所有微博'''
     wb_type_choices = (
-        (0, 'new'),
-        (1, 'forward'),
-        (2, 'collect'),
+        (0, '原创'),
+        (1, '转发'),
+        (2, '收藏'),
     )
-    wb_type = models.IntegerField(choices=wb_type_choices, default=0)
+    wb_type = models.IntegerField(choices=wb_type_choices, default=0, verbose_name="微博类型")
     forward_or_collect_from = models.ForeignKey('self', related_name="forward_or_collects",
-                                                blank=True, null=True)
-    user = models.ForeignKey('UserProfile')
-    text = models.CharField(max_length=140)
-    pictures_link_id = models.CharField(max_length=128, blank=True, null=True)
-    video_link_id = models.CharField(max_length=128, blank=True, null=True)
-    perm_choice = ((0, 'public'),
-                   (1, 'private'),
-                   (2, 'friends'))
-    perm = models.IntegerField(choices=perm_choice, default=0)
-    date = models.DateTimeField(auto_now_add=True)
+                                                blank=True, null=True, verbose_name="关联微博")
+    user = models.ForeignKey('UserProfile', verbose_name="用户")
+    text = models.CharField(max_length=140, verbose_name="微博内容")
+    pictures_link_id = models.CharField(max_length=128, blank=True, null=True, verbose_name="照片路径")
+    video_link_id = models.CharField(max_length=128, blank=True, null=True, verbose_name="视频路径")
+    perm_choice = ((0, '公开'),
+                   (1, '自己可见'),
+                   (2, '朋友可见'))
+    perm = models.IntegerField(choices=perm_choice, default=0, verbose_name="可见度")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
     class Meta:
         verbose_name = '所有微博内容'
@@ -38,8 +38,8 @@ class Weibo(models.Model):
 
 class Topic(models.Model):
     '''话题'''
-    name = models.CharField(max_length=140)
-    date = models.DateTimeField()
+    name = models.CharField(max_length=140, verbose_name="话题名字")
+    date = models.DateTimeField(auto_now=True, verbose_name="时间")
 
     class Meta:
         verbose_name = '话题'
@@ -52,7 +52,7 @@ class Topic(models.Model):
 class Category(models.Model):
     '''微博分类'''
 
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32, verbose_name="分类名")
 
     class Meta:
         verbose_name = '微博分类'
@@ -67,10 +67,13 @@ class Comment(models.Model):
     to_weibo = models.ForeignKey(Weibo)
     p_comment = models.ForeignKey('self', related_name="child_comments")
     user = models.ForeignKey('UserProfile')
-    comment_type_choices = ((0, 'comment'), (1, 'thumb_up'))
-    comment_type = models.IntegerField(choices=comment_type_choices, default=0)
+    comment_type_choices = (
+        (0, '评论'),
+        (1, '点赞'),
+    )
+    comment_type = models.IntegerField(choices=comment_type_choices, default=0, verbose_name="类型")
     comment = models.CharField(max_length=140)
-    date = models.DateTimeField(auto_created=True)
+    date = models.DateTimeField(auto_created=True, verbose_name="时间")
 
     class Meta:
         verbose_name = '评论'

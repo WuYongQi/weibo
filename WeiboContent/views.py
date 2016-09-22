@@ -21,7 +21,9 @@ def weibocontent(request):
             page = 1
         obj = models_server.WeiboContent()
         content_list = obj.all(page)
-        con_obj = respone.weibocontent(content_list)
+        favor_list = obj.Conut(content_list)
+        con_obj = respone.weibocontent(content_list, favor_list)
+        print(con_obj)
 
         return HttpResponse(json.dumps(con_obj.con_dic))
 

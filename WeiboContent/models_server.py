@@ -3,7 +3,10 @@
 __author__ = 'Nick Suo'
 
 from Common import time_conversion
+from django.db.models import Count, Min, Max, Sum
 from WeiboContent import models as wbcmodels
+from WeiboContent.models import Comment
+from WeiboContent.models import Weibo
 
 
 class WeiboContent:
@@ -22,18 +25,24 @@ class WeiboContent:
                 item.wb_type = "收藏"
         return obj
 
-    # def __time_con(self, obj):
-    #     """转换时间"""
-    #     for item in obj:
-    #         ret = time_conversion.timeconversion(item.date)
-    #         item.date = ret.timeret
-    #     return obj
 
     def all(self, page):
         """查询所有微博"""
-        obj_list = wbcmodels.Weibo.objects.all().order_by('-date')[
+        obj_list = Weibo.objects.all().order_by('-date')[
                    (int(page) * 10 if int(page) != 1 else 0):int(page) * 20]
         obj_wbtype = self.__wbtype(obj_list)
-        # obj_time = self.__time_con(obj_wbtype)
         return obj_wbtype
+
+
+    def Conut(self, obj_list):
+        couut_list = []
+        for item in obj_list:
+            obj = item.comment_set.all().filter(comment_type=1) \
+                .values('to_weibo').annotate(c=Count('comment_type'))
+            print(obj)
+            couut_list.append(obj[0])
+        print(couut_list)
+        return couut_list
+
+
 

@@ -63,20 +63,20 @@ class Category(models.Model):
 
 
 class Comment(models.Model):
-    '''评论'''
+    '''评论点赞'''
     to_weibo = models.ForeignKey(Weibo)
-    p_comment = models.ForeignKey('self', related_name="child_comments")
+    p_comment = models.ForeignKey('self', related_name="child_comments", blank=True, null=True)
     user = models.ForeignKey('UserProfile')
     comment_type_choices = (
         (0, '评论'),
         (1, '点赞'),
     )
     comment_type = models.IntegerField(choices=comment_type_choices, default=0, verbose_name="类型")
-    comment = models.CharField(max_length=140)
-    date = models.DateTimeField(auto_created=True, verbose_name="时间")
+    comment = models.CharField(max_length=140, blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, verbose_name="时间")
 
     class Meta:
-        verbose_name = '评论'
+        verbose_name = '评论点赞'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -92,7 +92,7 @@ class Tags(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name
+        return self.comment_type,self.name
 
 
 class UserProfile(models.Model):

@@ -137,29 +137,31 @@ STATICFILES_DIRS = (
 
 
 # Session
-# SESSION_ENGINE = 'redis_sessions.session'
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS_HOST = '114.215.128.25'
 # SESSION_REDIS_HOST = '192.168.11.61'
-# SESSION_REDIS_PORT = 6379
-# SESSION_REDIS_DB = 0
+SESSION_REDIS_PORT = 6379
+SESSION_REDIS_DB = 0
 # SESSION_REDIS_PASSWORD = 'wuyongqi123'
-# SESSION_COOKIE_NAME = "xja9sqa9sniul8"
-# SESSION_COOKIE_AGE = 20         # 超时时间
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_NAME = "xja9sqa9sniul8"
+SESSION_COOKIE_AGE = 20         # 超时时间
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
 # 配置reids
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://:wuyongqi123@192.168.11.61:6379",
-#         "OPTIONS": {
-#             # "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#             "CONNECTION_POOL_KWARGS": {"max_connections": 100}      # 连接池
-#         }
-#     }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://:wuyongqi123@192.168.11.61:6379",
+        "OPTIONS": {
+            # "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100}      # 连接池
+        }
+    }
+}
 
 
+# 内存默认缓存
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # 引擎

@@ -2,28 +2,36 @@
 # -*- coding:utf-8 -*-
 __author__ = 'Nick Suo'
 
+import os
+
 from Common import time_conversion
 from django.db.models import Count, Min, Max, Sum
+from django.contrib.auth.models import User
 from WeiboContent.models import Comment
 from WeiboContent.models import Weibo
 from WeiboContent.models import UserProfile
+from WeiboContent.models import Tags
+
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate
 
 
 class WeiboContent:
     def __init__(self):
         pass
 
-    # def __wbtype(self, obj):
-    #     """转换微博类型字符串"""
-    #     for item in obj:
-    #         wb_type = item.wb_type
-    #         if wb_type == 0:
-    #             item.wb_type = "原创"
-    #         elif wb_type == 1:
-    #             item.wb_type = "转发"
-    #         elif wb_type == 2:
-    #             item.wb_type = "收藏"
-    #     return obj
+    def __wbtype(self, obj):
+        """转换微博类型字符串"""
+        for item in obj:
+            wb_type = item.wb_type
+            if wb_type == 0:
+                item.wb_type = "原创"
+            elif wb_type == 1:
+                item.wb_type = "转发"
+            elif wb_type == 2:
+                item.wb_type = "收藏"
+        return obj
 
     def all(self, page):
         """查询所有微博"""
@@ -61,11 +69,66 @@ class WeiboContent:
         """删除"""
 
 
-class User:
+class UserCollection:
+    """用户操作类"""
+
     def __init__(self):
         pass
 
-    def getuser(self):
-        obj_list = UserProfile.objects.all()
+    def __is_put(self, username, email, password):
+        """新建用户"""
+        user = User.objects.create_user(username, email, password)
+        user.save()
+        return user
 
+    def is_userprofile(self, username, email, password, name, head_img,
+                       sex=1, age=None, brief=None):
+        """新建用户信息"""
+        userprofileobj = UserProfile.objects.create(
+            user=self.__is_put(username, email, password),
+            name=name,
+            email=email,
+            head_img=str(os.path.join('static', 'user', str(username), 'userinfo', head_img)),
+            sex=sex,
+            age=age,
+            brief=brief,
+        )
+        if userprofileobj:
+            return userprofileobj
+
+    def is_active(self, username, password):
+        """认证用户"""
+        user = authenticate(username=username, password=password)
+        if user:
+            return user
+        else:
+            return None
+
+    def put_passwd(self, username, old_password, new_password):
+        """修改密码"""
+        user = authenticate(username=username, password=old_password)
+        if user:
+            user.set_password(new_password)
+            user.save()
+            return user
+        else:
+            return None
+
+    def is_login(self, request, username, password):
+        """登录"""
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+        else:
+            return None
+
+    def is_logout(self, request):
+        """退出登录"""
+        return logout(request)
+
+    def put_tags(self, name):
+        """添加标签"""
+        tag = Tags.objects.create(name=name)
+        return tag
 

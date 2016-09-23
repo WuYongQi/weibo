@@ -8,9 +8,10 @@ from Common import time_conversion
 class weibocontent:
     """所有微博"""
 
-    def __init__(self, content_list, favor_list, status=True, message=''):
+    def __init__(self, content_list, favor_list, comments_list, status=True, message=''):
         self.content_list = content_list
         self.favor_list = favor_list
+        self.comments_list = comments_list
         self.list_by_dic = []
         self.__list_by_dic()
         self.con_dic = {
@@ -36,8 +37,19 @@ class weibocontent:
             "video": item.video_link_id,
             "forward": item.forward_or_collect_from,
             "to_weibo": item.id,
+            "fav_conut": None,
+            "com_conut": None,
         }
+        # 赞个数
         for item in self.favor_list:
-            if item['to_weibo'] == d['to_weibo']:
-                d.update(item)
+            if item:
+                if item['to_weibo'] == d['to_weibo']:
+                    d['fav_conut'] = item['fav_conut']
+        # 评论个数
+        for item in self.comments_list:
+            if item:
+                if item['to_weibo'] == d['to_weibo']:
+                    d['com_conut'] = item['com_conut']
         return d
+
+

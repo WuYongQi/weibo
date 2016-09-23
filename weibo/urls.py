@@ -24,5 +24,5 @@ urlpatterns = [
     # url(r'', weibocontentviews.index),
     url(r'^index/$', weibocontentviews.index),
 
-    url(r'^index/weibocontent\.html', weibocontentviews.weibocontent),
+    url(r'^index/weibocontent\.html', weibocontentviews.weibocontent),  # 微博内容
 ]

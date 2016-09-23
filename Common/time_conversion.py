@@ -42,3 +42,5 @@ class timeconversion:
         hour, minute, second = T.split(':')
         normaltime = "%s月%s日 %s:%s" % (mouth, day, hour, minute)
         return normaltime
+
+

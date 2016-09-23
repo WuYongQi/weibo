@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -46,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'weibo.urls'
@@ -132,3 +134,44 @@ STATIC_URL = '/Static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+# Session
+# SESSION_ENGINE = 'redis_sessions.session'
+# SESSION_REDIS_HOST = '192.168.11.61'
+# SESSION_REDIS_PORT = 6379
+# SESSION_REDIS_DB = 0
+# SESSION_REDIS_PASSWORD = 'wuyongqi123'
+# SESSION_COOKIE_NAME = "xja9sqa9sniul8"
+# SESSION_COOKIE_AGE = 20         # 超时时间
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+
+# 配置reids
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://:wuyongqi123@192.168.11.61:6379",
+#         "OPTIONS": {
+#             # "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#             "CONNECTION_POOL_KWARGS": {"max_connections": 100}      # 连接池
+#         }
+#     }
+# }
+
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # 引擎
+#         'TIMEOUT': 'unique-snowflake',  # 缓存超时时间（默认300，None表示永不过期，0表示立即过期）
+#         'OPTIONS': {
+#             'MAX_ENTRIES': 300,  # 最大缓存个数（默认300）
+#             'CULL_FREQUENCY': 3,  # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+#         },
+#         'KEY_PREFIX': '',  # 缓存key的前缀（默认空）
+#         'VERSION': 1,  # 缓存key的版本（默认1）
+#         # 'KEY_FUNCTION',   # 生成key的函数（默认函数会生成为：【前缀:版本:key】）
+#     }
+# }
+
+

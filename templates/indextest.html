@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+
+    <body>
+        <div>
+            <p><span id="currentTime"></span></p>
+        </div>
+
+
+        <script type="text/javascript">
+            window.onload= function(){
+                var myDate = new Date();
+                document.getElementById('currentTime').innerText = myDate.getTime();
+            };
+            function LoadPage(){
+                var targetUrl =  document.getElementById('url').value;
+                document.getElementById("iframePosition").src = targetUrl;
+            }
+        </script>
+    </body>
+</html>

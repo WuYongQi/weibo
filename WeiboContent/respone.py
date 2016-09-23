@@ -5,13 +5,14 @@ __author__ = 'Nick Suo'
 from Common import time_conversion
 
 
-class weibocontent:
+class weibocontentrespone:
     """所有微博"""
 
-    def __init__(self, content_list, favor_list, comments_list, status=True, message=''):
+    def __init__(self, content_list, favor_list, comments_list, forwarding_conut, status=True, message=''):
         self.content_list = content_list
         self.favor_list = favor_list
         self.comments_list = comments_list
+        self.forwarding_conut = forwarding_conut
         self.list_by_dic = []
         self.__list_by_dic()
         self.con_dic = {
@@ -31,14 +32,16 @@ class weibocontent:
             "wb_type": item.wb_type,
             "user": item.user.name,
             "text": item.text,
+            "head_img": str(item.user.head_img),
             "perm": item.perm,
             "date": time_conversion.timeconversion(item.date).timeret,
             "pictures": item.pictures_link_id,
             "video": item.video_link_id,
-            "forward": item.forward_or_collect_from,
+            "forward": str(item.forward_or_collect_from.user) if item.forward_or_collect_from else None,
             "to_weibo": item.id,
-            "fav_conut": None,
-            "com_conut": None,
+            "fav_conut": 0,
+            "com_conut": 0,
+            "for_conut": 0,
         }
         # 赞个数
         for item in self.favor_list:
@@ -50,6 +53,11 @@ class weibocontent:
             if item:
                 if item['to_weibo'] == d['to_weibo']:
                     d['com_conut'] = item['com_conut']
+        # 转发个数
+        for item in self.forwarding_conut:
+            if item:
+                if item['to_weibo'] == d['to_weibo']:
+                    d['for_conut'] = item['for_conut']
         return d
 
 

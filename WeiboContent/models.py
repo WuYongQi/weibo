@@ -92,7 +92,7 @@ class Tags(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.comment_type,self.name
+        return self.name
 
 
 class UserProfile(models.Model):
@@ -105,7 +105,7 @@ class UserProfile(models.Model):
     age = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name="年龄")
     email = models.EmailField(verbose_name="邮件")
     tags = models.ManyToManyField(Tags)
-    head_img = models.ImageField(verbose_name="头像")
+    head_img = models.ImageField(upload_to='/static/images/', verbose_name="头像")
 
     follow_list = models.ManyToManyField('self', blank=True, related_name="my_followers",
                                          symmetrical=False)
@@ -118,3 +118,4 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.name
+

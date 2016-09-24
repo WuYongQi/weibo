@@ -56,7 +56,7 @@ class weibocontentrespone:
         # 转发个数
         for item in self.forwarding_conut:
             if item:
-                if item['to_weibo'] == d['to_weibo']:
+                if item['forward_or_collect_from'] == d['to_weibo']:
                     d['for_conut'] = item['for_conut']
         return d
 

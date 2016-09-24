@@ -5,6 +5,8 @@ __author__ = 'Nick Suo'
 import os
 
 from Common import time_conversion
+from Common import singleton
+
 from django.db.models import Count, Min, Max, Sum
 from django.contrib.auth.models import User
 from WeiboContent.models import Comment
@@ -39,11 +41,21 @@ class WeiboContent:
                    (int(page) * 10 if int(page) != 1 else 0):int(page) * 20]
 
         # 赞个数
-        favor_conut_list = self.favorconut(obj_list)
+        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
+            .values('to_weibo').annotate(fav_conut=Count('id'))
         # 评论个数
-        comments_conut_list = self.commentsconut(obj_list)
+        comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
+            .values('to_weibo').annotate(com_conut=Count('id'))
         # 转发个数
-        forwarding_conut_list = self.forwardingconut(obj_list)
+        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from__in=list(obj_list), wb_type=1) \
+            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
+
+        # # 赞个数
+        # favor_conut_list = self.favorconut(obj_list)
+        # # 评论个数
+        # comments_conut_list = self.commentsconut(obj_list)
+        # # 转发个数
+        # forwarding_conut_list = self.forwardingconut(obj_list)
 
         return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
 
@@ -84,7 +96,7 @@ class WeiboContent:
         """删除"""
 
 
-
+@singleton.singleton
 class UserCollection:
     """用户操作类"""
 
@@ -174,8 +186,26 @@ class UserCollection:
         ret = userinfo_obj.my_followers.all()
         return {"focuslen": len(ret), "con": ret}
 
-    def userweibo(self, userinfoobj):
-        userinfo_obj = Weibo.objects.filter(user=userinfoobj).first()
-        ret = userinfo_obj.my_followers.all()
+    def userweibo(self, user_obj, page):
+        """用户登录显示关注用户微博"""
+        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+        fav_list = userinfo_obj.my_followers.all()
+        obj_list = Weibo.objects.filter(user__in=list(fav_list)).order_by('date')[
+                   (int(page) * 10 if int(page) != 1 else 0):int(page) * 20]
+
+        # 赞个数
+        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1)\
+            .values('to_weibo').annotate(fav_conut=Count('id'))
+        # 评论个数
+        comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
+            .values('to_weibo').annotate(com_conut=Count('id'))
+        # 转发个数
+        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from__in=list(obj_list), wb_type=1) \
+            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
+
+        return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
+
+
+
 
 

@@ -35,9 +35,9 @@ class weibocontentrespone:
             "head_img": str(item.user.head_img),
             "perm": item.perm,
             "date": time_conversion.timeconversion(item.date).timeret,
-            "pictures": item.pictures_link_id,
+            "pictures": item.pictures_link_id,  # []
             "video": item.video_link_id,
-            "forward": str(item.forward_or_collect_from.user) if item.forward_or_collect_from else None,
+            "forward": str(item.forward_or_collect_from.user) if item.forward_or_collect_from else None,    # url
             "to_weibo": item.id,
             "fav_conut": 0,
             "com_conut": 0,

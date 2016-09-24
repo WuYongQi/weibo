@@ -9,7 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.backends import ModelBackend
 
 from WeiboContent import models_server
-from WeiboContent import respone
+from WeiboContent.respone import weiborespone
+from WeiboContent.request import weiborequest
+from WeiboContent.request import userrequest
 from WeiboContent.forms import UserInfoPostForm
 
 
@@ -19,21 +21,20 @@ from WeiboContent.forms import UserInfoPostForm
 def index(request):
     obj = models_server.UserCollection()
     ret = obj.is_login(request=request, username="nick", password="nicknick")
-    # # print("Ret:", ret.id)
-    # userid = request.session.get('_auth_user_id')
-    # a = ModelBackend().get_user(user_id=userid)
-    # print(type(a), a, a.is_active)
-    # # print(userbackendobj.is_value())
-    # # print("name:", request.session.get('_auth_user_backend'))
-    # # print("name:", request.session.get('_auth_user_id'))
-    # request.session['id_login'] = True
-    # print("item:", request.session.items())
-    #
-    # cache.set(request.session.get('_auth_user_hash'), list(request.session.items()), timeout=30)
-    # print("1111", type(cache.get(request.session.get('_auth_user_hash'))), cache.get(request.session.get('_auth_user_hash')))
+    # print("Ret:", ret.id)
+    userid = request.session.get('_auth_user_id')
+    a = ModelBackend().get_user(user_id=userid)
+    print(type(a), a, a.is_active)
+    # print(userbackendobj.is_value())
+    # print("name:", request.session.get('_auth_user_backend'))
+    # print("name:", request.session.get('_auth_user_id'))
+    request.session['id_login'] = True
+    print("item:", request.session.items())
 
-    ret = models_server.UserCollection().wblist(ret)
-    print(ret)
+    cache.set(request.session.get('_auth_user_hash'), list(request.session.items()), timeout=30)
+    print("1111", type(cache.get(request.session.get('_auth_user_hash'))),
+          cache.get(request.session.get('_auth_user_hash')))
+
     return render(request, 'indextest.html', {"ti": time.time()})
 
 
@@ -54,14 +55,14 @@ def weibocontent(request):
         obj = models_server.WeiboContent()
         content_list, favor_list, comments_list, forwarding_conut = obj.all(page)
 
-        con_obj = respone.weibocontentrespone(content_list=content_list,
-                                              favor_list=favor_list,
-                                              comments_list=comments_list,
-                                              forwarding_conut=forwarding_conut)
+        con_obj = weiborespone.weibocontentrespone(content_list=content_list,
+                                                   favor_list=favor_list,
+                                                   comments_list=comments_list,
+                                                   forwarding_conut=forwarding_conut)
         print(con_obj.con_dic)
         return HttpResponse(json.dumps(con_obj.con_dic))
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
         page = request.POST.get('home', None)
 
 
@@ -71,7 +72,7 @@ def userinfo(request):
     if request.method == 'GET':
         pass
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
         """添加用户信息"""
         request_form = UserInfoPostForm(request.POST)
         if request_form.is_valid():
@@ -118,3 +119,20 @@ def login(request):
         ret = obj.is_logout(request)
         return
 
+
+def userhome(request, user):
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        userid = request.session.get('_auth_user_id')
+        userobj = ModelBackend().get_user(user_id=userid)
+        if userobj:
+            usermodel = models_server.UserCollection()
+
+
+
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    return HttpResponse(user)

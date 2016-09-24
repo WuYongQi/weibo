@@ -168,6 +168,14 @@ class UserCollection:
         ret = userinfo_obj.weibo_set.all()
         return {"wblen": len(ret), "con": ret}
 
+    def focuswblist(self, user_obj):
+        """我的关注"""
+        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+        ret = userinfo_obj.my_followers.all()
+        return {"focuslen": len(ret), "con": ret}
 
+    def userweibo(self, userinfoobj):
+        userinfo_obj = Weibo.objects.filter(user=userinfoobj).first()
+        ret = userinfo_obj.my_followers.all()
 
 

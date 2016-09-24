@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^index/$', weibocontentviews.index),
 
     url(r'^index/weibocontent\.html', weibocontentviews.weibocontent),  # 未登录微博内容
+    url(r'^home/(?P<user>\S*)\.html', weibocontentviews.userhome),  # 登录微博内容
 ]

@@ -6,25 +6,38 @@ import datetime
 import time
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.backends import ModelBackend
 
 from WeiboContent import models_server
 from WeiboContent import respone
+from WeiboContent.forms import UserInfoPostForm
 
 
 # Create your views here.
 
 
 def index(request):
-    # request.session.setdefault('is_login', True)
-    # request.session.get('k1', None)
-    # print(request.session.session_key)
-    # cache.set(request.session.session_key, {"k1": 'v1', "k2": "v2"}, timeout=25)
-    # print("1111", type(cache.get('xja9sqa9sniul8')), cache.get('xja9sqa9sniul8'))
+    obj = models_server.UserCollection()
+    ret = obj.is_login(request=request, username="nick", password="nicknick")
+    # # print("Ret:", ret.id)
+    # userid = request.session.get('_auth_user_id')
+    # a = ModelBackend().get_user(user_id=userid)
+    # print(type(a), a, a.is_active)
+    # # print(userbackendobj.is_value())
+    # # print("name:", request.session.get('_auth_user_backend'))
+    # # print("name:", request.session.get('_auth_user_id'))
+    # request.session['id_login'] = True
+    # print("item:", request.session.items())
+    #
+    # cache.set(request.session.get('_auth_user_hash'), list(request.session.items()), timeout=30)
+    # print("1111", type(cache.get(request.session.get('_auth_user_hash'))), cache.get(request.session.get('_auth_user_hash')))
 
+    ret = models_server.UserCollection().wblist(ret)
+    print(ret)
     return render(request, 'indextest.html', {"ti": time.time()})
 
 
-# @login_required(login_url='/index/')
+# @login_required
 def weibocontent(request):
     """微博内容视图"""
     if request.method == 'GET':
@@ -52,6 +65,7 @@ def weibocontent(request):
         page = request.POST.get('home', None)
 
 
+# @login_required
 def userinfo(request):
     """用户信息视图"""
     if request.method == 'GET':
@@ -59,10 +73,17 @@ def userinfo(request):
 
     if request.method == 'POST':
         """添加用户信息"""
-        obj = models_server.UserCollection()
-        ret = obj.is_userprofile(username="jenny", email='suoning8@163.com', password='jennyjenny',
-                                 name="珍妮", head_img='coco.img', sex=0, age=21, brief="I love Nick.")
-        print(ret)
+        request_form = UserInfoPostForm(request.POST)
+        if request_form.is_valid():
+            request_dict = request_form.clean()
+            print("request_dict", request_dict)
+            obj = models_server.UserCollection()
+            # ret = obj.is_userprofile(username="jenny", email='suoning8@163.com', password='jennyjenny',
+            #                          name="珍妮", head_img='coco.img', sex=0, age=21, brief="I love Nick.")
+            # print(ret)
+        else:
+            error_msg = request_form.errors.as_json()
+            print(type(error_msg), error_msg)
 
 
 def login(request):
@@ -77,6 +98,8 @@ def login(request):
         if username and password:
             obj = models_server.UserCollection()
             ret = obj.is_login(request=request, username=username, password=password)
+            if ret:
+                request.session['id_login'] = True
             return
 
     elif request.method == 'PUT':
@@ -94,5 +117,4 @@ def login(request):
         obj = models_server.UserCollection()
         ret = obj.is_logout(request)
         return
-
 

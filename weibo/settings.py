@@ -135,9 +135,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+# 没登录跳转链接
+LOGIN_URL = '/login/'
 
 # Session
-SESSION_ENGINE = 'redis_sessions.session'
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+# SESSION_ENGINE = 'redis_sessions.session'
 SESSION_REDIS_HOST = '114.215.128.25'
 # SESSION_REDIS_HOST = '192.168.11.61'
 SESSION_REDIS_PORT = 6379
@@ -152,7 +155,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://:wuyongqi123@192.168.11.61:6379",
+        # "LOCATION": "redis://:wuyongqi123@192.168.11.61:6379",
+        "LOCATION": "redis://114.215.128.25:6379",
         "OPTIONS": {
             # "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "CONNECTION_POOL_KWARGS": {"max_connections": 100}      # 连接池

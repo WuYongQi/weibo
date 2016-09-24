@@ -20,16 +20,15 @@ class timeconversion:
         self.time_yeardays = self.time_now.timetuple()[0]
         self.timeret = self.time_dudge()
 
-
     def time_dudge(self):
-        if (self.time_yeardays == self.time_obj.timetuple()[0]) and (
-                    self.time_mountdays == self.time_obj.timetuple()[1]) and (
+        if (self.time_onehours == self.time_obj.timetuple()[3]) and (
                     self.time_tadaydays == self.time_obj.timetuple()[2]) and (
-                    self.time_onehours == self.time_obj.timetuple()[3]):
-            return self.time_before()
-        elif (self.time_yeardays == self.time_obj.timetuple()[0]) and (
                     self.time_mountdays == self.time_obj.timetuple()[1]) and (
-                    self.time_tadaydays == self.time_obj.timetuple()[2]):
+                    self.time_yeardays == self.time_obj.timetuple()[0]):
+            return self.time_before()
+        elif (self.time_tadaydays == self.time_obj.timetuple()[2]) and (
+                    self.time_mountdays == self.time_obj.timetuple()[1]) and (
+                    self.time_yeardays == self.time_obj.timetuple()[0]):
             return self.time_today()
         else:
             return self.time_normal()
@@ -44,9 +43,8 @@ class timeconversion:
         return timetoday
 
     def time_normal(self):
-        mouth, day, hour, minute = self.time_obj.timetuple()[1], self.time_obj.timetuple()[2],\
+        mouth, day, hour, minute = self.time_obj.timetuple()[1], self.time_obj.timetuple()[2], \
                                    self.time_obj.timetuple()[1], self.time_obj.timetuple()[2]
         normaltime = "%s月%s日 %s:%s" % (mouth, day, hour, minute)
         return normaltime
-
 

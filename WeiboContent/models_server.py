@@ -39,25 +39,40 @@ class WeiboContent:
                    (int(page) * 10 if int(page) != 1 else 0):int(page) * 20]
 
         # 赞个数
+        favor_conut_list = self.favorconut(obj_list)
+        # 评论个数
+        comments_conut_list = self.commentsconut(obj_list)
+        # 转发个数
+        forwarding_conut_list = self.forwardingconut(obj_list)
+
+        return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
+
+    def favorconut(self, setlist):
+        """赞个数"""
         favor_conut = map(lambda x: x.comment_set.all().filter(comment_type=1)
-                          .values('to_weibo').annotate(fav_conut=Count('comment_type')), obj_list)
+                          .values('to_weibo').annotate(fav_conut=Count('comment_type')), setlist)
         favor_conut_list = [{'fav_conut': li[0]['fav_conut'], 'to_weibo': li[0]['to_weibo']}
                             if li else None
                             for li in favor_conut]
-        # 评论个数
+        return favor_conut_list
+
+    def commentsconut(self, setlist):
+        """评论个数"""
         comments_conut = map(lambda x: x.comment_set.all().filter(comment_type=0)
-                             .values('to_weibo').annotate(com_conut=Count('comment_type')), obj_list)
+                             .values('to_weibo').annotate(com_conut=Count('comment_type')), setlist)
         comments_conut_list = [{'com_conut': li[0]['com_conut'], 'to_weibo': li[0]['to_weibo']}
                                if li else None
                                for li in comments_conut]
-        # 转发个数
+        return comments_conut_list
+
+    def forwardingconut(self, setlist):
+        """转发个数"""
         forwarding_conut = map(lambda x: Weibo.objects.filter(forward_or_collect_from=x.id)
-                               .values('forward_or_collect_from').annotate(for_conut=Count('id')), obj_list)
+                               .values('forward_or_collect_from').annotate(for_conut=Count('id')), setlist)
         forwarding_conut_list = [{'for_conut': li[0]['for_conut'], 'to_weibo': li[0]['forward_or_collect_from']}
                                  if li else None
                                  for li in forwarding_conut]
-
-        return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
+        return forwarding_conut_list
 
     def add(self):
         """增加微博"""
@@ -67,6 +82,7 @@ class WeiboContent:
 
     def delete(self, nid):
         """删除"""
+
 
 
 class UserCollection:
@@ -96,7 +112,7 @@ class UserCollection:
         if userprofileobj:
             return userprofileobj
 
-    def is_active(self, username, password):
+    def is_active_user(self, username, password):
         """认证用户"""
         user = authenticate(username=username, password=password)
         if user:
@@ -120,8 +136,10 @@ class UserCollection:
         if user:
             if user.is_active:
                 login(request, user)
+                return user
+            return False
         else:
-            return None
+            return False
 
     def is_logout(self, request):
         """退出登录"""
@@ -131,4 +149,25 @@ class UserCollection:
         """添加标签"""
         tag = Tags.objects.create(name=name)
         return tag
+
+    def followlist(self, user_obj):
+        """我的粉丝"""
+        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+        ret = userinfo_obj.follow_list.all()
+        return {"followlen": len(ret), "con": ret}
+
+    def focuslist(self, user_obj):
+        """我的关注"""
+        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+        ret = userinfo_obj.my_followers.all()
+        return {"focuslen": len(ret), "con": ret}
+
+    def wblist(self, user_obj):
+        """我的微博"""
+        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+        ret = userinfo_obj.weibo_set.all()
+        return {"wblen": len(ret), "con": ret}
+
+
+
 

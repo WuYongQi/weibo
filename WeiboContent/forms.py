@@ -35,5 +35,28 @@ class UserInfoPostForm(forms.Form):
     )
 
 
+class NewWeiBo(forms.Form):
+    wb_type = forms.IntegerField(
+        error_messages={'required': '请选择微博类型', 'invalid': '微博类型格式错误'}
+    )
+    text = forms.CharField(
+        max_length=141,
+        error_messages={'required': '微博类型不能为空', 'invalid': '微博内容超过140个最大字数'}
+    )
+    perm = forms.IntegerField(
+        error_messages={'required': '请选择微博查看权限', 'invalid': '选择微博查看权限错误'}
+    )
+    date = forms.DateField(
+        required=False,
+    )
+    pictures = forms.CharField(
+        required=False,
+    )
+    video = forms.CharField(
+        required=False,
+    )
+    forward = forms.IntegerField(
+        required=False,
+    )
 
 

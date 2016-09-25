@@ -11,10 +11,12 @@ from django.template.context import RequestContext
 
 from WeiboContent import models_server
 from WeiboContent.respone import weiborespone
-from WeiboContent.respone import userrespone
 from WeiboContent.request import weiborequest
+from WeiboContent.respone import userrespone
 from WeiboContent.request import userrequest
+
 from WeiboContent.forms import UserInfoPostForm
+from WeiboContent.forms import NewWeiBo
 
 
 # Create your views here.
@@ -39,6 +41,12 @@ def index(request):
 
     models_server.UserCollection().userweibo(a, page=1)
 
+    f = NewWeiBo(request.GET)
+    print(f)
+    print(f.is_valid())
+    print(f.cleaned_data)
+    print(f.errors)
+
     return render(request, 'indextest.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
 
@@ -46,7 +54,7 @@ def index(request):
 def weibocontent(request):
     """微博内容视图"""
     if request.method == 'GET':
-
+        """未登录首页微博内容"""
         # from django.core.cache import cache
         # cache.set("foo", "value", timeout=25)
         # print(cache.ttl("foo"))
@@ -66,6 +74,7 @@ def weibocontent(request):
 
     elif request.method == 'POST':
         page = request.POST.get('home', None)
+
 
 
 # @login_required
@@ -131,6 +140,7 @@ def login(request):
 
 def userhome(request, user):
     if request.method == 'GET':
+        """登录后首页内容"""
         obj = models_server.UserCollection()
         ret = obj.is_login(request=request, username="nick", password="nicknick")
 
@@ -146,11 +156,24 @@ def userhome(request, user):
         return HttpResponse(json.dumps(con_obj.con_dic))
 
     elif request.method == 'POST':
+        """发布微博"""
         userid = request.session.get('_auth_user_id')
         userobj = ModelBackend().get_user(user_id=userid)
         if userobj:
-            usermodel = models_server.UserCollection()
-
+            formnewweiboret = NewWeiBo(request.POST)
+            if formnewweiboret:
+                data_dic = formnewweiboret.cleaned_data
+                data_dic['user'] = userobj
+                weiborequestobj = weiborequest.newweibocontentrequest(**data_dic)
+                # 加队列返回
+                weibocountentobj = models_server.WeiboContent()
+                ret = weibocountentobj.add(**weiborequestobj.dic())
+                print(ret)
+            else:
+                print(formnewweiboret.errors)
+                newweibocontentresponeobj = weiborespone.newweibocontentrespone(status=False,
+                                                                                message=formnewweiboret.errors)
+                return json.dumps(newweibocontentresponeobj.dic())
 
 
     elif request.method == 'PUT':

@@ -4,7 +4,7 @@ __author__ = 'Nick Suo'
 
 
 def singleton(argv):
-    # 单例模式
+    """单例模式"""
     dic = {}
 
     def inner(*args, **kwargs):

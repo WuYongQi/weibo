@@ -37,7 +37,7 @@ class weibocontentrespone:
             "date": time_conversion.timeconversion(item.date).timeret,
             "pictures": item.pictures_link_id,  # []
             "video": item.video_link_id,
-            "forward": str(item.forward_or_collect_from.user) if item.forward_or_collect_from else None,    # url
+            "forward": str(item.forward_or_collect_from.user) if item.forward_or_collect_from else 0,    # url
             "to_weibo": item.id,
             "fav_conut": 0,
             "com_conut": 0,
@@ -59,5 +59,19 @@ class weibocontentrespone:
                 if item['forward_or_collect_from'] == d['to_weibo']:
                     d['for_conut'] = item['for_conut']
         return d
+
+
+class newweibocontentrespone:
+    def __init__(self, status=True, message=''):
+        self.status = status
+        self.message = message
+
+    def dic(self):
+        d = {
+            'status': self.status,
+            'message': self.message,
+        }
+        return d
+
 
 

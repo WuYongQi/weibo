@@ -10,3 +10,11 @@ DBSetting = {
     'HOST': '',
     'PORT': '',
 }
+
+# rabbitMQ 配置
+rabbitMQ = {
+    'host': '192.168.1.5',
+}
+
+
+

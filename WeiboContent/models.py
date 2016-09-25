@@ -19,7 +19,7 @@ class Weibo(models.Model):
     forward_or_collect_from = models.ForeignKey('self', related_name="forward_or_collects",
                                                 blank=True, null=True, verbose_name="关联微博")
     user = models.ForeignKey('UserProfile', verbose_name="用户")
-    text = models.CharField(max_length=140, verbose_name="微博内容")
+    text = models.CharField(max_length=140, blank=True, null=True, verbose_name="微博内容")
     pictures_link_id = models.CharField(max_length=128, blank=True, null=True, verbose_name="照片路径")
     video_link_id = models.CharField(max_length=128, blank=True, null=True, verbose_name="视频路径")
     perm_choice = ((0, '公开'),

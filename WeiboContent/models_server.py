@@ -19,6 +19,7 @@ from django.contrib.auth import logout
 from django.contrib.auth import authenticate
 
 
+@singleton.singleton
 class WeiboContent:
     def __init__(self):
         pass
@@ -86,8 +87,10 @@ class WeiboContent:
                                  for li in forwarding_conut]
         return forwarding_conut_list
 
-    def add(self):
+    def add(self, weibodic):
         """增加微博"""
+        obj = Weibo.objects.create(**weibodic)
+        return obj
 
     def put(self, nid):
         """修改"""

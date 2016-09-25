@@ -7,13 +7,13 @@ DBSetting = {
     'NAME': 'weiboDB',
     'USER': 'root',
     'PASSWORD': 'suoning',
-    'HOST': '',
+    'HOST': '192.168.0.138',
     'PORT': '',
 }
 
 # rabbitMQ 配置
 rabbitMQ = {
-    'host': '192.168.1.5',
+    'host': '192.168.0.180',
     'no_ack': False,            # 是否启用 acknowledgment 消息不丢失， False/True, False 为启用状态
     'New_weibo': 'newweibo',    # 添加微博队列名字
 }

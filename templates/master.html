@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/Static/css/index.css" rel="stylesheet">
+</head>
+<body>
+    <div class="The_motel_dialog hide" id="Mo_T">
+        <div class="Login">
+            <div class="guanbi" onclick="Login_G()">X</div>
+            {% csrf_token %}
+            <div class="Login_info">
+                <div class='menu'>
+                    <ul id='tab-menu-title'>
+                        <li class='current' content-to='1'>账号登录</li>
+                        <li content-to='2'>安全登录</li>
+                    </ul>
+                </div>
+                <div id='tab-menu-body' class='content'>
+                    <div class="text" content='1'>
+                        <div class="text_username">
+                            <span class="username_img">
+                                <input id="username" type="text" onfocus="input_k(this)" onblur="input_x(this)">
+                            </span>
+                        </div>
+                        <div class="hide" id="error_null_name">
+                            <span class="triangle-one"></span>
+                            <span class="triangle-two"><span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请输入登录名</span>
+                        </div>
+                        <div class="hide" id="user_pwd_error">
+                            <span class="triangle-one"></span>
+                            <span class="triangle-two"><span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 用户名或密码错误。</span>
+                        </div>
+                        <div class="text_username">
+                            <span class="password_img">
+                                <input id="password" type="password" onfocus="input_k(this)" onblur="input_x(this)">
+                            </span>
+                        </div>
+                        <div class="hide" id="error_null_pwd">
+                            <span class="triangle-one_pwd"></span>
+                            <span class="triangle-two_pwd"><span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请输入密码</span>
+                        </div>
+                        <div class="text_login">
+                            <input type="checkbox" id="login_form_savestate" checked="checked">
+                            <label for="login_form_savestate" class="S_txt2">下次自动登录</label>
+                            <span class="forget_psw">
+                                <a class="S_txt2">忘记密码</a>
+                            </span>
+                        </div>
+                        <button class="Login_S" onclick="Login_Server()">登录</button>
+                        <button class="Login_Q">
+                            <i class="icon_qq"></i>
+                            <i style="margin-left: 20px;font-style: normal;">使用QQ直接登录</i>
+                        </button>
+                    </div>
+                    <div content='2' class='hide text'>content2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="index_head clearfix">
+        <span class="logo_img"></span>
+        <div class="index_seek">
+            <span id="Hot_search" onfocus="" onchange="" style="font-size: 6px;"></span>
+            <input type="text" name="seek">
+            <a title="搜索"></a>
+            <span class="Seek_img"></span>
+        </div>
+        <ul class="Navigation">
+            <li class="title_interval"><a href="javascript:(0)"><span class="Home_img"></span>首页</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><span class="Video_img"></span>视频</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><span class="Find_img"></span>发现</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><span class="Game_img"></span>游戏</a></li>
+            <li class="Login_Regist">
+                <span>
+                    <a href="javascript:(0)">注册</a>
+                </span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                <span>
+                    <a href="javascript:(0)" onclick="Login();">登录</a>
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="bottom_tools" style="bottom: 40px;">
+        <a id="scrollUp" href="javascript:;" title="飞回顶部" style="display: none;"></a>
+    </div>
+    <div class="index_text">
+        <div class="Content clearfix">
+            <div class="Content_left">
+                <ul class="Left_Navigation">
+                    <li class="active">
+                        <a class="left_interval" href="javascript:(0)">
+                            <span class="iconfont">&#xe607;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">推荐</em>
+                            <em class="Font_Hot">HOT</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe603;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">明星</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe608;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">视频</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe604;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">搞笑</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe606;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">情感</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe601;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">社会</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe606;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">综艺</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe602;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">美妆</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe605;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">美食</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe600;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">美女</em>
+                            <em class="Font_Hot" style="background-color: #60bcf0">NEW</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            <span class="iconfont">&#xe609;</span>&nbsp;&nbsp;
+                            <em class="Font_Correction">更多</em>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="Content_Center_ul" id="Text">
+
+            </ul>
+            <div class="Content_right">
+                <div class="Content_top_1">
+                    <div class="login">
+                        <div class='menu'>
+                            <ul id='tab-menu-title_tab'>
+                                <li class='current' content-to='1'>账号登录</li>
+                                <li content-to='2'>安全登录</li>
+                            </ul>
+                        </div>
+                        <div id='tab-menu-body_tab' class='content'>
+                            <div class="text" content='1'>
+                                <div class="text_username">
+                                    <span class="username_img">
+                                        <input id="username_tab" type="text" onfocus="input_k(this)" onblur="input_x(this)">
+                                    </span>
+                                </div>
+                                <div class="hide" id="error_null_name_tab">
+                                    <span class="triangle-one"></span>
+                                    <span class="triangle-two"><span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请输入登录名</span>
+                                </div>
+                                <div class="hide" id="user_pwd_error_tab">
+                                    <span class="triangle-one"></span>
+                                    <span class="triangle-two"><span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 用户名或密码错误。</span>
+                                </div>
+                                <div class="text_username">
+                                    <span class="password_img">
+                                        <input id="password_tab" type="password" onfocus="input_k(this)" onblur="input_x(this)">
+                                    </span>
+                                </div>
+                                <div class="hide" id="error_null_pwd_tab">
+                                    <span class="triangle-one_pwd"></span>
+                                    <span class="triangle-two_pwd"><span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请输入密码</span>
+                                </div>
+                                <div class="text_login">
+                                    <input type="checkbox" id="login_form_savestate" checked="checked">
+                                    <label for="login_form_savestate" class="S_txt2">记住我</label>
+                                    <span class="forget_psw">
+                                        <a class="S_txt2">忘记密码</a>
+                                    </span>
+                                </div>
+                                <button class="Login_S" onclick="Login_Server()">登录</button>
+                                <div class="null_div">
+                                    <span class="S_txt2">还没有微博？</span><a target="_blank" href="http://weibo.com/signup/signup.php ">立即注册!</a>
+                                </div>
+                                <div class="other_login clearfix">
+                                    <span class="tit W_fl S_txt2">其它登录：</span>
+                                    <div>
+                                        <a class="login_img_1"></a>
+                                        <a class="login_img_2"></a>
+                                        <a class="login_img_3"></a>
+                                        <a class="login_img_4"></a>
+                                        <a class="login_img_5"></a>
+                                        <a class="login_img_6"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div content='2' class='hide text'>content2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/Static/jQuery/jquery-1.12.4.js"></script>
+    <script src="/Static/jQuery/jquery.cookie.js"></script>
+    <script src="/Static/jQuery/Custom_JQ.js"></script>
+    <script>
+        $(function(){
+            Hot_search();
+            Request_content();
+            ChangeTab('#tab-menu-title', '#tab-menu-body');
+            ChangeTab_tab('#tab-menu-title_tab', '#tab-menu-body_tab');
+        })
+    </script>
+</body>
+</html>

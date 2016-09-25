@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.backends import ModelBackend
 from django.template.context import RequestContext
 
-from weibo.Common.messMQ import producers  # 生产者
+from Common.messMQ import producers  # 生产者
 
 from WeiboContent import models_server
 from WeiboContent.respone import weiborespone
@@ -53,7 +53,7 @@ def index(request):
     print(f.cleaned_data)
     print(f.errors)
 
-    return render(request, 'indextest.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
+    return render(request, 'login_master.html', {'context_instance': RequestContext(request)})
 
 
 # @login_required
@@ -175,7 +175,7 @@ def userhome(request):
                 obj = producers.producers()
                 ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps(weiborequestobj.dic()))
                 if ret:
-                    # obj.closeconn()   # 关闭连接
+                    obj.closeconn()   # 关闭连接
                     newweiboconresponeobj = weiborespone.newweibocontentrespone(status=True,
                                                                                 message='发布成功',
                                                                                 connect_dic=weiborequestobj.dic())
@@ -188,7 +188,8 @@ def userhome(request):
                 newweiboconresponeobj = weiborespone.newweibocontentrespone(status=False,
                                                                             message='填写错误',
                                                                             connect_dic=formnewweiboret.errors)
-            return json.dumps(newweiboconresponeobj.dic())
+            print(type(newweiboconresponeobj.dic()), newweiboconresponeobj.dic())
+            return HttpResponse(json.dumps(newweiboconresponeobj.dic()))
 
 
     elif request.method == 'PUT':

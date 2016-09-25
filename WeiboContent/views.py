@@ -53,10 +53,6 @@ def index(request):
     print(f.cleaned_data)
     print(f.errors)
 
-    d = {'video_link_id': '', 'pictures_link_id': '', 'date': '41分钟前', 'perm': 0,
-         'wb_type': 0, 'user': 'nick', 'text': '阿斯顿发生地方', 'forward_or_collect_from': None}
-
-
     return render(request, 'indextest.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
 

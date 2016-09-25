@@ -65,6 +65,8 @@ class newweibocontentrespone:
     def __init__(self, connect_dic, status=True, message=''):
         self.status = status
         self.message = message
+        # print(connect_dic['user'])
+        # connect_dic['user'] = str(connect_dic['user'])
         self.connect = connect_dic
 
     def dic(self):

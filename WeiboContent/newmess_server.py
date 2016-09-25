@@ -57,15 +57,16 @@ class consumers(BaseMQ.BaseMQ):
 
     def callback(self, ch, method, properties, body):
         """回调函数"""
-        # print("callback:", method.redelivered)    # 3
+        # print("callback:", method.redelivered)    # True
         # print("callback:", method.delivery_tag)    # 1
         strbody = str(body, encoding='utf8')
         dicbody = json.loads(strbody)
+        print("THis is huidiao callback!!!!!!!!!!!")
         print("callback:", type(dicbody), dicbody)
         # 写入数据库
-        # weibocountentobj = models_server.WeiboContent()
-        # ret = weibocountentobj.add(**dicbody)
-        # print("callback_ret:", ret)
+        weibocountentobj = models_server.WeiboContent()
+        ret = weibocountentobj.add(dicbody)
+        print("callback_ret:", ret)
 
 
 """
@@ -81,7 +82,6 @@ class MyThread(threading.Thread):
 
     def run(self):  # 定义每个线程要运行的函数
         consumers(queue=rabbitMQconfig['New_weibo'])
-
 
 MyThread().start()
 

@@ -175,7 +175,7 @@ def userhome(request):
                 obj = producers.producers()
                 ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps(weiborequestobj.dic()))
                 if ret:
-                    # obj.closeconn()   # 关闭连接
+                    obj.closeconn()   # 关闭连接
                     newweiboconresponeobj = weiborespone.newweibocontentrespone(status=True,
                                                                                 message='发布成功',
                                                                                 connect_dic=weiborequestobj.dic())

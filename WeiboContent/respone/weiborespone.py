@@ -62,14 +62,16 @@ class weibocontentrespone:
 
 
 class newweibocontentrespone:
-    def __init__(self, status=True, message=''):
+    def __init__(self, connect_dic, status=True, message=''):
         self.status = status
         self.message = message
+        self.connect = connect_dic
 
     def dic(self):
         d = {
             'status': self.status,
             'message': self.message,
+            'connect': self.connect,
         }
         return d
 

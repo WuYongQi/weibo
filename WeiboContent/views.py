@@ -4,10 +4,13 @@ from django.shortcuts import HttpResponse
 import json
 import datetime
 import time
+import config
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.backends import ModelBackend
 from django.template.context import RequestContext
+
+from weibo.Common.messMQ import producers  # 生产者
 
 from WeiboContent import models_server
 from WeiboContent.respone import weiborespone
@@ -17,6 +20,9 @@ from WeiboContent.request import userrequest
 
 from WeiboContent.forms import UserInfoPostForm
 from WeiboContent.forms import NewWeiBo
+
+# 消费者夯住
+from WeiboContent import newmess_server
 
 
 # Create your views here.
@@ -74,7 +80,6 @@ def weibocontent(request):
 
     elif request.method == 'POST':
         page = request.POST.get('home', None)
-
 
 
 # @login_required
@@ -138,7 +143,7 @@ def login(request):
         return
 
 
-def userhome(request, user):
+def userhome(request):
     if request.method == 'GET':
         """登录后首页内容"""
         obj = models_server.UserCollection()
@@ -161,25 +166,33 @@ def userhome(request, user):
         userobj = ModelBackend().get_user(user_id=userid)
         if userobj:
             formnewweiboret = NewWeiBo(request.POST)
-            if formnewweiboret:
+            if formnewweiboret.is_valid():
                 data_dic = formnewweiboret.cleaned_data
                 data_dic['user'] = userobj
                 weiborequestobj = weiborequest.newweibocontentrequest(**data_dic)
                 # 加队列返回
-                weibocountentobj = models_server.WeiboContent()
-                ret = weibocountentobj.add(**weiborequestobj.dic())
-                print(ret)
+                print(weiborequestobj.dic())
+                obj = producers.producers()
+                ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps(weiborequestobj.dic()))
+                if ret:
+                    # obj.closeconn()   # 关闭连接
+                    newweiboconresponeobj = weiborespone.newweibocontentrespone(status=True,
+                                                                                message='发布成功',
+                                                                                connect_dic=weiborequestobj.dic())
+                else:
+                    newweiboconresponeobj = weiborespone.newweibocontentrespone(status=False,
+                                                                                message='发布错误',
+                                                                                connect_dic=formnewweiboret.errors)
             else:
                 print(formnewweiboret.errors)
-                newweibocontentresponeobj = weiborespone.newweibocontentrespone(status=False,
-                                                                                message=formnewweiboret.errors)
-                return json.dumps(newweibocontentresponeobj.dic())
+                newweiboconresponeobj = weiborespone.newweibocontentrespone(status=False,
+                                                                            message='填写错误',
+                                                                            connect_dic=formnewweiboret.errors)
+            return json.dumps(newweiboconresponeobj.dic())
 
 
     elif request.method == 'PUT':
         pass
     elif request.method == 'DELETE':
         pass
-    return HttpResponse(user)
-
 

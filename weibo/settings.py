@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'weibo.wsgi.application'
 
 # 配置数据库
 from config import DBSetting
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -136,19 +137,23 @@ STATICFILES_DIRS = (
 )
 
 # 没登录跳转链接
-LOGIN_URL = '/login/'
+LOGIN_URL = '/index/'
 
 # Session
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
-# SESSION_ENGINE = 'redis_sessions.session'
-# SESSION_REDIS_HOST = '114.215.128.25'
-SESSION_REDIS_HOST = '192.168.1.108'
-SESSION_REDIS_PORT = 6379
-SESSION_REDIS_DB = 0
-SESSION_REDIS_PASSWORD = 'wuyongqi123'
-SESSION_COOKIE_NAME = "xja9sqa9sniul8"
-SESSION_COOKIE_AGE = 20         # 超时时间
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+from config import session as sessionconfig
+
+if sessionconfig['status']:
+    SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies' if sessionconfig['encryption'] \
+        else 'redis_sessions.session'
+    # SESSION_ENGINE = 'redis_sessions.session'
+    # SESSION_REDIS_HOST = '114.215.128.25'
+    SESSION_REDIS_HOST = sessionconfig['host']
+    SESSION_REDIS_PORT = sessionconfig['port']
+    SESSION_REDIS_DB = sessionconfig['DB']
+    SESSION_REDIS_PASSWORD = sessionconfig['passwd']
+    SESSION_COOKIE_NAME = sessionconfig['name']
+    SESSION_COOKIE_AGE = sessionconfig['time_out']  # 超时时间
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
 # 配置reids
@@ -159,7 +164,7 @@ CACHES = {
         # "LOCATION": "redis://114.215.128.25:6379",
         "OPTIONS": {
             # "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {"max_connections": 100}      # 连接池
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100}  # 连接池
         }
     }
 }
@@ -179,5 +184,3 @@ CACHES = {
 #         # 'KEY_FUNCTION',   # 生成key的函数（默认函数会生成为：【前缀:版本:key】）
 #     }
 # }
-
-

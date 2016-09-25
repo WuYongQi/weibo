@@ -30,3 +30,6 @@ class newweibocontentrequest:
             'video_link_id': self.video_link_id,
             'forward_or_collect_from': self.forward_or_collect_from,
         }
+        return d
+
+

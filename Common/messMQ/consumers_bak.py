@@ -54,8 +54,8 @@ class consumers(BaseMQ.BaseMQ):
 
     def callback(self, ch, method, properties, body):
         """回调函数"""
-        print(method['redelivered'])    # 3
-        print(method['delivery_tag'])    # 1
+        print(method.redelivered)    # True
+        print(method.delivery_tag)    # 1
         strbody = str(body, encoding='utf8')
         dicbody = json.loads(strbody)
         print(type(dicbody), dicbody)
@@ -65,3 +65,6 @@ class consumers(BaseMQ.BaseMQ):
 How to ues:
 consumers(queue=config.rabbitMQ['New_weibo'])
 """
+# consumers(queue='hello')
+# import config
+# consumers(queue=config.rabbitMQ['New_weibo'])

@@ -3,6 +3,7 @@
 __author__ = 'Nick Suo'
 
 import datetime
+from Common import time_conversion
 
 
 class newweibocontentrequest:
@@ -22,10 +23,10 @@ class newweibocontentrequest:
     def dic(self):
         d = {
             'wb_type': self.wb_type,
-            'user': self.user,
+            'user_id': str(self.user.id),
             'text': self.text,
             'perm': self.perm,
-            'date': self.date,
+            'date': time_conversion.timeconversion(self.date).timeret,
             'pictures_link_id': self.pictures_link_id,
             'video_link_id': self.video_link_id,
             'forward_or_collect_from': self.forward_or_collect_from,

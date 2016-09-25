@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.backends import ModelBackend
 from django.template.context import RequestContext
 
-from weibo.Common.messMQ import producers  # 生产者
+from Common.messMQ import producers  # 生产者
 
 from WeiboContent import models_server
 from WeiboContent.respone import weiborespone
@@ -52,6 +52,10 @@ def index(request):
     print(f.is_valid())
     print(f.cleaned_data)
     print(f.errors)
+
+    d = {'video_link_id': '', 'pictures_link_id': '', 'date': '41分钟前', 'perm': 0,
+         'wb_type': 0, 'user': 'nick', 'text': '阿斯顿发生地方', 'forward_or_collect_from': None}
+
 
     return render(request, 'indextest.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
@@ -188,7 +192,7 @@ def userhome(request):
                 newweiboconresponeobj = weiborespone.newweibocontentrespone(status=False,
                                                                             message='填写错误',
                                                                             connect_dic=formnewweiboret.errors)
-            return json.dumps(newweiboconresponeobj.dic())
+            return HttpResponse(json.dumps(newweiboconresponeobj.dic()))
 
 
     elif request.method == 'PUT':

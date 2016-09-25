@@ -6,7 +6,9 @@ __author__ = 'Nick Suo'
 DBSetting = {
     'NAME': 'weiboDB',
     'USER': 'root',
+    # 'PASSWORD': 'python_q1_s1',
     'PASSWORD': 'suoning',
+    # 'HOST': '114.48.127.122',
     'HOST': '',
     'PORT': '',
 }
@@ -20,7 +22,7 @@ rabbitMQ = {
 
 # session 配置
 session = {
-    'status': True,         # 是否启用session
+    'status': True,         # 是否启用session,必须启用!!!
     'encryption': True,     # 是否加密session
     'host': '192.168.0.160',
     'port': '6379',

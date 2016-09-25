@@ -34,7 +34,7 @@ class timeconversion:
             return self.time_normal()
 
     def time_before(self):
-        beforetime = "%s分钟前" % (61 - int(self.time_obj.timetuple()[3]))
+        beforetime = "%s分钟前" % abs(int(self.time_now.timetuple()[3]) - int(self.time_obj.timetuple()[3]) + 1)
         return beforetime
 
     def time_today(self):

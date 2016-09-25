@@ -59,4 +59,8 @@ ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps({'name': 'test', 'a
 if ret:
     obj.closeconn()
 """
-
+# obj = producers()
+# import json
+# ret = obj.createadd('hello', json.dumps({'name': 'test', 'age': 'test'}))
+# if ret:
+#     obj.closeconn()

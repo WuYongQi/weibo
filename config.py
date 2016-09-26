@@ -28,12 +28,12 @@ rabbitMQ = {
 session = {
     'status': True,         # 是否启用session,必须启用!!!
     'encryption': True,     # 是否加密session
-    # 'host': '144.48.127.122',
-    'host': '192.168.11.51',
+    'host': '144.48.127.122',
+    # 'host': '192.168.11.51',
     'port': '6379',
     'DB': 0,
-    # 'passwd': '',
-    'passwd': 'wuyongqi123',
+    'passwd': '',
+    # 'passwd': 'wuyongqi123',
     'name': 'xja9sqa9sniul8',
     'time_out': 20,      # 单位秒
 }

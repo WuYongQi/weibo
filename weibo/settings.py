@@ -163,8 +163,8 @@ CACHES = {
         # "LOCATION": "redis://:wuyongqi123@192.168.1.108:6379",
         # "LOCATION": "redis://144.48.127.122:6379",
         "LOCATION": [
-            # "redis://114.215.128.25:6379",
-            "redis://:wuyongqi123@192.168.11.51:6379",
+            "redis://114.215.128.25:6379",
+            # "redis://:wuyongqi123@192.168.11.51:6379",
         ],
         "OPTIONS": {
             # "CLIENT_CLASS": "django_redis.client.DefaultClient",

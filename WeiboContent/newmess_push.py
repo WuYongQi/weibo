@@ -34,14 +34,20 @@ class pushconsumers(BaseMQ.BaseMQ):
         cache.set(self.exchange, body, timeout=30)
 
 
-
 class MyThread(threading.Thread):
     def __init__(self, exchange):
         threading.Thread.__init__(self)
         self.exchange = exchange
+        self.status = False
 
     def run(self):  # 定义每个线程要运行的函数
+        if self.status:
+            raise Exception('This is stop threading.')
         ret = pushconsumers(exchange=self.exchange)
+
+    def stop(self):
+        self.status = True
+
 
 def start(exchange):
     MyThread(exchange=exchange).start()

@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^index/weibocontent\.html', weibocontentviews.weibocontent),  # 未登录微博内容
     url(r'^home\.html$', weibocontentviews.userhome),  # 登录关注好友微博内容
     url(r'^login/', weibocontentviews.login),  # 登录关注好友微博内容
+    url(r'^home/push/mess\.html', weibocontentviews.messpush),  # 推送
+    url(r'^home/upload/pv\.html', weibocontentviews.picture_video),  # 推送
 ]

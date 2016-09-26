@@ -7,9 +7,12 @@ import json
 import pika
 import threading
 from Common.messMQ import BaseMQ
+from Common.messMQ.producers import producers
+from Common.encryption import encryption
 from config import rabbitMQ as rabbitMQconfig
 from config import newmess_status
 from WeiboContent import models_server
+from WeiboContent import push_followers
 
 
 # connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -64,12 +67,27 @@ class consumers(BaseMQ.BaseMQ):
         dicbody = json.loads(strbody)
         print("THis is huidiao callback!!!!!!!!!!!")
         print("callback:", type(dicbody), dicbody)
+
         # 写入数据库
         weibocountentobj = models_server.WeiboContent()
         ret = weibocountentobj.add(dicbody)
         print("callback_ret:", ret)
-        # 检测在线粉丝并推送
 
+        # 检测在线粉丝并推送
+        # 放入以用户命名的队列
+        name = encryption(dicbody['user_id'])
+        producersobj = producers()
+        ret = producersobj.createadd(queue='',
+                                     body=json.dumps({'name': 'test', 'age': 'test'}),
+                                     exchange=name, )
+        if ret:
+            tarhas_list = getattr(push_followers.pushfollowers, dicbody['user_id'], None)
+            if not tarhas_list:
+                setattr(push_followers.pushfollowers, dicbody['user_id'], [name, ])
+            else:
+                list(tarhas_list).append(name)
+            print('tarhas_list', tarhas_list)
+            producersobj.closeconn()
 
 
 """

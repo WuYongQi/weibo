@@ -29,9 +29,13 @@ class producers(BaseMQ.BaseMQ):
         self.connection = pika.BlockingConnection(self.hostconPar)
         self.channel = self.connection.channel()
 
-    def queuedeclare(self, queue):
+    def queuedeclare(self, queue, exchange=''):
         """创建队列"""
-        self.channel.queue_declare(queue=queue)
+        if not exchange:
+            self.channel.queue_declare(queue=queue)
+        else:
+            self.channel.exchange_declare(exchange=exchange, type='fanout')
+        self.channel.basic_qos(prefetch_count=1)
 
     def basicpublish(self, routing_key, body, exchange=''):
         """放入数据"""
@@ -42,7 +46,8 @@ class producers(BaseMQ.BaseMQ):
 
     def createadd(self, queue, body, exchange=''):
         """创建并放入数据"""
-        self.queuedeclare(queue=queue)
+        self.queuedeclare(queue=queue, exchange=exchange)
+        self.channel.basic_qos(prefetch_count=1)
         ret = self.basicpublish(routing_key=queue, body=body, exchange=exchange)
         return ret
 

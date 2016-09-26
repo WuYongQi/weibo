@@ -171,6 +171,13 @@ class UserCollection:
         ret = userinfo_obj.follow_list.all()
         return {"followlen": len(ret), "con": ret}
 
+    def followlistid(self, user_obj):
+        """我的粉丝ID"""
+        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+        ret = list(userinfo_obj.follow_list.values('user_id'))
+        list_id = [item['user_id'] for item in ret]
+        return list_id
+
     def focuslist(self, user_obj):
         """我的关注"""
         userinfo_obj = UserProfile.objects.filter(user=user_obj).first()

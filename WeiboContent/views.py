@@ -1,9 +1,12 @@
 from django.shortcuts import render, render_to_response
 from django.shortcuts import HttpResponse
 
+import os
 import json
 import datetime
 import time
+import shutil
+
 import config
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
@@ -11,8 +14,12 @@ from django.contrib.auth.backends import ModelBackend
 from django.template.context import RequestContext
 
 from Common.messMQ import producers  # 生产者
+from Common.encryption import encryption  # 加密函数
 
 from WeiboContent import models_server
+from WeiboContent import user_file
+from WeiboContent import push_followers
+from WeiboContent import newmess_push
 from WeiboContent.respone import weiborespone
 from WeiboContent.request import weiborequest
 from WeiboContent.respone import userrespone
@@ -20,6 +27,7 @@ from WeiboContent.request import userrequest
 
 from WeiboContent.forms import UserInfoPostForm
 from WeiboContent.forms import NewWeiBo
+from WeiboContent.forms import picturevideoForm
 
 # 消费者夯住
 from WeiboContent import newmess_server
@@ -31,27 +39,31 @@ from WeiboContent import newmess_server
 def index(request):
     obj = models_server.UserCollection()
     ret = obj.is_login(request=request, username="nick", password="nicknick")
-    # print("Ret:", ret.id)
     userid = request.session.get('_auth_user_id')
+    userobj = ModelBackend().get_user(user_id=userid)
     a = ModelBackend().get_user(user_id=userid)
     # print(type(a), a, a.is_active)
     # print(userbackendobj.is_value())
     # print("name:", request.session.get('_auth_user_backend'))
     # print("name:", request.session.get('_auth_user_id'))
     request.session['id_login'] = True
+    print(models_server.UserCollection().followlistid(user_obj=userobj))
+    retdic = {
+        'is_login': True,
+        'user_id': request.session['_auth_user_id'],
+        'followlist': models_server.UserCollection().followlistid(user_obj=userobj),
+    }
     # print("item:", request.session.items())
 
     for i in cache.iter_keys("_auth_user_hash*"):
         print("next_iterkey:", i)
 
-    cache.set(request.session.get('_auth_user_hash'), list(request.session.items()), timeout=30)
-    print("1111", type(cache.get(request.session.get('_auth_user_hash'))),
-          cache.get(request.session.get('_auth_user_hash')))
+    cache.set(userid, retdic, timeout=30)
+    print("1111", type(cache.get(userid)), cache.get(userid))
+    print("11111", cache.get(userid)['is_login'])
 
     models_server.UserCollection().userweibo(a, page=1)
 
-    from WeiboContent.push_followers import pushfollowers
-    pushfollowers(1)
 
     return render(request, 'login_master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
@@ -178,6 +190,7 @@ def userhome(request):
                     obj.closeconn()  # 关闭连接
                     newweiboconresponeobj = weiborespone.newweibocontentrespone(status=True,
                                                                                 message='发布成功',
+                                                                                user_obj=userobj,
                                                                                 connect_dic=weiborequestobj.dic())
                 else:
                     newweiboconresponeobj = weiborespone.newweibocontentrespone(status=False,
@@ -195,3 +208,56 @@ def userhome(request):
         pass
     elif request.method == 'DELETE':
         pass
+
+@login_required
+def picture_video(request):
+    userid = request.session.get('_auth_user_id')
+    userobj = ModelBackend().get_user(user_id=userid)
+    fileobj = user_file.userfile(user_obj=userobj)
+    filepath = fileobj.filepath
+    if userobj:
+        if request.method == 'GET':
+            shutil.rmtree(filepath) if os.path.isdir(filepath) else os.makedirs(filepath)
+
+        elif request.method == 'POST':
+            try:
+                obj = request.FILES.get('PVFile')
+                fileabspath = os.path.join(filepath, encryption(obj.name))
+                f = open(fileabspath, 'wb')
+                for chunk in obj.chunks():
+                    f.write(chunk)
+                f.close()
+                pvfileresponeobj = weiborespone.PVFile(status=True, message='上传成功', filepath=fileabspath)
+            except Exception as e:
+                pvfileresponeobj = weiborespone.PVFile(status=False, message='上传失败', filepath=e)
+            return HttpResponse(json.dumps(pvfileresponeobj.dic()))
+            # formpvret = picturevideoForm(request.POST, request.FILES)
+            # if formpvret.is_valid():
+            #     # upload = models.UploadFile()
+            #     # upload.userid = 1
+            #     uploadfile = formpvret.cleaned_data['PVFile']
+            #     # upload.save()
+            #     print(uploadfile)
+            #     # os.listdir('dirname')列出指定目录下的所有文件和子目录，包括隐藏文件，并以列表方式打印
+            #     # shutil.move(src, dst)  递归移动一个文件或目录到另一个位置，类似于"mv"命令
+
+
+@login_required
+def messpush(request):
+    userid = request.session.get('_auth_user_id')
+    cacheuserdic = cache.get(userid, None)
+    if not cacheuserdic['is_login']:
+        return
+    followidlist = cacheuserdic['followlist']
+    # 找id为队列
+    num = 0
+    for user_id in followidlist:
+        tarhas_list = getattr(push_followers.pushfollowers, str(user_id), None)
+        if not tarhas_list:
+            continue
+        for i in tarhas_list:
+            newmess_push.start(i)
+            num += 1
+    return HttpResponse(json.dumps(str(num)))
+
+

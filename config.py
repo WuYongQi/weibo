@@ -2,6 +2,9 @@
 #-*- coding:utf-8 -*-
 __author__ = 'Nick Suo'
 
+import os
+import sys
+
 # 数据库配置
 DBSetting = {
     'NAME': 'weibodb',
@@ -39,6 +42,7 @@ session = {
 # 修改表时关闭
 newmess_status = True
 
-
+# 当前路径
+PATH = os.path.join(os.path.dirname(__file__))
 
 

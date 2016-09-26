@@ -60,3 +60,7 @@ class NewWeiBo(forms.Form):
     )
 
 
+class picturevideoForm(forms.Form):
+    PVFile = forms.FileField()
+
+

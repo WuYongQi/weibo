@@ -62,18 +62,35 @@ class weibocontentrespone:
 
 
 class newweibocontentrespone:
-    def __init__(self, connect_dic, status=True, message=''):
+    def __init__(self, connect_dic, status=True, message='', user_obj=None):
         self.status = status
         self.message = message
-        # print(connect_dic['user'])
-        # connect_dic['user'] = str(connect_dic['user'])
         self.connect = connect_dic
+        from WeiboContent import models
+        self.user = str(models.UserProfile.objects.filter(user=user_obj).first().name)
+        connect_dic['user'] = self.user
+        print(connect_dic)
 
     def dic(self):
         d = {
             'status': self.status,
             'message': self.message,
             'connect': self.connect,
+        }
+        return d
+
+
+class PVFile:
+    def __init__(self, filepath, status=True, message=''):
+        self.filepath = filepath
+        self.status = status
+        self.message = message
+
+    def dic(self):
+        d = {
+            'filepath': self.filepath,
+            'status': self.status,
+            'message': self.message,
         }
         return d
 

@@ -10,7 +10,7 @@ import config
 class userfile:
     def __init__(self, user_obj):
         self.user_obj = user_obj
-        self.filepath = os.path.join('user', str(self.user_obj.username), 'temp')
+        self.filepath = os.path.join(config.PATH, 'status', 'user', str(self.user_obj.username), 'temp')
 
     def __move_file(self, temp_path, weiboid_path):
         new_path = os.path.join(config.PATH, 'static', 'user', str(self.user_obj.username), 'weibo_img', weiboid_path)

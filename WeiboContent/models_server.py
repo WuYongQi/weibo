@@ -119,7 +119,7 @@ class UserCollection:
             user=self.__is_put(username, email, password),
             name=name,
             email=email,
-            head_img=str(os.path.join('static', 'user', str(username), 'userinfo', head_img)),
+            head_img=str(os.path.join(str(username), 'User_info', head_img)),
             sex=sex,
             age=age,
             brief=brief,

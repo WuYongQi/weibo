@@ -5,6 +5,7 @@ __author__ = 'Nick Suo'
 import json
 import pika
 import threading
+from django.core.cache import cache
 from Common.messMQ import BaseMQ
 from config import rabbitMQ as rabbitMQconfig
 from config import newmess_status
@@ -16,12 +17,13 @@ class pushconsumers(BaseMQ.BaseMQ):
 
     def __init__(self, exchange):
         super(pushconsumers, self).__init__()
+        self.exchange = exchange
         self.connection = pika.BlockingConnection(self.hostconPar)
         self.channel = self.connection.channel()
-        self.channel.exchange_declare(exchange=exchange, type='fanout')
+        self.channel.exchange_declare(exchange=self.exchange, type='fanout')
         self.result = self.channel.queue_declare(exclusive=True)
         self.queue_name = self.result.method.queue
-        self.channel.queue_bind(exchange=exchange, queue=self.queue_name)
+        self.channel.queue_bind(exchange=self.exchange, queue=self.queue_name)
         self.channel.basic_consume(self.callback,
                                    queue=self.queue_name,
                                    no_ack=True)
@@ -29,6 +31,7 @@ class pushconsumers(BaseMQ.BaseMQ):
 
     def callback(self, ch, method, properties, body):
         print(" [x] %r" % body)
+        cache.set(self.exchange, body, timeout=30)
 
 
 

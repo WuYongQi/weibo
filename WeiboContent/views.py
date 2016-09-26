@@ -24,6 +24,7 @@ from WeiboContent.respone import weiborespone
 from WeiboContent.request import weiborequest
 from WeiboContent.respone import userrespone
 from WeiboContent.request import userrequest
+from WeiboContent.respone import pushmessrespone
 
 from WeiboContent.forms import UserInfoPostForm
 from WeiboContent.forms import NewWeiBo
@@ -131,6 +132,7 @@ def login(request):
             if ret:
                 request.session['id_login'] = True
                 loginrespone.status = True
+                return HttpResponse(json.dumps(loginrespone.dic()))
             loginrespone.status = False
             loginrespone.message = "用户名或密码错误"
         else:
@@ -211,6 +213,7 @@ def userhome(request):
 
 @login_required
 def picture_video(request):
+    """图片视频上传视图"""
     userid = request.session.get('_auth_user_id')
     userobj = ModelBackend().get_user(user_id=userid)
     fileobj = user_file.userfile(user_obj=userobj)
@@ -218,46 +221,49 @@ def picture_video(request):
     if userobj:
         if request.method == 'GET':
             shutil.rmtree(filepath) if os.path.isdir(filepath) else os.makedirs(filepath)
-
+            return HttpResponse('ok')
         elif request.method == 'POST':
             try:
                 obj = request.FILES.get('PVFile')
-                fileabspath = os.path.join(filepath, encryption(obj.name))
+                fileabspath = os.path.join(filepath, encryption(obj.name), '.', str(obj.name).split('.')[-1])
                 f = open(fileabspath, 'wb')
                 for chunk in obj.chunks():
                     f.write(chunk)
                 f.close()
-                pvfileresponeobj = weiborespone.PVFile(status=True, message='上传成功', filepath=fileabspath)
+                pvfileresponeobj = weiborespone.PVFile(status=True, message='上传成功',
+                                                       filepath=str(fileabspath).split('user')[-1])
             except Exception as e:
-                pvfileresponeobj = weiborespone.PVFile(status=False, message='上传失败', filepath=e)
+                pvfileresponeobj = weiborespone.PVFile(status=False, message='上传失败', filepath=str(e))
             return HttpResponse(json.dumps(pvfileresponeobj.dic()))
-            # formpvret = picturevideoForm(request.POST, request.FILES)
-            # if formpvret.is_valid():
-            #     # upload = models.UploadFile()
-            #     # upload.userid = 1
-            #     uploadfile = formpvret.cleaned_data['PVFile']
-            #     # upload.save()
-            #     print(uploadfile)
-            #     # os.listdir('dirname')列出指定目录下的所有文件和子目录，包括隐藏文件，并以列表方式打印
-            #     # shutil.move(src, dst)  递归移动一个文件或目录到另一个位置，类似于"mv"命令
 
 
 @login_required
 def messpush(request):
+    """心跳视图"""
+    pushmessresponeobj = pushmessrespone.pushmessrespone(count='')
     userid = request.session.get('_auth_user_id')
     cacheuserdic = cache.get(userid, None)
     if not cacheuserdic['is_login']:
-        return
+        pushmessresponeobj.status = False
+        pushmessresponeobj.message = "没登录"
+        return HttpResponse(json.dumps(pushmessresponeobj.dic()))
     followidlist = cacheuserdic['followlist']
     # 找id为队列
     num = 0
+    li = []
     for user_id in followidlist:
         tarhas_list = getattr(push_followers.pushfollowers, str(user_id), None)
         if not tarhas_list:
             continue
         for i in tarhas_list:
             newmess_push.start(i)
-            num += 1
-    return HttpResponse(json.dumps(str(num)))
+            cachedic = cache.get(i, None)
+            if cachedic:
+                num += 1
+                li.append(cacheuserdic)
+    pushmessresponeobj.status = True
+    pushmessresponeobj.num = str(num)
+    pushmessresponeobj.count = li
+    return HttpResponse(json.dumps(pushmessresponeobj.dic()))
 
 

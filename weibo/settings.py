@@ -160,11 +160,18 @@ if sessionconfig['status']:
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://:wuyongqi123@192.168.1.108:6379",
-        # "LOCATION": "redis://114.215.128.25:6379",
+        # "LOCATION": "redis://:wuyongqi123@192.168.1.108:6379",
+        # "LOCATION": "redis://144.48.127.122:6379",
+        "LOCATION": [
+            # "redis://114.215.128.25:6379",
+            "redis://:wuyongqi123@192.168.11.51:6379",
+        ],
         "OPTIONS": {
             # "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {"max_connections": 100}  # 连接池
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},     # 连接池
+            # "PARSER_CLASS": "redis.connection.HiredisParser",       # hiredis解释器
+            # 2 apt-get install python-dev  3 apt-get install python3-dev
+            # easy_install hiredis
         }
     }
 }

@@ -8,6 +8,7 @@ import pika
 import threading
 from Common.messMQ import BaseMQ
 from config import rabbitMQ as rabbitMQconfig
+from config import newmess_status
 from WeiboContent import models_server
 
 
@@ -67,6 +68,8 @@ class consumers(BaseMQ.BaseMQ):
         weibocountentobj = models_server.WeiboContent()
         ret = weibocountentobj.add(dicbody)
         print("callback_ret:", ret)
+        # 检测在线粉丝并推送
+
 
 
 """
@@ -83,5 +86,6 @@ class MyThread(threading.Thread):
     def run(self):  # 定义每个线程要运行的函数
         consumers(queue=rabbitMQconfig['New_weibo'])
 
-MyThread().start()
+if newmess_status:
+    MyThread().start()
 

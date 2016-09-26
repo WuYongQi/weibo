@@ -38,22 +38,22 @@ def index(request):
     # print(userbackendobj.is_value())
     # print("name:", request.session.get('_auth_user_backend'))
     # print("name:", request.session.get('_auth_user_id'))
-    # request.session['id_login'] = True
+    request.session['id_login'] = True
     # print("item:", request.session.items())
 
-    # cache.set(request.session.get('_auth_user_hash'), list(request.session.items()), timeout=30)
-    # print("1111", type(cache.get(request.session.get('_auth_user_hash'))),
-    #       cache.get(request.session.get('_auth_user_hash')))
+    for i in cache.iter_keys("_auth_user_hash*"):
+        print("next_iterkey:", i)
+
+    cache.set(request.session.get('_auth_user_hash'), list(request.session.items()), timeout=30)
+    print("1111", type(cache.get(request.session.get('_auth_user_hash'))),
+          cache.get(request.session.get('_auth_user_hash')))
 
     models_server.UserCollection().userweibo(a, page=1)
 
-    f = NewWeiBo(request.GET)
-    print(f)
-    print(f.is_valid())
-    print(f.cleaned_data)
-    print(f.errors)
+    from WeiboContent.push_followers import pushfollowers
+    pushfollowers(1)
 
-    return render(request, 'indextest.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
+    return render(request, 'login_master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
 
 # @login_required
@@ -175,7 +175,7 @@ def userhome(request):
                 obj = producers.producers()
                 ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps(weiborequestobj.dic()))
                 if ret:
-                    obj.closeconn()   # 关闭连接
+                    obj.closeconn()  # 关闭连接
                     newweiboconresponeobj = weiborespone.newweibocontentrespone(status=True,
                                                                                 message='发布成功',
                                                                                 connect_dic=weiborequestobj.dic())
@@ -195,4 +195,3 @@ def userhome(request):
         pass
     elif request.method == 'DELETE':
         pass
-

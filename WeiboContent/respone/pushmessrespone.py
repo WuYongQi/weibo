@@ -3,6 +3,9 @@
 __author__ = 'Nick Suo'
 
 
+import json
+
+
 class pushmessrespone:
 
     def __init__(self, count, num=0, status=True, message=''):
@@ -18,4 +21,8 @@ class pushmessrespone:
             'status': self.status,
             'message': self.message,
         }
+        return d
+
+
+
 

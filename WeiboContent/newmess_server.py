@@ -75,11 +75,14 @@ class consumers(BaseMQ.BaseMQ):
 
         # 检测在线粉丝并推送
         # 放入以用户命名的队列
-        name = encryption(dicbody['user_id'])
+        name = str(dicbody['user_id']) + 'mq'
+
         producersobj = producers()
         ret = producersobj.createadd(queue='',
-                                     body=json.dumps({'name': 'test', 'age': 'test'}),
+                                     body=json.dumps(dicbody),
                                      exchange=name, )
+        producersobj.closeconn()
+
         if ret:
             tarhas_list = getattr(push_followers.pushfollowers, dicbody['user_id'], None)
             if not tarhas_list:
@@ -87,7 +90,23 @@ class consumers(BaseMQ.BaseMQ):
             else:
                 list(tarhas_list).append(name)
             print('tarhas_list', tarhas_list)
-            producersobj.closeconn()
+
+
+        # connection = pika.BlockingConnection(pika.ConnectionParameters(
+        #     host=rabbitMQconfig['host']))
+        # channel = connection.channel()
+        #
+        # channel.exchange_declare(exchange=name,
+        #                          type='fanout')
+        #
+        # channel.basic_publish(exchange=name,
+        #                       routing_key='',
+        #                       body=json.dumps(dicbody))
+        # print(" [x] Sent %rxxxxxxxxxxx" % json.dumps(dicbody))
+        # connection.close()
+
+
+
 
 
 """

@@ -8,15 +8,18 @@ from Common import time_conversion
 from Common import singleton
 
 from django.db.models import Count, Min, Max, Sum
+from django.db.models import Q
+from django.db.models import F
+
 from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate
+
 from WeiboContent.models import Comment
 from WeiboContent.models import Weibo
 from WeiboContent.models import UserProfile
 from WeiboContent.models import Tags
-
-from django.contrib.auth import login
-from django.contrib.auth import logout
-from django.contrib.auth import authenticate
 
 
 @singleton.singleton
@@ -165,6 +168,11 @@ class UserCollection:
         tag = Tags.objects.create(name=name)
         return tag
 
+    def mymess(self, user_obj):
+        """个人信息"""
+        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+        return userinfo_obj
+
     def followlist(self, user_obj):
         """我的粉丝"""
         userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
@@ -172,10 +180,13 @@ class UserCollection:
         return {"followlen": len(ret), "con": ret}
 
     def followlistid(self, user_obj):
-        """我的粉丝ID"""
+        """我的粉丝USERINFOID"""
         userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
-        ret = list(userinfo_obj.follow_list.values('user_id'))
-        list_id = [item['user_id'] for item in ret]
+        # ret = list(userinfo_obj.follow_list.values('user_id'))
+        retuserinfo = userinfo_obj.follow_list.values('user')
+        ret = UserProfile.objects.filter(user_id__in=[item['user'] for item in retuserinfo]).values('id')
+        list_id = [item['id'] for item in ret]
+        print(list_id)
         return list_id
 
     def focuslist(self, user_obj):
@@ -204,7 +215,53 @@ class UserCollection:
                    (int(page) * 10 if int(page) != 1 else 0):int(page) * 20]
 
         # 赞个数
-        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1)\
+        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
+            .values('to_weibo').annotate(fav_conut=Count('id'))
+        # 评论个数
+        comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
+            .values('to_weibo').annotate(com_conut=Count('id'))
+        # 转发个数
+        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from__in=list(obj_list), wb_type=1) \
+            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
+
+        return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
+
+
+class Searchall:
+    """搜索类"""
+    def __init__(self):
+        pass
+
+    def add(self, adddic):
+        # {
+        #     'connector': 'AND'/'OR',
+        #     'count': [('id', 1), ('id', 1), ]
+        # }
+        con = Q()
+        q1 = Q()
+        q1.connector = adddic['connector']
+        for item in adddic['count']:
+            q1.children.append(item)
+
+        con.add(q1, 'AND')
+        return con
+
+    def name(self, searchtext):
+        # addoneobj is self.addobj()
+        retlist = []
+        # retlist.append(UserProfile.objects.filter(name=searchtext).first())
+        # retlist.extend(list(UserProfile.objects.filter(name__istartswith=searchtext).all()))
+        retlist.extend(list(UserProfile.objects.filter(name__icontains=searchtext).all()))
+        return retlist
+
+    def weibo(self, searchtext):
+        obj_list = []
+        # retlist.append(Weibo.objects.filter(text=searchtext).first())
+        # retlist.extend(list(Weibo.objects.filter(text__istartswith=searchtext).all()))
+        obj_list.extend(list(Weibo.objects.filter(text__icontains=searchtext).all()))
+
+        # 赞个数
+        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
             .values('to_weibo').annotate(fav_conut=Count('id'))
         # 评论个数
         comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
@@ -217,5 +274,8 @@ class UserCollection:
 
 
 
+# news=New.objects.filter(Q(question__startswith='What'))
+# Q(  ~Q(pub_date__year=2005    否定
+# Poll.objects.get(Q(question__startswith='Who'),Q(pub_date=date(2005, 5, 6)))
 
 

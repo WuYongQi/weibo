@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -145,8 +146,6 @@ from config import session as sessionconfig
 if sessionconfig['status']:
     SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies' if sessionconfig['encryption'] \
         else 'redis_sessions.session'
-    # SESSION_ENGINE = 'redis_sessions.session'
-    # SESSION_REDIS_HOST = '114.215.128.25'
     SESSION_REDIS_HOST = sessionconfig['host']
     SESSION_REDIS_PORT = sessionconfig['port']
     SESSION_REDIS_DB = sessionconfig['DB']
@@ -163,7 +162,7 @@ CACHES = {
         # "LOCATION": "redis://:wuyongqi123@192.168.1.108:6379",
         # "LOCATION": "redis://144.48.127.122:6379",
         "LOCATION": [
-            "redis://114.215.128.25:6379",
+            "redis://:wuyongqi123@144.48.127.122:6379",
             # "redis://:wuyongqi123@192.168.11.51:6379",
         ],
         "OPTIONS": {

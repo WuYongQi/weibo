@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+{#    <link href="/Static/css/iconfont.css" rel="stylesheet">#}
+{#    <link href="/Static/css/demo.css" rel="stylesheet">#}
     <link href="/Static/css/index_2.css" rel="stylesheet">
+    <link href="/Static/css/jquery.sinaEmotion.css" rel="stylesheet">
+    <script src="/Static/jQuery/jquery-1.12.4.js"></script>
+    <script src="/Static/jQuery/jquery.sinaEmotion.js"></script>
 </head>
 <body>
 {% csrf_token %}
@@ -16,10 +21,10 @@
             <span class="Seek_img"></span>
         </div>
         <ul class="Navigation">
-            <li class="title_interval"><a href="javascript:(0)"><span class="Home_img"></span>首页</a></li>
-            <li class="title_interval"><a href="javascript:(0)"><span class="Video_img"></span>视频</a></li>
-            <li class="title_interval"><a href="javascript:(0)"><span class="Find_img"></span>发现</a></li>
-            <li class="title_interval"><a href="javascript:(0)"><span class="Game_img"></span>游戏</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe607;</em>首页</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe612;</em>视频</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe617;</em>发现</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe618;</em>游戏</a></li>
             <li class="Login_Regist"><span><a href="javascript:(0)">注册</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span><a href="javascript:(0)">登录</a></span></li>
         </ul>
     </div>
@@ -137,45 +142,69 @@
                         <textarea id="Release_text"  class="Content_center_input_index" ></textarea>
                     </div>
                     <div class="Content_center_input_bq">
-                        <span class="Content_center_input_biaoq">表情</span>
-                        <span class="Content_center_input_img">图片</span>
-                        <span class="Content_center_input_video">视频</span>
-                        <span class="Content_center_input_ht">话题</span>
-                        <span class="Content_center_input_tt">头条</span>
+                        <span class="Content_center_input_biaoq" id="face">
+                            <span style="color: #ff9000;font-weight: bold" class="iconfont_weibo">&#xe60b;</span>
+                            <span class="option_wb" style="margin-right: 15px">表情</span>
+                        </span>
+                        <span class="Content_center_input_img" id="prcuter_one" multiple>
+                            <span style="color: #72a305;font-weight: bold" class="iconfont_weibo">&#xe60d;</span>
+                            <input type="file" class="hide" id="upload_zp">
+                            <span class="option_wb">图片</span>
+                        </span>
+                        <span class="Content_center_input_video">
+                            <span style="color: #4d607c;font-weight: bold" class="iconfont_weibo">&#xe612;</span>
+                            <span class="option_wb">视频</span>
+                        </span>
+                        <span class="Content_center_input_ht">
+                            <span style="color: #4579d8;font-weight: bold" class="iconfont_weibo">&#xe60c;</span>
+                            <span class="option_wb">话题</span>
+                        </span>
+                        <span class="Content_center_input_tt">
+                            <span style="color: #ff6600;font-weight: bold" class="iconfont_weibo">&#xe610;</span>
+                            <span class="option_wb">头条文章</span>
+                        </span>
                     </div>
+                    <button class="W_btn_a" onclick="Release()" diss-data="module=stissue" node-type="submit" style="color:#fff " title="发布微博按钮">发布</button>
                     <div class="Content_center_input_fb">
-                        <span class="Content_center_input_fb_qx">公开</span>
-                        <em class="W_ficon ficon_arrow_down S_ficon">c</em>
-                        <a class="W_btn_a" onclick="Release()" diss-data="module=stissue" node-type="submit" style="color:#fff " title="发布微博按钮">发布</a>
+{#                        <div style="overflow: hidden;width: 45px;display: inline-block">#}
+{#                            <select style="border: 0;outline: none;">#}
+{#                                <option value="0">公开</option>#}
+{#                                <option value="1">好友圈</option>#}
+{#                                <option value="2">仅自己可见</option>#}
+{#                                <option value="3">群可见</option>#}
+{#                            </select>#}
+{#                        </div>#}
+                        <span class="Content_center_input_fb_qx ">公开</span>
+                        <em class="W_ficon ficon_arrow_down S_ficon iconfont_info">&#xe619;</em>
                     </div>
                 </div>
 
             </ul>
-        </div>
-    </div>
-    <div>
-        <span  class="Content_input_right_top"></span>
-        <span class="Content_input_right_top2"></span>
-        <span class="Content_center_right_top_img"></span>
-        <ul class="Content_center_vip_lv_name">
-            <li><a class="Content_center_right_name">碗里的柠檬</a></li>
-            <li><span class="Content_center_right_vip"/></li>
-{#            <li><span class="Content_center_right_lv"/></li>#}
-            <li><span class="Content_center_right_lv" title="微博等级4">Lv 4</span></li>
-        </ul>
-        <div class="Content_center_guanzhu_fans_weibo" style="display: inline;">
-            <ul class="Content_center_guanzhu">
-                <li><a class="Content_center_guanzhu_num">133</a></li>
-                <li><a class="Content_center_guanzhu_hanzi">关注</a></li>
-            </ul>
-            <ul class="Content_center_fans">
-                <li><a class="Content_center_fans_num">1</a></li>
-                <li><a class="Content_center_fans_hanzi">粉丝</a></li>
-            </ul>
-            <ul class="Content_center_weibo">
-                <li><a class="Content_center_weibo_num">13</a></li>
-                <li><a class="Content_center_weibo_hanzi">微博</a></li>
-            </ul>
+            <div class=" Content_input_right_top_all_SLQ">
+                <span  class="Content_input_right_top"></span>
+                <span class="Content_input_right_top2"></span>
+                <span class="Content_center_right_top_img"></span>
+                <ul class="Content_center_vip_lv_name">
+                    <li><a class="Content_center_right_name">碗里的柠檬</a></li>
+                    <li><span class="Content_center_right_vip"/></li>
+                    <li><span class="Content_center_right_lv"/></li>
+                    <li><span class="Content_center_right_lv" title="微博等级4">Lv 4</span></li>
+                </ul>
+                <div class="Content_center_guanzhu_fans_weibo" style="display: inline;">
+                    <ul class="Content_center_guanzhu">
+                        <li><a class="Content_center_guanzhu_num">133</a></li>
+                        <li><a class="Content_center_guanzhu_hanzi">关注</a></li>
+                    </ul>
+                    <ul class="Content_center_fans">
+                        <li><a class="Content_center_fans_num">1</a></li>
+                        <li><a class="Content_center_fans_hanzi">粉丝</a></li>
+                    </ul>
+                    <ul class="Content_center_weibo">
+                        <li><a class="Content_center_weibo_num">13</a></li>
+                        <li><a class="Content_center_weibo_hanzi">微博</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <div class="Content_center_backround">
@@ -188,14 +217,16 @@
             <li><a href="">文章</a></li>
         </ul>
     </div>
-    <script src="/Static/jQuery/jquery-1.12.4.js"></script>
+    <div></div>
     <script src="/Static/jQuery/jquery.cookie.js"></script>
     <script src="/Static/jQuery/Custom_JQ.js"></script>
     <script>
         $(function(){
-            Hot_search()
+            $('#face').SinaEmotion($('#Release_text'));
+            Hot_search();
             Request_content()
         })
+		var time = setInterval(move, 30000);
     </script>
 </body>
 </html>

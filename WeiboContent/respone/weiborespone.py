@@ -39,9 +39,9 @@ class weibocontentrespone:
             "video": item.video_link_id,
             "forward": str(item.forward_or_collect_from.user) if item.forward_or_collect_from else 0,    # url
             "to_weibo": item.id,
-            "fav_conut": 0,
-            "com_conut": 0,
-            "for_conut": 0,
+            "fav_count": 0,
+            "com_count": 0,
+            "for_count": 0,
         }
         # 赞个数
         for item in self.favor_list:

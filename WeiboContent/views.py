@@ -26,6 +26,7 @@ from WeiboContent.respone import userrespone
 from WeiboContent.request import userrequest
 from WeiboContent.respone import pushmessrespone
 from WeiboContent.respone import sessionrespone
+from WeiboContent.respone import searchrespone
 
 from WeiboContent.forms import UserInfoPostForm
 from WeiboContent.forms import NewWeiBo
@@ -39,8 +40,8 @@ from WeiboContent import newmess_server
 
 
 def index(request):
-    obj = models_server.UserCollection()
-    ret = obj.is_login(request=request, username="nick", password="nicknick")
+    # obj = models_server.UserCollection()
+    # ret = obj.is_login(request=request, username="nick", password="nicknick")
     userid = request.session.get('_auth_user_id')
     if not userid:
         return render(request, 'master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
@@ -52,28 +53,28 @@ def index(request):
         elif not cacheret['is_login']:
             return render(request, 'master.html',
                           {"ti": time.time(), 'context_instance': RequestContext(request)})
-    userobj = ModelBackend().get_user(user_id=userid)
-    a = ModelBackend().get_user(user_id=userid)
+    # userobj = ModelBackend().get_user(user_id=userid)
+    # a = ModelBackend().get_user(user_id=userid)
     # print(type(a), a, a.is_active)
     # print(userbackendobj.is_value())
     # print("name:", request.session.get('_auth_user_backend'))
     # print("name:", request.session.get('_auth_user_id'))
-    request.session['id_login'] = True
-    print(models_server.UserCollection().followlistid(user_obj=userobj))
-    retdic = {
-        'is_login': True,
-        'user_id': request.session['_auth_user_id'],
-        'followlist': models_server.UserCollection().followlistid(user_obj=userobj),
-    }
+    # request.session['id_login'] = True
+    # print(models_server.UserCollection().followlistid(user_obj=userobj))
+    # retdic = {
+    #     'is_login': True,
+    #     'user_id': request.session['_auth_user_id'],
+    #     'followlist': models_server.UserCollection().followlistid(user_obj=userobj),
+    # }
     # print("item:", request.session.items())
     # for i in cache.iter_keys("_auth_user_hash*"):
     #     print("next_iterkey:", i)
 
-    cache.set(userid, retdic, timeout=30)
-    print("1111", type(cache.get(userid)), cache.get(userid))
-    print("11111", cache.get(userid)['is_login'])
+    # cache.set(userid, retdic, timeout=30)
+    # print("1111", type(cache.get(userid)), cache.get(userid))
+    # print("11111", cache.get(userid)['is_login'])
 
-    models_server.UserCollection().userweibo(a, page=1)
+    # models_server.UserCollection().userweibo(a, page=1)
 
 
     return render(request, 'login_master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
@@ -153,7 +154,9 @@ def login(request):
                 request.session['id_login'] = True
                 loginrespone.status = True
                 sessionrequestobj = sessionrespone.sessionrespone(user_id=user_id)
-                cache.set(user_id, sessionrequestobj.dic(), timeout=30)
+                cache.set(user_id, sessionrequestobj.dic(), timeout=60 * 3)
+                usercollobj = models_server.UserCollection()
+                newmess_push.start('%s%s' % (str(usercollobj.mymess(ModelBackend().get_user(user_id=user_id)).id), 'mq'))
             else:
                 loginrespone.status = False
                 loginrespone.message = "用户名或密码错误"
@@ -186,14 +189,14 @@ def login(request):
 def userhome(request):
     if request.method == 'GET':
         """登录后首页内容"""
-        obj = models_server.UserCollection()
-        ret = obj.is_login(request=request, username="nick", password="nicknick")
+        # obj = models_server.UserCollection()
+        # ret = obj.is_login(request=request, username="nick", password="nicknick")
 
         userid = request.session.get('_auth_user_id', None)
         userobj = ModelBackend().get_user(user_id=userid)
         usercollectionobj = models_server.UserCollection()
         page = request.GET.get('home') if request.GET.get('home', None) else 1
-        content_list, favor_list, comments_list, forwarding_conut = usercollectionobj.userweibo(ret, page=page)
+        content_list, favor_list, comments_list, forwarding_conut = usercollectionobj.userweibo(userobj, page=page)
         con_obj = weiborespone.weibocontentrespone(content_list=content_list,
                                                    favor_list=favor_list,
                                                    comments_list=comments_list,
@@ -209,11 +212,22 @@ def userhome(request):
             if formnewweiboret.is_valid():
                 data_dic = formnewweiboret.cleaned_data
                 data_dic['user'] = userobj
+                # 文件处理
+                filepath = user_file.userfile(user_obj=userobj).filepath
+                data_path = filepath.split('user')[1]
+                if os.path.isdir(filepath):
+                    if len(os.listdir(filepath)) != 0:
+                        img = []
+                        for item in os.listdir(filepath):
+                            img.append(os.path.join(data_path, item))
+                        data_dic['pictures'] = json.dumps(img)
+                    shutil.rmtree(filepath)
                 weiborequestobj = weiborequest.newweibocontentrequest(**data_dic)
                 # 加队列返回
                 print(weiborequestobj.dic())
                 obj = producers.producers()
-                ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps(weiborequestobj.dic()))
+                ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps(weiborequestobj.dicadd()))
+
                 if ret:
                     obj.closeconn()  # 关闭连接
                     newweiboconresponeobj = weiborespone.newweibocontentrespone(status=True,
@@ -247,12 +261,17 @@ def picture_video(request):
     filepath = fileobj.filepath
     if userobj:
         if request.method == 'GET':
-            shutil.rmtree(filepath) if os.path.isdir(filepath) else os.makedirs(filepath)
+            if os.path.isdir(filepath):
+                shutil.rmtree((filepath))
+                os.makedirs(filepath)
+            else:
+                os.makedirs(filepath)
             return HttpResponse('ok')
         elif request.method == 'POST':
             try:
                 obj = request.FILES.get('PVFile')
-                fileabspath = os.path.join(filepath, encryption(obj.name), '.', str(obj.name).split('.')[-1])
+                fileabspath = os.path.join(filepath,
+                                           '%s%s%s' % (encryption(obj.name), '.', str(obj.name).split('.')[-1]))
                 f = open(fileabspath, 'wb')
                 for chunk in obj.chunks():
                     f.write(chunk)
@@ -267,30 +286,53 @@ def picture_video(request):
 @login_required
 def messpush(request):
     """心跳视图"""
-    pushmessresponeobj = pushmessrespone.pushmessrespone(count='')
     userid = request.session.get('_auth_user_id', None)
     cacheuserdic = cache.get(userid, None)
     if not cacheuserdic['is_login']:
-        pushmessresponeobj.status = False
-        pushmessresponeobj.message = "登录超时，请重新登录"
+        pushmessresponeobj = pushmessrespone.pushmessrespone(count='',
+                                                             status=False,
+                                                             message="登录超时，请重新登录")
         return HttpResponse(json.dumps(pushmessresponeobj.dic()))
-    followidlist = cacheuserdic['followlist']   # 关注的人ID
-    num = 0     # 个数初始化
-    li = []     # [{},{},]
+    followidlist = cacheuserdic['followlist']  # 关注的人ID
+    num = 0  # 个数初始化
+    li = []  # [{},{},]
     for user_id in followidlist:
-        tarhas_list = getattr(push_followers.pushfollowers, str(user_id), None)
-        if not tarhas_list:
-            continue
-        for i in tarhas_list:
-            newmess_push.start(i)
-            cachedic = cache.get(i, None)
-            print(cachedic)
-            if cachedic:
-                num += 1
-                li.append(cacheuserdic)
-    pushmessresponeobj.status = True
-    pushmessresponeobj.num = str(num)
-    pushmessresponeobj.count = li
+        cachedic = cache.get('%s%s' % (user_id, 'mq'), None)
+        if cachedic:
+            num += 1
+            li.append(str(cachedic, encoding='utf8'))
+    pushmessresponeobj = pushmessrespone.pushmessrespone(count=li,
+                                                         status=True,
+                                                         message="",
+                                                         num=num)
     return HttpResponse(json.dumps(pushmessresponeobj.dic()))
 
+
+def searchall(request):
+    """搜索视图"""
+    if request.method == 'GET':
+        searchtype = request.GET.get('type', None)
+        searchtext = request.GET.get('text', None)
+        searchallobj = models_server.Searchall()
+
+        if searchtype == 'user':
+            ret = searchallobj.name(searchtext)
+            if ret:
+                searchresponeobj = searchrespone.searchrespone(ret)
+                return HttpResponse(json.dumps(searchresponeobj.dic()))
+        else:
+            content_list, favor_list, comments_list, forwarding_conut = searchallobj.weibo(searchtext)
+
+            con_obj = weiborespone.weibocontentrespone(content_list=content_list,
+                                                       favor_list=favor_list,
+                                                       comments_list=comments_list,
+                                                       forwarding_conut=forwarding_conut)
+            return HttpResponse(json.dumps(con_obj.con_dic))
+
+
+text_url = open(os.path.join(os.path.dirname(os.path.dirname(__file__)),'static','img','BQ_Url','emotions.json'),encoding='utf-8').read()
+@login_required
+def Expression_processing(req):
+    """QQ表情"""
+    return HttpResponse(text_url)
 

@@ -32,8 +32,10 @@ class producers(BaseMQ.BaseMQ):
     def queuedeclare(self, queue, exchange=''):
         """创建队列"""
         if not exchange:
+            print("not fanout///")
             self.channel.queue_declare(queue=queue)
         else:
+            print("fanout///")
             self.channel.exchange_declare(exchange=exchange, type='fanout')
         self.channel.basic_qos(prefetch_count=1)
 

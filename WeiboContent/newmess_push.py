@@ -31,26 +31,48 @@ class pushconsumers(BaseMQ.BaseMQ):
 
     def callback(self, ch, method, properties, body):
         print(" [x] %r" % body)
-        cache.set(self.exchange, body, timeout=30)
+        cache.set(self.exchange, body, timeout=60*5)
 
 
 class MyThread(threading.Thread):
     def __init__(self, exchange):
         threading.Thread.__init__(self)
         self.exchange = exchange
-        self.status = False
 
     def run(self):  # 定义每个线程要运行的函数
-        if self.status:
-            raise Exception('This is stop threading.')
+        print("run...", self.exchange)
         ret = pushconsumers(exchange=self.exchange)
-
-    def stop(self):
-        self.status = True
 
 
 def start(exchange):
-    MyThread(exchange=exchange).start()
+    tobj = MyThread(exchange=exchange)
+    tobj.start()
+    # connection = pika.BlockingConnection(pika.ConnectionParameters(
+    #     host=rabbitMQconfig['host']))
+    # channel = connection.channel()
+    #
+    # channel.exchange_declare(exchange=exchange,
+    #                          type='fanout')
+    #
+    # result = channel.queue_declare(exclusive=True)
+    # queue_name = result.method.queue
+    #
+    # channel.queue_bind(exchange=exchange,
+    #                    queue=queue_name)
+    #
+    # print(' [*] Waiting for logs. To exit press CTRL+C')
+    #
+    # def callback(ch, method, properties, body):
+    #     print(" [x] %r" % body)
+    #     print("boddddyy", exchange)
+    #
+    #     cache.set(exchange, body, timeout=60 * 5)
+    #
+    # channel.basic_consume(callback,
+    #                       queue=queue_name,
+    #                       no_ack=True)
+    #
+    # channel.start_consuming()
 
 
 

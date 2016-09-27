@@ -32,17 +32,17 @@ session = {
     # 'host': '192.168.11.51',
     'port': '6379',
     'DB': 0,
-    'passwd': '',
-    # 'passwd': 'wuyongqi123',
+    # 'passwd': '',
+    'passwd': 'wuyongqi123',
     'name': 'xja9sqa9sniul8',
-    'time_out': 20,      # 单位秒
+    'time_out': 60*3,      # 单位秒
 }
 
 # 消费者线程
 # 修改表时关闭
 newmess_status = True
 
-# 当前路径
+# 当前路径,务改
 PATH = os.path.join(os.path.dirname(__file__))
 
 

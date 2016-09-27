@@ -80,7 +80,7 @@ def index(request):
     return render(request, 'login_master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
 
-@login_required
+
 def weibocontent(request):
     """微博内容视图"""
     if request.method == 'GET':
@@ -306,6 +306,16 @@ def messpush(request):
                                                          message="",
                                                          num=num)
     return HttpResponse(json.dumps(pushmessresponeobj.dic()))
+
+
+def searchtml(request):
+    """返回搜索页面视图"""
+    userid = request.session.get('_auth_user_id', None)
+    cacheuserdic = cache.get(userid, None)
+    if not cacheuserdic or not cacheuserdic['is_login']:
+        return render(request, 'search_no_login.html', {'context_instance': RequestContext(request)})
+    else:
+        return render(request, 'search.html', {'context_instance': RequestContext(request)})
 
 
 def searchall(request):

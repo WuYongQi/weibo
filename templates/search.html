@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>微博搜索</title>
+    <link rel = 'icon' href="/Static/img/favicon.ico">
+    <link href="/Static/css/search/search.css" rel="stylesheet">
+</head>
+<body>
+        <div class="index_head clearfix">
+        <span class="logo_img"></span>
+        <div class="index_seek">
+            <span id="Hot_search" onfocus="" onchange="" style="font-size: 6px;"></span>
+            <input type="text" name="seek" >
+            <a title="搜索"></a>
+            <span class="Seek_img"></span>
+        </div>
+        <ul class="Navigation">
+            <li class="title_interval"><a href="javascript:(0)"><span class="Home_img"></span>首页</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><span class="Video_img"></span>视频</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><span class="Find_img"></span>发现</a></li>
+            <li class="title_interval"><a href="javascript:(0)"><span class="Game_img"></span>游戏</a></li>
+            <li class="Login_Regist"><span><a href="javascript:(0)">注册</a></span>&nbsp;|&nbsp;<span><a href="javascript:(0)">登录</a></span></li>
+        </ul>
+    </div>
+    <div class="bottom_tools" style="bottom: 40px;">
+        <a id="scrollUp" href="javascript:;" title="飞回顶部" style="display: none;"></a>
+    </div>
+    <div class="head"></div>
+    <div class="pg_body">
+
+    <div class="w">
+        <div class="body_head_L">
+            <a class="search_logo"></a>
+            <div class="search_tags">
+                <ul>
+                    <li><img src="/Static/img/search_logo.png"></li>
+                    <li><a href="">综合</a></li>
+                    <li><a href="">找人</a></li>
+                    <li><a href="">图片</a></li>
+                    <li><a href="">兴趣综合</a></li>
+                </ul>
+            </div>
+
+            <input type="text" id="text" class="search_input"/>
+            <a class="search_butten" id="search_butten">搜索</a>
+
+            <ul class="search_qita">
+                <li><a href="#">高级搜索</a></li>
+                <li><a href="#">设置</a></li>
+                <li><a href="#">帮助</a></li>
+            </ul>
+        </div>
+        <div class="search_body_L">
+            <ul id="ulcount">
+                <li>
+                    <div class="search_body_L_flag">
+                    <img class="search_user_img" src="/Static/userinfo_img/66134906jw8f6vdbrm831j20e80e70sz.jpg">
+                        <a  href="" class="search_user_name" >陈乔恩</a>
+                        <a href="" class="search_user_V"></a>
+                        <span class="search_user_sex"></span>
+                        <span class="search_user_address"> 台湾
+                            <a href="http://weibo.com/chenchiaoen"> http://weibo.com/chenchiaoen</a>
+                            <span class="search_user_job">演员</span>
+                            <span class="search_user_inf">关注 450  |  粉丝 5265万  |  微博 4284 </span>
+                            <a class="search_user_trends">最近微博:</a><span>.......</span>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="search_body_R">
+            <a class="search_R_title_L">相关兴趣主页</a>
+            <div class="search_R_fisrt_title">
+                <img class="search_R_title_img_first_SLQ"
+                     src="/Static/userinfo_img/66134906jw8f6vdbrm831j20e80e70sz.jpg"/>
+                <a  href="" class="search_R_user_name_first_SLQ" >陈乔恩</a>
+                <a href="" class="search_R_user_V_first_SLQ"></a>
+                <span class="search_R_user_from_first_SLQ"> 台湾</span>
+            </div>
+            <div class="search_R_two_title">
+                    <img class="search_R_title_img_first_SLQ"
+                         src="/Static/userinfo_img/66134906jw8f6vdbrm831j20e80e70sz.jpg"/>
+                    <a  href="" class="search_R_user_name_first_SLQ" >陈乔恩</a>
+                    <a href="" class="search_R_user_V_first_SLQ"></a>
+                    <span class="search_R_user_from_first_SLQ"> 台湾</span>
+            </div>
+             <div class="search_R_three_title">
+                    <img class="search_R_title_img_first_SLQ"
+                         src="/Static/userinfo_img/66134906jw8f6vdbrm831j20e80e70sz.jpg"/>
+                    <a  href="" class="search_R_user_name_first_SLQ" >陈乔恩</a>
+                    <a href="" class="search_R_user_V_first_SLQ"></a>
+                    <span class="search_R_user_from_first_SLQ"> 台湾</span>
+            </div>
+             <div class="search_R_four_title">
+                    <img class="search_R_title_img_first_SLQ"
+                         src="/Static/userinfo_img/66134906jw8f6vdbrm831j20e80e70sz.jpg"/>
+                    <a  href="" class="search_R_user_name_first_SLQ" >陈乔恩</a>
+                    <a href="" class="search_R_user_V_first_SLQ"></a>
+                    <span class="search_R_user_from_first_SLQ"> 台湾</span>
+            </div>
+            <div class="search_resou_R_SLQ">
+                <span class="search_R_title_L_resou_SLQ">实时热搜榜
+                <a class="search_R_title_R_resou_SLQ">更多>>></a></span>
+                <span class="search_R_title_resou_index_SLQ">
+                    <ul class="search_R_title_resou_content_index_SLQ">
+                        <li style="color:#ff821f ">1.<a  href="">马蓉</a><span>55万</span></li>
+                        <li style="color:#ff821f ">2.<a  href="">中国版她很漂亮</a><span>51万</span></li>
+                        <li style="color:#ff821f ">3.<a  href="">马蓉发文</a><span>44万</span></li>
+                        <li>4.<a href="">产后多天宝宝未睁眼</a><span>36万</span></li>
+                        <li>5.<a href="">雪炫ZICO分手</a><span>34万</span></li>
+                        <li>6.<a href="">古力娜扎 郑爽</a><span>26万</span></li>
+                        <li>7.<a href="">你凭什么说我矮</a><span>21万</span></li>
+                        <li>8.<a href="">有点甜  这歌词真虐心</a><span>20万</span></li>
+                        <li>9.<a href="">暖男同时交往4个女友</a><span>17万</span></li>
+                        <li>10.<a href="">奶茶可不是只能买着喝</a><span>10万</span></li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <div class="foot"></div>
+    <div class="other_link S_bg1 clearfix">
+            <p class="copy">
+                <a target="_blank" href="http://help.weibo.com/?refer=didao&amp;bottomnav=1&amp;wvr=6" class="S_txt2"><i class="W_icon icon_weibo"></i>微博客服</a>
+                <a class="S_txt2" target="_blank" href="http://help.weibo.com/newtopic/suggest?bottomnav=1&amp;wvr=6">意见反馈</a>
+                <a class="S_txt2" target="_blank" href="http://weibo.com/aj/static/report.html?_wv=6">舞弊举报</a>
+                <a class="S_txt2" target="_blank" href="http://open.weibo.com/?bottomnav=1&amp;wvr=6">开放平台</a>
+                <a class="S_txt2" target="_blank" href="http://hr.weibo.com/?bottomnav=1&amp;wvr=6">微博招聘</a>
+                <a class="S_txt2" target="_blank" href="http://news.sina.com.cn/guide/?bottomnav=1&amp;wvr=6">新浪网导航</a>
+                <a class="S_txt2" target="_blank" href="http://service.account.weibo.com/?bottomnav=1&amp;wvr=6">举报处理大厅</a>
+            <select node-type="changeLanguage" suda-data="key=tblog_home_click&amp;value=language_versions_click">
+                <option value="zh-cn" selected="">中文(简体)</option>
+                <option value="zh-tw">中文(臺灣)</option>
+                <option value="zh-hk">中文(香港)</option>
+                <option value="en">English</option>
+              </select></p>
+              <p class="copy_v2">
+                  <a class="S_txt2" target="_blank" href="http://weibo.com/aj/static/jicp.html?_wv=6">京ICP证100780号</a>
+                  <a class="S_txt2" href="http://weibo.com/aj/static/medi_license.html?_wv=6" target="__blank">互联网药品服务许可证</a>
+                  <a class="S_txt2" href="http://weibo.com/aj/static/medi_health_license.html?_wv=6" target="__blank">互联网医疗保健许可证</a>
+                  <a class="S_txt2" href="http://weibo.com/aj/static/jww.html?_wv=6" target="__blank">京网文[2014]2046-296号</a>
+                  <a class="S_txt2" href="http://www.miibeian.gov.cn/" target="__blank">京ICP备12002058号</a> 
+                  <a class="S_txt2" href="http://weibo.com/aj/static/license.html?_wv=6" target="__blank">增值电信业务经营许可证B2-20140447</a>
+              </p>
+              <p class="company"><span class="copy S_txt2">Copyright © 2009-2016 WEIBO 北京微梦创科网络技术有限公司</span><span><a class="S_txt2" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11000002000019"><i class="icon_netsecurity"></i>京公网安备11000002000019号</a>
+            </span></p>
+        </div>
+</div>
+
+    <script src="/Static/jQuery/jquery-1.12.4.js"></script>
+    <script>
+        var search_values = $('#text').val();
+        $('#search_butten').bind("click", function () {
+            $.ajax({
+                type: 'GET',
+                url: '/index/search.html/',
+                data: {'type': 'user', 'text': search_values},
+                dataType: 'json',
+                success: function (arg) {
+                    console.log(arg);
+                    console.log(arg['status']);
+                    if (arg['status']){
+                        var countlist = arg['count'];
+                        for(var i=0;i<countlist.length;i++){
+{#                            countlist[i]#}
+                            var st = '<li><div class="search_body_L_flag"><img class="search_user_img" src="/Static' +
+                                    countlist[i]['head_img'] + '"><a  href="" class="search_user_name" >' + countlist[i]['name'] +
+                                    '</a><a href="" class="search_user_V"></a><span class="search_user_sex"></span><span class="search_user_address">'
+                                    + countlist[i]['sex'] + '<a href="http://weibo.com/chenchiaoen"> http://weibo.com/chenchiaoen</a>' +
+                                    '<span class="search_user_job">' + countlist[i]['tags'] + '</span><span class="search_user_inf">关注 450  |  粉丝 5265万  |  微博 4284 </span>'
+                                    + '<a class="search_user_trends">' + countlist[i]['brief'] + '</a><span>.......</span></span></div></li>';
+                            $('#ulcount').append(st);
+                        }
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>

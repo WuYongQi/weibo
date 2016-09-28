@@ -46,6 +46,7 @@ function Request_content() {
         data: {},
         dataType: 'json',
         success: function (arg) {
+            console.log(arg);
             // var expression = $('<img render="ext" width="22" height="22">');
             console.log(arg);
             if (arg['status']) {
@@ -54,7 +55,8 @@ function Request_content() {
                     if (pictures) {
                         var pictures = JSON.parse(v['pictures']);
                     }
-                    console.log(pictures);
+                    console.log(pictures,'asdfasdvsdfvrgasdgasdgdas');
+                    console.log(pictures[0],'asdfasdvsdfvrgasdgasdgdas');
                     console.log(typeof (v['pictures']));
                     if (pictures.length > 1) {
                         var li = $("<li class='Content_Center_li_img clearfix'>");
@@ -81,8 +83,8 @@ function Request_content() {
                         var li = $("<li class='Content_Center_li'>");
                         var Center = $('<div class="Content_Center_TXT">').appendTo(li);
                         var Center_left = $('<div class="Text_left">').appendTo(Center);
-                        $('<img src="/Static/user/nick/weibo_img/1/123.png" width="106" height="70">').appendTo(Center_left);   //后期修改
-                        // $('<img src="/Static/user/'+pictures[0]+'"'+' width="106" height="70">').appendTo(Center_left);
+                        // $('<img src="/Static/user/nick/weibo_img/1/123.png" width="106" height="70">').appendTo(Center_left);   //后期修改
+                        $('<img src="/Static/user/'+pictures[0]+'"'+' width="106" height="70">').appendTo(Center_left);
                         var Text_right = $('<div class="Text_right">').appendTo(Center);
                         var Coutent = $('<div class="Coutent">').html(AnalyticEmotion(v["text"])).appendTo(Text_right);
                         // var Coutent = $('<div class="Coutent">' + v['text'] + '</div>').appendTo(Text_right);

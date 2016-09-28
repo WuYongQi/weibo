@@ -37,22 +37,23 @@ from WeiboContent import newmess_server
 
 
 # Create your views here.
+S = "/tmp/test/test2"
 
 
 def index(request):
-    # obj = models_server.UserCollection()
-    # ret = obj.is_login(request=request, username="nick", password="nicknick")
+    obj = models_server.UserCollection()
+    ret = obj.is_login(request=request, username="nick", password="nicknick")
     userid = request.session.get('_auth_user_id')
-    if not userid:
-        return render(request, 'master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
-    else:
-        cacheret = cache.get(userid, None)
-        if not cacheret:
-            return render(request, 'master.html',
-                          {"ti": time.time(), 'context_instance': RequestContext(request)})
-        elif not cacheret['is_login']:
-            return render(request, 'master.html',
-                          {"ti": time.time(), 'context_instance': RequestContext(request)})
+    # if not userid:
+    #     return render(request, 'master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
+    # else:
+    #     cacheret = cache.get(userid, None)
+    #     if not cacheret:
+    #         return render(request, 'master.html',
+    #                       {"ti": time.time(), 'context_instance': RequestContext(request)})
+    #     elif not cacheret['is_login']:
+    #         return render(request, 'master.html',
+    #                       {"ti": time.time(), 'context_instance': RequestContext(request)})
     # userobj = ModelBackend().get_user(user_id=userid)
     # a = ModelBackend().get_user(user_id=userid)
     # print(type(a), a, a.is_active)
@@ -80,7 +81,6 @@ def index(request):
     return render(request, 'login_master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
 
-@login_required
 def weibocontent(request):
     """微博内容视图"""
     if request.method == 'GET':
@@ -212,19 +212,21 @@ def userhome(request):
             if formnewweiboret.is_valid():
                 data_dic = formnewweiboret.cleaned_data
                 data_dic['user'] = userobj
-                # 文件处理
                 filepath = user_file.userfile(user_obj=userobj).filepath
                 data_path = filepath.split('user')[1]
+                # print(os.path.dirname(filepath),data_path,'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW')
                 if os.path.isdir(filepath):
                     if len(os.listdir(filepath)) != 0:
                         img = []
-                        for item in os.listdir(filepath):
-                            img.append(os.path.join(data_path, item))
+                        new_path = os.path.join(os.path.dirname(filepath),'weibo_img',encryption(filepath))
+                        os.rename(filepath, new_path)
+                        new_path_data = new_path.split('user')[1]
+                        for item in os.listdir(new_path):
+                            img.append(os.path.join(new_path_data, item))
                         data_dic['pictures'] = json.dumps(img)
-                    shutil.rmtree(filepath)
+                #文件处理
                 weiborequestobj = weiborequest.newweibocontentrequest(**data_dic)
-                # 加队列返回
-                print(weiborequestobj.dic())
+                # 加队列返
                 obj = producers.producers()
                 ret = obj.createadd(config.rabbitMQ['New_weibo'], json.dumps(weiborequestobj.dicadd()))
 
@@ -331,8 +333,8 @@ def searchall(request):
 
 
 text_url = open(os.path.join(os.path.dirname(os.path.dirname(__file__)),'static','img','BQ_Url','emotions.json'),encoding='utf-8').read()
-@login_required
 def Expression_processing(req):
     """QQ表情"""
+    print('aaaaaaaaaaaaaaa')
     return HttpResponse(text_url)
 

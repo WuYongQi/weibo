@@ -26,6 +26,7 @@ class newweibocontentrequest:
             'wb_type': self.wb_type,
             'user_id': str(self.user.id),
             'text': self.text,
+            # 'weibo_id':self.
             'perm': self.perm,
             'date': time_conversion.timeconversion(self.date).timeret,
             'pictures_link_id': self.pictures_link_id,

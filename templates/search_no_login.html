@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>微博搜索-搜索</title>
+    <link rel='icon' href="/Static/img/favicon.ico">
+    <link href="/Static/css/search/search_no_login.css" rel="stylesheet">
+</head>
+<body>
+<div class="index_head clearfix">
+    <span class="logo_img"></span>
+    <div class="index_seek">
+        <span id="Hot_search" onfocus="" onchange="" style="font-size: 6px;"></span>
+        <input type="text" name="seek">
+        <a title="搜索"></a>
+        <span class="Seek_img"></span>
+    </div>
+    <ul class="Navigation">
+        <li class="title_interval"><a href="javascript:(0)"><span class="Home_img"></span>首页</a></li>
+        <li class="title_interval"><a href="javascript:(0)"><span class="Video_img"></span>视频</a></li>
+        <li class="title_interval"><a href="javascript:(0)"><span class="Find_img"></span>发现</a></li>
+        <li class="title_interval"><a href="javascript:(0)"><span class="Game_img"></span>游戏</a></li>
+        <li class="Login_Regist"><span><a href="javascript:(0)">注册</a></span>&nbsp;|&nbsp;<span><a
+                href="javascript:(0)">登录</a></span></li>
+    </ul>
+</div>
+<div class="bottom_tools" style="bottom: 40px;">
+    <a id="scrollUp" href="javascript:;" title="飞回顶部" style="display: none;"></a>
+</div>
+
+
+<img class="search_login_logo" src="/Static/img/index_logo.png"/>
+<div class="search_a_no_login">
+    <a href="" class="search_a_no_login1" style="
+        color: blue;
+        margin-right: 19px;">综合</a>
+    <a href="" class="search_a_no_login1">找人</a>
+</div>
+{{ up.ExcelFile }}
+<input type="text" id="seek" class="search_input_no_login"/>
+<a class="search_no_login_butten" id="submitj">搜索</a>
+<div class="search_foot_no_login">
+    <p class="search_p">
+        {#        <a class="search_foot_logo"></a>#}
+        <a class="ico_service" href="http://ir.weibo.com/?bottomnav=1&wvr=5" target="_blank">关于微博</a>
+        <a href="http://help.weibo.com/?refer=didao&bottomnav=1&wvr=5" target="_blank">微博帮助</a>
+        <a href="http://help.weibo.com/newtopic/suggest?bottomnav=1&wvr=5" target="_blank">意见反馈</a>
+        <a href="http://open.weibo.com/?bottomnav=1&wvr=5" target="_blank">开放平台</a>
+        <a href="http://hr.weibo.com/?bottomnav=1&wvr=5" target="_blank">微博招聘</a>
+        <a href="http://news.sina.com.cn/guide/?bottomnav=1&wvr=5" target="_blank">新浪网导航</a>
+        <a href="http://service.account.weibo.com/?bottomnav=1&wvr=5" target="_blank">社区管理中心</a>
+        <a href="http://service.account.weibo.com/roles/gongyue?bottomnav=1&wvr=5" target="_blank">微博社区公约</a>
+    </p>
+    <p class="company"><span class="copy S_txt2">Copyright &copy; 2009-2016 WEIBO 北京微梦创科网络技术有限公司</span>
+        <span>
+        <a href="http://weibo.com/aj/static/jww.html" target="_blank" class="S_txt2">京网文[2011]0398-130号</a><a
+                href="http://www.miibeian.gov.cn" target="_blank" class="S_txt2">京ICP备12002058号</a>
+    </span></p>
+</div>
+
+<script src="/Static/jQuery/jquery-1.12.4.js"></script>
+<script>
+    var search_values = $('#seek').val();
+    $('#submitj').bind("click", function () {
+        $.ajax({
+            type: 'GET',
+            url: '/index/search.html/',
+            data: {'type': 'user', 'text': search_values},
+            success: function (arg) {
+                console.log(arg);
+            }
+        })
+    })
+</script>
+</body>
+</html>

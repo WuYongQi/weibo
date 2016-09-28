@@ -12,14 +12,13 @@ DBSetting = {
     # 'PASSWORD': 'python_q1',
     'PASSWORD': 'suoning',
     # 'HOST': '144.48.127.122',
-    'HOST': '192.168.11.32',
+    'HOST': '',
     'PORT': '',
 }
 
 # rabbitMQ 配置
 rabbitMQ = {
-    # 'host': '144.48.127.122',
-    'host': '192.168.11.57',
+    'host': '192.168.1.114',
     'no_ack': False,            # 是否启用 acknowledgment 消息不丢失， False/True, False 为启用状态
     'New_weibo': 'newweibo',    # 添加微博队列名字
 }
@@ -29,7 +28,6 @@ session = {
     'status': True,         # 是否启用session,必须启用!!!
     'encryption': True,     # 是否加密session
     'host': '144.48.127.122',
-    # 'host': '192.168.11.51',
     'port': '6379',
     'DB': 0,
     # 'passwd': '',
@@ -38,11 +36,21 @@ session = {
     'time_out': 60*3,      # 单位秒
 }
 
+# redis缓存配置
+cache = {
+    'cache_type': 'redis',      # redis/cache
+    'redis_host': ["redis://:wuyongqi123@144.48.127.122:6379", ],   # 连接主机列表
+    'redis_timeout': 60 * 5,   # 连接超时时间
+}
+
 # 消费者线程
 # 修改表时关闭
 newmess_status = True
 
 # 当前路径,务改
 PATH = os.path.join(os.path.dirname(__file__))
+
+
+
 
 

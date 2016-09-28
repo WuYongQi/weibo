@@ -31,7 +31,7 @@ var uSinaEmotionsHt = new Hashtable();
 
 // 初始化缓存，页面仅仅加载一次就可以了
 function init_bq() {
-	var app_id = '1362404091';
+	// var app_id = '1362404091';
 	$.ajax( {
 		dataType : 'json',
 		// url : 'https://api.weibo.com/2/emotions.json?source=' + app_id,

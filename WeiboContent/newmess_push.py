@@ -10,6 +10,7 @@ from Common.messMQ import BaseMQ
 from config import rabbitMQ as rabbitMQconfig
 from config import newmess_status
 from WeiboContent import models_server
+import config
 
 
 class pushconsumers(BaseMQ.BaseMQ):
@@ -38,9 +39,9 @@ class pushconsumers(BaseMQ.BaseMQ):
             beforecache[0] = int(num) + 1
             beforecache.append(body)
             print("beforecache222:", beforecache)
-            cache.set(self.exchange, beforecache, timeout=60 * 5)
+            cache.set(self.exchange, beforecache, timeout=config.cache['redis_timeout'])
         else:
-            cache.set(self.exchange, [1, body, ], timeout=60*5)
+            cache.set(self.exchange, [1, body, ], timeout=config.cache['redis_timeout'])
 
 
 class MyThread(threading.Thread):

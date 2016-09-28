@@ -37,11 +37,11 @@ from WeiboContent import newmess_server
 
 
 # Create your views here.
-S = "/tmp/test/test2"
+
 
 
 def index(request):
-    # obj = models_server.UserCollection()
+    obj = models_server.UserCollection()
     # ret = obj.is_login(request=request, username="nick", password="nicknick")
     userid = request.session.get('_auth_user_id')
     if not userid:
@@ -100,6 +100,20 @@ def weibocontent(request):
                                                    comments_list=comments_list,
                                                    forwarding_conut=forwarding_conut)
         print(con_obj.con_dic)
+        return HttpResponse(json.dumps(con_obj.con_dic))
+
+    elif request.method == 'POST':
+        weiboid = request.POST.get('weibo_id', None)
+        print("wwww", weiboid)
+        if not weiboid:
+            return HttpResponse({'status': False})
+        obj = models_server.WeiboContent()
+        content_list, favor_list, comments_list, forwarding_conut = obj.onewei(weiboid=weiboid)
+        con_obj = weiborespone.weibocontentrespone(content_list=content_list,
+                                                   favor_list=favor_list,
+                                                   comments_list=comments_list,
+                                                   forwarding_conut=forwarding_conut)
+        print("ddd///", con_obj.con_dic)
         return HttpResponse(json.dumps(con_obj.con_dic))
 
     elif request.method == 'POST':
@@ -217,13 +231,14 @@ def userhome(request):
                 # print(os.path.dirname(filepath),data_path,'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW')
                 if os.path.isdir(filepath):
                     if len(os.listdir(filepath)) != 0:
-                        img = []
+                        # img = []
+                        path = encryption(filepath)
                         new_path = os.path.join(os.path.dirname(filepath),'weibo_img',encryption(filepath))
                         os.rename(filepath, new_path)
-                        new_path_data = new_path.split('user')[1]
-                        for item in os.listdir(new_path):
-                            img.append(os.path.join(new_path_data, item))
-                        data_dic['pictures'] = json.dumps(img)
+                        # new_path_data = new_path.split('user')[1]
+                        # for item in os.listdir(new_path):
+                        #     img.append(os.path.join(new_path_data, item))
+                        data_dic['pictures'] = path
                 #文件处理
                 weiborequestobj = weiborequest.newweibocontentrequest(**data_dic)
                 # 加队列返
@@ -296,12 +311,16 @@ def messpush(request):
                                                              message="登录超时，请重新登录")
         return HttpResponse(json.dumps(pushmessresponeobj.dic()))
     followidlist = cacheuserdic['followlist']  # 关注的人ID
+    numyet = cache.get('numyet', 0)
+    weibo_id = cache.get('weibo_id', None)
     num = 0  # 个数初始化
     li = []  # [{},{},]
+    status = False
     for user_id in followidlist:
         cachedic = cache.get('%s%s' % (user_id, 'mq'), None)
         if cachedic:
             for i in cachedic:
+                status = True
                 if str(cachedic.index(i)) == '0':
                     num += int(i)
                     continue
@@ -309,21 +328,11 @@ def messpush(request):
             # li.append(cachedic)
     print("li:", li)
     pushmessresponeobj = pushmessrespone.pushmessrespone(count=li,
-                                                         status=True,
+                                                         status=status,
                                                          message="",
                                                          num=num)
     print("pushmessresponeobj.dic():", pushmessresponeobj.dic())
     return HttpResponse(json.dumps(pushmessresponeobj.dic()))
-
-
-def searchtml(request):
-    """返回搜索页面视图"""
-    userid = request.session.get('_auth_user_id', None)
-    cacheuserdic = cache.get(userid, None)
-    if not cacheuserdic or not cacheuserdic['is_login']:
-        return render(request, 'search_no_login.html', {'context_instance': RequestContext(request)})
-    else:
-        return render(request, 'search.html', {'context_instance': RequestContext(request)})
 
 
 def searchall(request):

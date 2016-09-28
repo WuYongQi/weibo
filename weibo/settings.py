@@ -155,38 +155,43 @@ if sessionconfig['status']:
     SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
-# 配置reids
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        # "LOCATION": "redis://:wuyongqi123@192.168.1.108:6379",
-        # "LOCATION": "redis://144.48.127.122:6379",
-        "LOCATION": [
-            "redis://:wuyongqi123@144.48.127.122:6379",
-            # "redis://:wuyongqi123@192.168.11.51:6379",
-        ],
-        "OPTIONS": {
-            # "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {"max_connections": 100},     # 连接池
-            # "PARSER_CLASS": "redis.connection.HiredisParser",       # hiredis解释器
-            # 2 apt-get install python-dev  3 apt-get install python3-dev
-            # easy_install hiredis
+
+from config import cache
+if cache['cache_type'] == 'redis':
+    # 配置reids
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            # "LOCATION": "redis://:wuyongqi123@192.168.1.108:6379",
+            # "LOCATION": "redis://144.48.127.122:6379",
+            "LOCATION": [
+                # "redis://:wuyongqi123@144.48.127.122:6379",
+                *cache['redis_host']
+            ],
+            "OPTIONS": {
+                # "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "CONNECTION_POOL_KWARGS": {"max_connections": 100},     # 连接池
+                # "PARSER_CLASS": "redis.connection.HiredisParser",       # hiredis解释器
+                # 2 apt-get install python-dev  3 apt-get install python3-dev
+                # easy_install hiredis
+            }
         }
     }
-}
+elif cache['cache_type'] == 'cache':
+    # 内存默认缓存
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # 引擎
+            'TIMEOUT': 'unique-snowflake',  # 缓存超时时间（默认300，None表示永不过期，0表示立即过期）
+            'OPTIONS': {
+                'MAX_ENTRIES': 300,  # 最大缓存个数（默认300）
+                'CULL_FREQUENCY': 3,  # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+            },
+            'KEY_PREFIX': '',  # 缓存key的前缀（默认空）
+            'VERSION': 1,  # 缓存key的版本（默认1）
+            # 'KEY_FUNCTION',   # 生成key的函数（默认函数会生成为：【前缀:版本:key】）
+        }
+    }
 
 
-# 内存默认缓存
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # 引擎
-#         'TIMEOUT': 'unique-snowflake',  # 缓存超时时间（默认300，None表示永不过期，0表示立即过期）
-#         'OPTIONS': {
-#             'MAX_ENTRIES': 300,  # 最大缓存个数（默认300）
-#             'CULL_FREQUENCY': 3,  # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
-#         },
-#         'KEY_PREFIX': '',  # 缓存key的前缀（默认空）
-#         'VERSION': 1,  # 缓存key的版本（默认1）
-#         # 'KEY_FUNCTION',   # 生成key的函数（默认函数会生成为：【前缀:版本:key】）
-#     }
-# }
+

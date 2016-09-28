@@ -47,17 +47,12 @@ function Request_content() {
         dataType: 'json',
         success: function (arg) {
             console.log(arg);
-            // var expression = $('<img render="ext" width="22" height="22">');
-            console.log(arg);
             if (arg['status']) {
                 $.each(arg['content'], function (k, v) {
                     var pictures = v['pictures'];
                     if (pictures) {
                         var pictures = JSON.parse(v['pictures']);
                     }
-                    console.log(pictures,'asdfasdvsdfvrgasdgasdgdas');
-                    console.log(pictures[0],'asdfasdvsdfvrgasdgasdgdas');
-                    console.log(typeof (v['pictures']));
                     if (pictures.length > 1) {
                         var li = $("<li class='Content_Center_li_img clearfix'>");
                         var Center = $('<div class="Content_Center_TXT_img clearfix">').appendTo(li);
@@ -109,6 +104,110 @@ function Request_content() {
             }
         }
     })
+}
+function Request_login_content() {
+     $.ajax({
+        url: '/index/weibocontent.html',
+        type: 'get',
+        data: {},
+        dataType: 'json',
+        success: function (arg) {
+            console.log(arg);
+            if (arg['status']) {
+                $.each(arg['content'], function (k, v) {
+                    var pictures = v['pictures'];
+                    if (pictures) {
+                        var pictures = JSON.parse(v['pictures']);
+                    }
+                    if(v['wb_type'] == 1){
+                        console.log('发消息!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                        console.log(v['forward']);
+                        $.ajax({
+                            url:'/index/weibocontent.html',
+                            type:'post',
+                            data:{'weibo_id':v['forward'], 'Cookie':document.cookie},
+                            dataType: 'json',
+                            success: function (arg) {
+                                var forw_info = arg ;
+                                console.log(forw_info);
+                                if (forw_info['status']){
+                                    li = $('<li class="index_center_img_SLQ" style="position: relative">');
+                                    $('<img href="" class="index_center_touxiang_SLQ" src="/Static/img/test_img/005KvRRWjw8ezywugsozbj30a10873zw.jpg"/>').appendTo(li);
+                                    $('<ul class="index_center_img_ul_SLQ"><li style="margin-top: 10px;"><a href="" class="index_center_img_name_SLQ">'+v['user']+'</a></li><li><a class="index_center_img_V_SLQ"></a> <a class="index_center_img_vip_SLQ"></a><a class="index_center_img_lvxing_SLQ"></a></li>').appendTo(li);
+                                    $('<div class="index_center_img_time_from_SLQ"><span class="index_center_img_time_SLQ">'+v['date']+'</span><span class="index_cener_img_from_SLQ">来自</span><span class="index_cener_img_from_add_SLQ">iPhone 9999plus</span></div>').appendTo(li);
+                                    $('<span class="index_center_readme_zhuanfa_SLQ">'+v['text']).appendTo(li);
+                                    $('<ul class="index_center_img_ul_zhuanfa_SLQ"><li class="index_center_img_li_SLQ"><a href="" class="index_center_img_name_zhuanfa_SLQ">@'+forw_info['content'][0]["user"]+'</a></li></ul>').appendTo(li);
+                                    $('<span class="index_center_img_readme_SLQ">'+AnalyticEmotion(forw_info['content'][0]["text"])+'</span>').appendTo(li)
+                                    var img_text_title = $('<div class="index_img_iii_SLQ">');
+                                    var img_text_content = $('<div class="index_img_SLQ" id="pt">');
+                                    var img_list = JSON.parse(forw_info['content'][0]['pictures']);
+                                    console.log(img_list);
+                                    for(var i=0;img_list.length > i;i++) {
+                                        console.log(i,'aaaa');
+                                        // if(i==10){
+                                        //     break
+                                        // }
+                                        console.log(img_list[i]);
+                                        $('<a href="#" target="_blank"><img src="/Static/user' + img_list[i] + '">').appendTo(img_text_content);
+                                    }
+                                    img_text_content.appendTo(img_text_title);
+                                    img_text_title.appendTo(li);
+                                    li.appendTo($('#Text'))
+                                }
+                            }
+                        });
+
+                    }else if (pictures.length > 1) {
+                        var li = $("<li class='Content_Center_li_img clearfix'>");
+                        var Center = $('<div class="Content_Center_TXT_img clearfix">').appendTo(li);
+                        var Text_info = $('<div class="Text_info">').appendTo(Center);
+                        var Text = $('<span>').html(AnalyticEmotion(v["text"])).appendTo(Text_info);
+                        // var Text_ = $('<span>'+v["text"]).appendTo(Text_info);
+                        var Text_img = $('<div class="Picture_zone">').appendTo(Center);
+                        var ul = $('<ul>');
+                        for (var i = 0; i < 3; i++) {
+                            li_list = $('<li><img class="piccut_v piccut_h" src="/Static/user/' + v["pictures"][i] + '">').appendTo(ul);
+                        }
+                        ul.appendTo(Text_img);
+                        var Userinfo_img = $('<div class="Userinfo_img">').appendTo(Center);
+                        $('<span><a href="javascript:(0)"><img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18"></a></span>').appendTo(Userinfo_img);//用户头像
+                        $('<span><a href="javascript:(0)"><span>&nbsp;@' + v["user"] + '</span></a></span>').appendTo(Userinfo_img);//用户名
+                        $('<span>&nbsp;&nbsp;&nbsp;' + v['date'] + '</span>').appendTo(Userinfo_img);//时间
+                        $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Userinfo_img);//赞的个数
+                        $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Userinfo_img);//评论个数
+                        $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Userinfo_img);//转发个数
+                        li.appendTo($('#Text'))
+                    } else if (pictures.length <= 1) {
+                        console.log(AnalyticEmotion(v["text"]));
+                        var li = $("<li class='Content_Center_li'>");
+                        var Center = $('<div class="Content_Center_TXT">').appendTo(li);
+                        var Center_left = $('<div class="Text_left">').appendTo(Center);
+                        // $('<img src="/Static/user/nick/weibo_img/1/123.png" width="106" height="70">').appendTo(Center_left);   //后期修改
+                        $('<img src="/Static/user/'+pictures[0]+'"'+' width="106" height="70">').appendTo(Center_left);
+                        var Text_right = $('<div class="Text_right">').appendTo(Center);
+                        var Coutent = $('<div class="Coutent">').html(AnalyticEmotion(v["text"])).appendTo(Text_right);
+                        // var Coutent = $('<div class="Coutent">' + v['text'] + '</div>').appendTo(Text_right);
+                        var Content_Userinfo = $('<div class="Content_Userinfo">').appendTo(Text_right);
+                        var span = $('<span>').appendTo(Content_Userinfo);
+                        var MUser = $('<a href="javascript:(0)">').appendTo(span);//用户个人主页url
+                        var User_title_img = $('<img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18">').appendTo(MUser); //用户头像
+                        var span_User = $('<span>').appendTo(Content_Userinfo);
+                        var Userinfo = $('<a href="javascript:(0)">').appendTo(span_User);//用户个人主页url
+                        var Username = $('<span>&nbsp;@' + v["user"] + '</span>').appendTo(Userinfo);
+                        var span_time = $('<span>&nbsp;&nbsp;&nbsp;' + v["date"] + '</span>').appendTo(Content_Userinfo);
+                        var span_zan = $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Content_Userinfo);//赞的个数
+                        var span_p = $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Content_Userinfo);//评论个数
+                        var span_zf = $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Content_Userinfo);//转发个数
+                        li.appendTo($('#Text'));
+                    } else {
+                        alert('服务器偷懒，获取信息失败，请重新获取！')
+                    }
+                })
+            } else {
+                alert('服务器偷懒，获取信息失败，请重新获取！')
+            }
+        }
+     })
 }
 function Login() {
     $('#Mo_T').attr('class', 'The_motel_dialog')
@@ -210,7 +309,7 @@ function Release() {
         success: function (arg) {
             $('#Release_text').val(' ');
             if (arg['status']) {
-                
+                console.log(arg['connect']);
                 var li = $("<li class='Content_Center_li'>");
                 var Center = $('<div class="Content_Center_TXT">').appendTo(li);
                 var Center_left = $('<div class="Text_left">').appendTo(Center);
@@ -321,9 +420,13 @@ function updata_pctert() {
 
     })
 }
-img = [];
-
+function flush_Text() {
+    var weibo_input = $('#new_weibo_input');
+    $('#Text').empty().appendTo(weibo_input);
+    Request_login_content()
+}
 function move() {
+    $('#flush_text').remove();
     $.ajax({
         url: "/home/push/mess.html",
         data: {"a": 1},
@@ -331,33 +434,14 @@ function move() {
         dataType: "json",
         success: function (arg) {
             console.log(arg);
+            if (arg.status){
+                var num = arg.num;
+                var message = arg.message;
+                var count = arg.count;
+                title_info = $('<li id="flush_text"><a onclick="flush_Text()" href="" id="new_text" class="search_new_text_SLQ">有'+num+'条新微薄，点击刷新</a></li>');
+                $('#Text').children().eq(0).after(title_info);
+                console.log("您有", num, "新微薄");
+            }
         }
     })
-}
-
-
-
-
-function videoxx() {
-    content = {'date': '今天 10:30', 'wb_type': 0, 'perm': 0, 'user': 'nick', 
-    'forward': 0, 'to_weibo': 553, 'for_count': 0, 'video': '', 
-    'head_img': 'nick/User_info/mm.jpeg',
-    'fav_count': 0, 'com_count': 0, 'text': 'asdfasdfasdf', 'pictures': ''};
-    
-    var testnight = '<div class="index_center_img_SLQ"><img href="" class="index_center_touxiang_SLQ" src="/Static/' +
-        content['head_img'] + '"/><ul class="index_center_img_ul_SLQ"><li><a href="" class="index_center_img_name_SLQ"> + '
-    + '全球搞笑趣事集' + '</a></li><li><a class="index_center_img_V_SLQ"></a><a class="index_center_img_vip_SLQ"></a><a class="index_center_img_lvxing_SLQ"></a>'
-            + '</li></ul><div class="index_center_img_time_from_SLQ"><span class="index_center_img_time_SLQ">' +
-        content['date'] + '</span><span class="index_cener_img_from_SLQ">来自</span><span class="index_cener_img_from_add_SLQ">' +
-        content['user'] + '</span></div><div class="index_center_img_wen"><span class="index_center_img_readme_SLQ">' +
-        content['text']
-        + '</span></div><div class="index_img_iii_SLQ"><div class="index_img_SLQ" id="pt">';
-    var img = '';
-    for(var index in content['pictures']){
-        var aa = '<a href="#" target="_blank"> <img src="/Static/' + content['pictures'][index] + '"></a>'
-        var img = img + aa
-    }
-    var testnight = testnight + img + '</div></div></div>';
-    
-    $('#Text').appendTo(testnight);
 }

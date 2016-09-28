@@ -3,6 +3,7 @@
 __author__ = 'Nick Suo'
 
 from Common import time_conversion
+import os,config,json
 
 
 class weibocontentrespone:
@@ -21,6 +22,16 @@ class weibocontentrespone:
             "content": self.list_by_dic
         }
 
+    def __img_new_path(self, username, img_path):
+        new_path = os.path.join(config.PATH, 'static', 'user', username, "weibo_img", img_path)
+        if os.path.isdir(new_path):
+            imglist = []
+            for item in os.listdir(new_path):
+                imglist.append(os.path.join(new_path, item).split('user')[-1])
+            return json.dumps(imglist)
+        else:
+            return json.dumps([])
+
     def __list_by_dic(self):
         for item in self.content_list:
             dic = self.__dic_of(item)
@@ -35,9 +46,10 @@ class weibocontentrespone:
             "head_img": str(item.user.head_img),
             "perm": item.perm,
             "date": time_conversion.timeconversion(item.date).timeret,
-            "pictures": item.pictures_link_id,  # []
+            # "pictures": item.pictures_link_id,  # []
+            "pictures": self.__img_new_path(str(item.user.user.username), item.pictures_link_id),
             "video": item.video_link_id,
-            "forward": str(item.forward_or_collect_from.user) if item.forward_or_collect_from else 0,    # url
+            "forward": str(item.forward_or_collect_from.id) if item.forward_or_collect_from else 0,    # url
             "to_weibo": item.id,
             "fav_count": 0,
             "com_count": 0,

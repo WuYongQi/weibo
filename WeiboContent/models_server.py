@@ -90,6 +90,19 @@ class WeiboContent:
                                  for li in forwarding_conut]
         return forwarding_conut_list
 
+    def onewei(self, weiboid):
+        weiboobj = Weibo.objects.filter(id=weiboid)
+        # 赞个数
+        favor_conut_list = Comment.objects.filter(to_weibo=weiboobj, comment_type=1) \
+            .values('to_weibo').annotate(fav_conut=Count('id'))
+        # 评论个数
+        comments_conut_list = Comment.objects.filter(to_weibo=weiboobj, comment_type=0) \
+            .values('to_weibo').annotate(com_conut=Count('id'))
+        # 转发个数
+        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from=weiboobj, wb_type=1) \
+            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
+        return weiboobj, favor_conut_list, comments_conut_list, forwarding_conut_list
+
     def add(self, weibodic):
         """增加微博"""
         obj = Weibo.objects.create(**weibodic)

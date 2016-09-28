@@ -1,27 +1,25 @@
- .index_center_img_SLQ {
-    /* background-color: rgba(192, 192, 192, 1); */
+.index_center_img_SLQ {
+    background-color: #fff;
     border: 1px solid silver;
-    max-width: 564px;
-    padding: 10px 71px 10px 10px;
-    height: 701px;
-    position: relative;
+    width: 588px;
+    padding: 10px 0 10px 10px;
+    max-height: 537px;
+    margin-bottom: 10px;
+    border-radius: 3px;
 }
 
 .index_center_touxiang_SLQ{
-    /* background-image: url(/static/img/test_img/005KvRRWjw8ezywugsozbj30a10873zw.jpg); */
     display: inline-block;
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    /* margin: -18px -41px; */
-    /* padding: 21px 21px; */
 }
 
 .index_center_img_ul_SLQ{
         list-style: none;
 }
 .index_center_readme_zhuanfa_SLQ{
-    margin: 54px 71px;
+    margin: 46px 71px 1px 71px;
     position: absolute;
 }
 .index_center_img_wen{
@@ -31,16 +29,27 @@
     height: 367px;
     margin: 96px -7px;
 }
+.search_new_text_SLQ{
+    background-color: #fff8bf;
+    /* border: 1px black solid; */
+    display: block;
+    height: 30px;
+    width: 600px;
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #eb7350;
+    text-decoration: none;
+}
 
 .index_center_img_ul_zhuanfa_SLQ {
     display: inline;
     list-style: none;
-    margin: 86px 0;
 }
 .index_center_img_li_SLQ{
     text-align: -webkit-match-parent;
     display: inline-block;
-    margin: 89px 6px;
+     margin: 57px 6px 1px 6px;
 }
 .index_center_img_name_zhuanfa_SLQ{
     display: inline-block;
@@ -54,13 +63,13 @@
 .index_center_zhuanfa_SLQ
     {
     /* display: inline; */
-    margin: -169px 57px;
-    padding: 0 0;
+    margin: -118px 57px;
+    padding: 0;
     text-align: -webkit-match-parent;
 }
 
 .index_center_img_V_zhuanfa_SLQ{
-    background: url(/static/img/test_img/icon.png);
+    background: url(/Static/img/icon.png);
     display: block;
     width: 20px;
     height: 25px;
@@ -94,7 +103,7 @@
     font-weight: 700;
 }
 .index_center_img_vip_SLQ{
-    background: url(/static/img/test_img/icon.png);
+    background: url(/Static/img/icon.png);
     display: block;
     width: 20px;
     height: 25px;
@@ -103,7 +112,7 @@
 }
 
 .index_center_img_V_SLQ{
-    background: url(/static/img/test_img/icon.png);
+    background: url(/Static/img/icon.png);
     display: block;
     width: 20px;
     height: 25px;
@@ -112,7 +121,7 @@
 }
 
 .index_center_img_vip_SLQ{
-    background: url(/static/img/test_img/icon.png);
+    background: url(/Static/img/icon.png);
     display: block;
     width: 20px;
     height: 25px;
@@ -121,7 +130,7 @@
 }
 
 .index_center_img_lvxing_SLQ{
-    background: url(/static/img/test_img/icon.png);
+    background: url(/Static/img/icon.png);
     display: block;
     width: 20px;
     height: 25px;
@@ -133,7 +142,7 @@
     color: #808080;
     text-decoration: none;
     font-size: 12px;
-    margin: -33px 60px;
+    margin: -38px 60px;
 }
 
 .index_center_img_time_SLQ:hover{
@@ -147,17 +156,21 @@
 .index_center_img_readme_SLQ{
     font-size: 14px;
     display: block;
-    margin: 120px 60px;
+    /*margin: 105px 60px;*/
+    margin: -13px 60px 20px 60px;
     color: #333;
 }
 
 .index_img_SLQ img{
-    width: 165px;
-    height: 165px;
+    width: 110px;
+    height: 110px;
 }
 
 .index_img_SLQ{
-    display: inline;
+    width: 338px;
+    max-height: 338px;
+    /*background: red;*/
+    padding: 4px 0 0 4px;
 }
 
 .index_img_iii_SLQ {
@@ -166,8 +179,8 @@
     /* max-height: 600px; */
     /* width: 602px; */
     display: inline-flex;
-    width: 100%;
-    height: auto;
-    margin: -123px 34px;
-    padding: 9px 21px;
+    /* width: 100%; */
+    /* height: auto; */
+    margin: -17px 0 0 0;
+    padding: 1px 59px;
 }

@@ -210,7 +210,7 @@ function Release() {
         success: function (arg) {
             $('#Release_text').val(' ');
             if (arg['status']) {
-                cosnole.log(arg['connect']);
+                
                 var li = $("<li class='Content_Center_li'>");
                 var Center = $('<div class="Content_Center_TXT">').appendTo(li);
                 var Center_left = $('<div class="Text_left">').appendTo(Center);
@@ -333,4 +333,31 @@ function move() {
             console.log(arg);
         }
     })
+}
+
+
+
+
+function videoxx() {
+    content = {'date': '今天 10:30', 'wb_type': 0, 'perm': 0, 'user': 'nick', 
+    'forward': 0, 'to_weibo': 553, 'for_count': 0, 'video': '', 
+    'head_img': 'nick/User_info/mm.jpeg',
+    'fav_count': 0, 'com_count': 0, 'text': 'asdfasdfasdf', 'pictures': ''};
+    
+    var testnight = '<div class="index_center_img_SLQ"><img href="" class="index_center_touxiang_SLQ" src="/Static/' +
+        content['head_img'] + '"/><ul class="index_center_img_ul_SLQ"><li><a href="" class="index_center_img_name_SLQ"> + '
+    + '全球搞笑趣事集' + '</a></li><li><a class="index_center_img_V_SLQ"></a><a class="index_center_img_vip_SLQ"></a><a class="index_center_img_lvxing_SLQ"></a>'
+            + '</li></ul><div class="index_center_img_time_from_SLQ"><span class="index_center_img_time_SLQ">' +
+        content['date'] + '</span><span class="index_cener_img_from_SLQ">来自</span><span class="index_cener_img_from_add_SLQ">' +
+        content['user'] + '</span></div><div class="index_center_img_wen"><span class="index_center_img_readme_SLQ">' +
+        content['text']
+        + '</span></div><div class="index_img_iii_SLQ"><div class="index_img_SLQ" id="pt">';
+    var img = '';
+    for(var index in content['pictures']){
+        var aa = '<a href="#" target="_blank"> <img src="/Static/' + content['pictures'][index] + '"></a>'
+        var img = img + aa
+    }
+    var testnight = testnight + img + '</div></div></div>';
+    
+    $('#Text').appendTo(testnight);
 }

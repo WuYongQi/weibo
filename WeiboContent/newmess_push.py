@@ -31,7 +31,16 @@ class pushconsumers(BaseMQ.BaseMQ):
 
     def callback(self, ch, method, properties, body):
         print(" [x] %r" % body)
-        cache.set(self.exchange, body, timeout=60*5)
+        beforecache = cache.get(self.exchange, None)
+        print("beforecache:", beforecache)
+        if beforecache:
+            num = beforecache[0]
+            beforecache[0] = int(num) + 1
+            beforecache.append(body)
+            print("beforecache222:", beforecache)
+            cache.set(self.exchange, beforecache, timeout=60 * 5)
+        else:
+            cache.set(self.exchange, [1, body, ], timeout=60*5)
 
 
 class MyThread(threading.Thread):

@@ -41,19 +41,19 @@ S = "/tmp/test/test2"
 
 
 def index(request):
-    obj = models_server.UserCollection()
-    ret = obj.is_login(request=request, username="nick", password="nicknick")
+    # obj = models_server.UserCollection()
+    # ret = obj.is_login(request=request, username="nick", password="nicknick")
     userid = request.session.get('_auth_user_id')
-    # if not userid:
-    #     return render(request, 'master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
-    # else:
-    #     cacheret = cache.get(userid, None)
-    #     if not cacheret:
-    #         return render(request, 'master.html',
-    #                       {"ti": time.time(), 'context_instance': RequestContext(request)})
-    #     elif not cacheret['is_login']:
-    #         return render(request, 'master.html',
-    #                       {"ti": time.time(), 'context_instance': RequestContext(request)})
+    if not userid:
+        return render(request, 'master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
+    else:
+        cacheret = cache.get(userid, None)
+        if not cacheret:
+            return render(request, 'master.html',
+                          {"ti": time.time(), 'context_instance': RequestContext(request)})
+        elif not cacheret['is_login']:
+            return render(request, 'master.html',
+                          {"ti": time.time(), 'context_instance': RequestContext(request)})
     # userobj = ModelBackend().get_user(user_id=userid)
     # a = ModelBackend().get_user(user_id=userid)
     # print(type(a), a, a.is_active)
@@ -81,10 +81,6 @@ def index(request):
     return render(request, 'login_master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 0527c6a569b7185784fa50032e0b5e0ae90ffc6a
 def weibocontent(request):
     """微博内容视图"""
     if request.method == 'GET':
@@ -305,12 +301,18 @@ def messpush(request):
     for user_id in followidlist:
         cachedic = cache.get('%s%s' % (user_id, 'mq'), None)
         if cachedic:
-            num += 1
-            li.append(str(cachedic, encoding='utf8'))
+            for i in cachedic:
+                if str(cachedic.index(i)) == '0':
+                    num += int(i)
+                    continue
+                li.append(str(i, encoding='utf-8'))
+            # li.append(cachedic)
+    print("li:", li)
     pushmessresponeobj = pushmessrespone.pushmessrespone(count=li,
                                                          status=True,
                                                          message="",
                                                          num=num)
+    print("pushmessresponeobj.dic():", pushmessresponeobj.dic())
     return HttpResponse(json.dumps(pushmessresponeobj.dic()))
 
 
@@ -349,6 +351,5 @@ def searchall(request):
 text_url = open(os.path.join(os.path.dirname(os.path.dirname(__file__)),'static','img','BQ_Url','emotions.json'),encoding='utf-8').read()
 def Expression_processing(req):
     """QQ表情"""
-    print('aaaaaaaaaaaaaaa')
     return HttpResponse(text_url)
 

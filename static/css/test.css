@@ -1,0 +1,101 @@
+.index_center_img_SLQ {
+     /* background-color: rgba(192, 192, 192, 1); */
+    border: 1px solid silver;
+    max-width: 564px;
+    padding: 10px 71px 10px 10px;
+    height: 643px;
+}
+
+.index_center_touxiang_SLQ{
+    /*background-image: url(/static/img/test_img/005KvRRWjw8ezywugsozbj30a10873zw.jpg);*/
+    display: inline-block;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    /*margin: -18px -41px;*/
+    /*padding: 21px 21px;*/
+}
+
+.index_center_img_ul_SLQ{
+    list-style: none;
+}
+
+.index_center_img_name_SLQ{
+    display: block;
+    margin: -61px 20px;
+    /* padding-top: 72px; */
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.index_center_img_V_SLQ{
+    background: url(/Static/img/test_img/icon.png);
+    display: block;
+    width: 20px;
+    height: 25px;
+    background-position: 0 -41px;
+    margin: 38px 123px;
+}
+
+.index_center_img_vip_SLQ{
+    background: url(/Static/img/test_img/icon.png);
+    display: block;
+    width: 20px;
+    height: 25px;
+    background-position: -22px -91px;
+    margin: -64px 137px;
+}
+
+.index_center_img_lvxing_SLQ{
+    background: url(/Static/img/test_img/icon.png);
+    display: block;
+    width: 20px;
+    height: 25px;
+    background-position: -75px -116px;
+    margin: 39px 159px;
+}
+
+.index_center_img_time_from_SLQ{
+    color: #808080;
+    text-decoration: none;
+    font-size: 12px;
+    margin: -33px 60px;
+}
+
+.index_center_img_time_SLQ:hover{
+    color:#eb7350;
+}
+
+.index_cener_img_from_add_SLQ:hover{
+    color:#eb7350;
+}
+
+.index_center_img_readme_SLQ{
+    font-size: 14px;
+    display: block;
+    margin: 47px 60px;
+    color: #333
+}
+
+.index_img_SLQ img{
+    width: 165px;
+    height: 165px;
+}
+
+.index_img_SLQ{
+    display: inline;
+}
+
+.index_img_iii_SLQ {
+    /* background-color: rgba(192, 192, 192, 1); */
+    /* border: 1px solid silver; */
+    /* max-height: 600px; */
+    /* width: 602px; */
+    width: 100%;
+    height: auto;
+    margin: -37px 26px;
+    padding: 9px 21px;
+}
+

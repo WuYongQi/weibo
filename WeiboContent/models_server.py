@@ -45,62 +45,40 @@ class WeiboContent:
                    (int(page) * 10 if int(page) != 1 else 0):int(page) * 20]
 
         # 赞个数
-        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
-            .values('to_weibo').annotate(fav_conut=Count('id'))
+        favor_conut_list = self.favorconut(obj_list)
         # 评论个数
-        comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
-            .values('to_weibo').annotate(com_conut=Count('id'))
+        comments_conut_list = self.commentsconut(obj_list)
         # 转发个数
-        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from__in=list(obj_list), wb_type=1) \
-            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
-
-        # # 赞个数
-        # favor_conut_list = self.favorconut(obj_list)
-        # # 评论个数
-        # comments_conut_list = self.commentsconut(obj_list)
-        # # 转发个数
-        # forwarding_conut_list = self.forwardingconut(obj_list)
+        forwarding_conut_list = self.forwardingconut(obj_list)
 
         return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
 
-    def favorconut(self, setlist):
+    def favorconut(self, obj_list):
         """赞个数"""
-        favor_conut = map(lambda x: x.comment_set.all().filter(comment_type=1)
-                          .values('to_weibo').annotate(fav_conut=Count('comment_type')), setlist)
-        favor_conut_list = [{'fav_conut': li[0]['fav_conut'], 'to_weibo': li[0]['to_weibo']}
-                            if li else None
-                            for li in favor_conut]
+        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
+            .values('to_weibo').annotate(fav_conut=Count('id'))
         return favor_conut_list
 
-    def commentsconut(self, setlist):
+    def commentsconut(self, obj_list):
         """评论个数"""
-        comments_conut = map(lambda x: x.comment_set.all().filter(comment_type=0)
-                             .values('to_weibo').annotate(com_conut=Count('comment_type')), setlist)
-        comments_conut_list = [{'com_conut': li[0]['com_conut'], 'to_weibo': li[0]['to_weibo']}
-                               if li else None
-                               for li in comments_conut]
+        comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
+            .values('to_weibo').annotate(com_conut=Count('id'))
         return comments_conut_list
 
-    def forwardingconut(self, setlist):
+    def forwardingconut(self, obj_list):
         """转发个数"""
-        forwarding_conut = map(lambda x: Weibo.objects.filter(forward_or_collect_from=x.id)
-                               .values('forward_or_collect_from').annotate(for_conut=Count('id')), setlist)
-        forwarding_conut_list = [{'for_conut': li[0]['for_conut'], 'to_weibo': li[0]['forward_or_collect_from']}
-                                 if li else None
-                                 for li in forwarding_conut]
+        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from__in=list(obj_list), wb_type=1) \
+            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
         return forwarding_conut_list
 
     def onewei(self, weiboid):
         weiboobj = Weibo.objects.filter(id=weiboid)
         # 赞个数
-        favor_conut_list = Comment.objects.filter(to_weibo=weiboobj, comment_type=1) \
-            .values('to_weibo').annotate(fav_conut=Count('id'))
+        favor_conut_list = self.favorconut(weiboobj)
         # 评论个数
-        comments_conut_list = Comment.objects.filter(to_weibo=weiboobj, comment_type=0) \
-            .values('to_weibo').annotate(com_conut=Count('id'))
+        comments_conut_list = self.commentsconut(weiboobj)
         # 转发个数
-        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from=weiboobj, wb_type=1) \
-            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
+        forwarding_conut_list = self.forwardingconut(weiboobj)
         return weiboobj, favor_conut_list, comments_conut_list, forwarding_conut_list
 
     def add(self, weibodic):
@@ -186,39 +164,32 @@ class UserCollection:
         userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
         return userinfo_obj
 
-    def followlist(self, user_obj):
-        """我的粉丝"""
-        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
-        ret = userinfo_obj.follow_list.all()
-        return {"followlen": len(ret), "con": ret}
-
     def followlistid(self, user_obj):
-        """我的粉丝USERINFOID"""
+        """我的粉丝USERINFO[ID]"""
         userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
-        # ret = list(userinfo_obj.follow_list.values('user_id'))
         retuserinfo = userinfo_obj.follow_list.values('user')
         ret = UserProfile.objects.filter(user_id__in=[item['user'] for item in retuserinfo]).values('id')
         list_id = [item['id'] for item in ret]
-        print(list_id)
         return list_id
 
-    def focuslist(self, user_obj):
-        """我的关注"""
-        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
-        ret = userinfo_obj.my_followers.all()
-        return {"focuslen": len(ret), "con": ret}
+    # def followlist(self, user_obj):
+    #     """我的粉丝"""
+    #     userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+    #     ret = userinfo_obj.follow_list.all()
+    #     return {"followlen": len(ret), "followcon": ret}
+    #
+    # def focuslist(self, user_obj):
+    #     """我的关注"""
+    #     userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+    #     ret = userinfo_obj.my_followers.all()
+    #     return {"focuslen": len(ret), "focuscon": ret}
+    #
+    # def wblist(self, user_obj):
+    #     """我的微博"""
+    #     userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
+    #     ret = userinfo_obj.weibo_set.all()
+    #     return {"wblen": len(ret), "wbcon": ret}
 
-    def wblist(self, user_obj):
-        """我的微博"""
-        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
-        ret = userinfo_obj.weibo_set.all()
-        return {"wblen": len(ret), "con": ret}
-
-    def focuswblist(self, user_obj):
-        """我的关注"""
-        userinfo_obj = UserProfile.objects.filter(user=user_obj).first()
-        ret = userinfo_obj.my_followers.all()
-        return {"focuslen": len(ret), "con": ret}
 
     def userweibo(self, user_obj, page):
         """用户登录显示关注用户微博"""

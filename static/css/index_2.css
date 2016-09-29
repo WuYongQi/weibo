@@ -107,7 +107,7 @@ body{
     border-radius: 3px;
     background-color: red;
     width: 230px;
-    height: 165px;
+    height: 179px;
     margin: 15px 0 0 10px;
 }
 .Content_input_right_top{
@@ -134,7 +134,7 @@ body{
     float: right;
     width: 60px;
     margin: -554px 226px;
-    background-image: url(/Static/img/0060U3qijw8f48w5350d9j30to0tpta1.jpg);
+    /*background-image: url(/Static/img/0060U3qijw8f48w5350d9j30to0tpta1.jpg);*/
     border-radius: 50%;
     background-position: center center;
     background-repeat: round;
@@ -731,7 +731,7 @@ line-height: 34px;
     background: url(/Static/img/068_s.jpg)no-repeat;
     background-color: white;
     width: 230px;
-    height: 169px;
+    height: 179px;
     margin: 15px 0 0 10px;
     /*z-index: 1;*/
 
@@ -739,10 +739,10 @@ line-height: 34px;
 .Content_center_right_top_img{
     float: left;
     /* z-index: 2; */
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     margin: 37px 83px;
-    background-image: url(/Static/img/0060U3qijw8f48w5350d9j30to0tpta1.jpg);
+    /*background-image: url('');*/
     border-radius: 50%;
     background-repeat: round;
     background-position: center center;
@@ -752,10 +752,11 @@ line-height: 34px;
     display: none;
 }
 .Content_center_vip_lv_name{
-    margin: 100px 35px;
+    margin: 105px 35px 0 35px;
     position: relative;
     list-style: none;
     display: inline-flex;
+    float: left;
 }
 .Content_center_guanzhu_fans_weibo{
      float: left;
@@ -771,7 +772,9 @@ line-height: 34px;
     font-size: 14px;
     position: relative;
     font-weight: bold;
-     color: #333;
+    color: #333;
+    max-width: 160px;
+    height: 20px;
 }
 .Content_center_vip_lv_name a:hover{
     color: #fa7e3d;
@@ -788,7 +791,7 @@ line-height: 34px;
 .Content_center_right_lv{
     background-color: #fa7e3d;
     color: #fff;
-    padding: 2px 5px 2px 5px;
+    padding: 0 5px 0 5px;
     border-radius: 50px;
     font-size: 1px;
     line-height: 10px;
@@ -797,7 +800,7 @@ line-height: 34px;
 
     color: #808080;
     display: flex;
-    margin: 115px -6px;
+    margin: -6px -6px;
 }
 .Content_center_right_dongtai_SLQ li{
     list-style: none;

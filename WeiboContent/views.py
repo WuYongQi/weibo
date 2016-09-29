@@ -45,15 +45,13 @@ def index(request):
     # ret = obj.is_login(request=request, username="nick", password="nicknick")
     userid = request.session.get('_auth_user_id')
     if not userid:
-        return render(request, 'master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
+        return render(request, 'master.html', {'context_instance': RequestContext(request)})
     else:
         cacheret = cache.get(userid, None)
         if not cacheret:
-            return render(request, 'master.html',
-                          {"ti": time.time(), 'context_instance': RequestContext(request)})
+            return render(request, 'master.html', {'context_instance': RequestContext(request)})
         elif not cacheret['is_login']:
-            return render(request, 'master.html',
-                          {"ti": time.time(), 'context_instance': RequestContext(request)})
+            return render(request, 'master.html', {'context_instance': RequestContext(request)})
     # userobj = ModelBackend().get_user(user_id=userid)
     # a = ModelBackend().get_user(user_id=userid)
     # print(type(a), a, a.is_active)
@@ -78,18 +76,13 @@ def index(request):
     # models_server.UserCollection().userweibo(a, page=1)
 
 
-    return render(request, 'login_master.html', {"ti": time.time(), 'context_instance': RequestContext(request)})
+    return render(request, 'login_master.html', {'context_instance': RequestContext(request)})
 
 
 def weibocontent(request):
     """微博内容视图"""
     if request.method == 'GET':
         """未登录首页微博内容"""
-        # from django.core.cache import cache
-        # cache.set("foo", "value", timeout=25)
-        # print(cache.ttl("foo"))
-        # print(cache.get("foo"))
-        # cache.keys("foo_*")   #["foo_1", "foo_2"]
 
         page = request.GET.get('home') if request.GET.get('home', None) else 1
         obj = models_server.WeiboContent()
@@ -99,12 +92,10 @@ def weibocontent(request):
                                                    favor_list=favor_list,
                                                    comments_list=comments_list,
                                                    forwarding_conut=forwarding_conut)
-        print(con_obj.con_dic)
         return HttpResponse(json.dumps(con_obj.con_dic))
 
     elif request.method == 'POST':
         weiboid = request.POST.get('weibo_id', None)
-        print("wwww", weiboid)
         if not weiboid:
             return HttpResponse({'status': False})
         obj = models_server.WeiboContent()
@@ -113,15 +104,8 @@ def weibocontent(request):
                                                    favor_list=favor_list,
                                                    comments_list=comments_list,
                                                    forwarding_conut=forwarding_conut)
-        print("ddd///", con_obj.con_dic)
         return HttpResponse(json.dumps(con_obj.con_dic))
 
-    elif request.method == 'POST':
-        pass
-    elif request.method == 'PUT':
-        pass
-    elif request.method == 'DELETE':
-        pass
 
 
 @login_required
@@ -144,10 +128,7 @@ def userinfo(request):
             error_msg = request_form.errors.as_json()
             print(type(error_msg), error_msg)
 
-    elif request.method == 'PUT':
-        pass
-    elif request.method == 'DELETE':
-        pass
+
 
 
 def login(request):
@@ -203,12 +184,18 @@ def login(request):
 def userhome(request):
     if request.method == 'GET':
         """登录后首页内容"""
-        # obj = models_server.UserCollection()
-        # ret = obj.is_login(request=request, username="nick", password="nicknick")
-
         userid = request.session.get('_auth_user_id', None)
         userobj = ModelBackend().get_user(user_id=userid)
         usercollectionobj = models_server.UserCollection()
+
+        # 关注信息
+        follew = request.GET.get('follew', None)
+        if follew:
+            mymess = usercollectionobj.mymess(userobj)
+            userinfomessobj = userrespone.userinfomess(mymess)
+            return HttpResponse(json.dumps(userinfomessobj.dic()))
+
+
         page = request.GET.get('home') if request.GET.get('home', None) else 1
         content_list, favor_list, comments_list, forwarding_conut = usercollectionobj.userweibo(userobj, page=page)
         con_obj = weiborespone.weibocontentrespone(content_list=content_list,
@@ -227,17 +214,12 @@ def userhome(request):
                 data_dic = formnewweiboret.cleaned_data
                 data_dic['user'] = userobj
                 filepath = user_file.userfile(user_obj=userobj).filepath
-                data_path = filepath.split('user')[1]
-                # print(os.path.dirname(filepath),data_path,'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW')
+                # data_path = filepath.split('user')[1]
                 if os.path.isdir(filepath):
                     if len(os.listdir(filepath)) != 0:
-                        # img = []
                         path = encryption(filepath)
                         new_path = os.path.join(os.path.dirname(filepath),'weibo_img',encryption(filepath))
                         os.rename(filepath, new_path)
-                        # new_path_data = new_path.split('user')[1]
-                        # for item in os.listdir(new_path):
-                        #     img.append(os.path.join(new_path_data, item))
                         data_dic['pictures'] = path
                 #文件处理
                 weiborequestobj = weiborequest.newweibocontentrequest(**data_dic)
@@ -262,11 +244,6 @@ def userhome(request):
                                                                             connect_dic=formnewweiboret.errors)
             return HttpResponse(json.dumps(newweiboconresponeobj.dic()))
 
-
-    elif request.method == 'PUT':
-        pass
-    elif request.method == 'DELETE':
-        pass
 
 
 @login_required
@@ -305,6 +282,8 @@ def messpush(request):
     """心跳视图"""
     userid = request.session.get('_auth_user_id', None)
     cacheuserdic = cache.get(userid, None)
+    if not cacheuserdic:
+        return False
     if not cacheuserdic['is_login']:
         pushmessresponeobj = pushmessrespone.pushmessrespone(count='',
                                                              status=False,

@@ -22,7 +22,7 @@ class weibocontentrespone:
             "content": self.list_by_dic
         }
 
-    def __img_new_path(self, username, img_path):
+    def __new_path(self, username, img_path):
         new_path = os.path.join(config.PATH, 'static', 'user', username, "weibo_img", img_path)
         if os.path.isdir(new_path):
             imglist = []
@@ -47,8 +47,8 @@ class weibocontentrespone:
             "perm": item.perm,
             "date": time_conversion.timeconversion(item.date).timeret,
             # "pictures": item.pictures_link_id,  # []
-            "pictures": self.__img_new_path(str(item.user.user.username), item.pictures_link_id),
-            "video": item.video_link_id,
+            "pictures": self.__new_path(str(item.user.user.username), item.pictures_link_id),
+            "video": self.__new_path(str(item.user.user.username), item.video_link_id),
             "forward": str(item.forward_or_collect_from.id) if item.forward_or_collect_from else 0,    # url
             "to_weibo": item.id,
             "fav_count": 0,

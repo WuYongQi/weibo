@@ -18,7 +18,7 @@ DBSetting = {
 
 # rabbitMQ 配置
 rabbitMQ = {
-    'host': '192.168.1.114',
+    'host': '192.168.11.30',
     'no_ack': False,            # 是否启用 acknowledgment 消息不丢失， False/True, False 为启用状态
     'New_weibo': 'newweibo',    # 添加微博队列名字
 }
@@ -33,14 +33,16 @@ session = {
     # 'passwd': '',
     'passwd': 'wuyongqi123',
     'name': 'xja9sqa9sniul8',
-    'time_out': 60*3,      # 单位秒
+    'time_out': 60*5,      # 单位秒
 }
 
 # redis缓存配置
 cache = {
     'cache_type': 'redis',      # redis/cache
-    'redis_host': ["redis://:wuyongqi123@144.48.127.122:6379", ],   # 连接主机列表
-    'redis_timeout': 60 * 5,   # 连接超时时间
+    'redis_host': [
+        "redis://:wuyongqi123@144.48.127.122:6379",
+    ],   # 连接主机列表
+    'redis_timeout': 60 * 0,   # 连接超时时间
 }
 
 # 消费者线程

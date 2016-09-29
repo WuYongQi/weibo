@@ -38,6 +38,7 @@ function init_bq() {
 		url : '/emotions.json',
 		data:{'a':'b'},
 		type:'get',
+		async: false,	/*by nick*/
 		success : function(response) {
 			response = {'code':1,'data':response};
 			console.log(response);

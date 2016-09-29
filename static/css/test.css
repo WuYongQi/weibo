@@ -8,6 +8,7 @@
 
 .index_center_touxiang_SLQ{
     /*background-image: url(/static/img/test_img/005KvRRWjw8ezywugsozbj30a10873zw.jpg);*/
+    list-style-type: none;
     display: inline-block;
     border-radius: 50%;
     height: 50px;

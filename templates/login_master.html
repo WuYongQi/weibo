@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-{#    <link href="/Static/css/iconfont.css" rel="stylesheet">#}
-{#    <link href="/Static/css/demo.css" rel="stylesheet">#}
+    {#    <link href="/Static/css/iconfont.css" rel="stylesheet">#}
+    {#    <link href="/Static/css/demo.css" rel="stylesheet">#}
     <link href="/Static/css/index_2.css" rel="stylesheet">
     <link href="/Static/css/jquery.sinaEmotion.css" rel="stylesheet">
     <link href="/Static/css/zhuanfa.css" rel="stylesheet">
@@ -13,136 +13,138 @@
 </head>
 <body>
 {% csrf_token %}
-    <div class="index_head clearfix">
-        <span class="logo_img"></span>
-        <div class="index_seek">
-            <span id="Hot_search" onfocus="" onchange="" style="font-size: 6px;"></span>
-            <input type="text" name="seek">
-            <a title="搜索"></a>
-            <span class="Seek_img"></span>
+<div class="index_head clearfix">
+    <a href="/index/"><span class="logo_img"></span></a>
+    <div class="index_seek">
+        <span id="Hot_search" onfocus="" onchange="" style="font-size: 6px;"></span>
+        <input type="text" name="seek">
+        <a title="搜索"></a>
+        <span class="Seek_img"></span>
+    </div>
+    <ul class="Navigation">
+        <li class="title_interval"><a href="/index/"><em class="iconfont_head">&#xe607;</em>首页</a></li>
+        <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe612;</em>视频</a></li>
+        <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe617;</em>发现</a></li>
+        <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe618;</em>游戏</a></li>
+        <li class="Login_Regist"><span><a href="javascript:(0)">注册</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span><a
+                href="javascript:(0)">登录</a></span></li>
+    </ul>
+</div>
+<div class="bottom_tools" style="bottom: 40px;">
+    <a id="scrollUp" href="javascript:;" title="飞回顶部" style="display: none;"></a>
+</div>
+<div class="index_text">
+    <div class="Content clearfix">
+        <div class="Content_left">
+
+            <ul class="Left_Navigation">
+                <div class="Left_Navigation_top">
+                    <li class="active">
+                        <a class="left_interval" href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe607;</span>&nbsp;&nbsp;#}
+                            &nbsp;
+                            <em class="Font_Correction">推荐</em>
+                            {#                            <em class="Font_Hot">HOT</em>#}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe603;</span>&nbsp;&nbsp;#}
+                            &nbsp;
+                            <em class="Font_Correction">我的收藏</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe608;</span>&nbsp;&nbsp;#}
+                            &nbsp;
+                            <em class="Font_Correction">我的赞</em>
+                        </a>
+
+                    </li>
+                </div>
+                <hr noshade="noshade" size="1" color="#e9d1e9"/>
+                <div class="Font_Correction_h" style="font-size: 12px">
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe604;</span>&nbsp;&nbsp;#}
+                            &nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">热门微博</em>
+                        </a>
+                        <hr noshade="noshade" size="1" color="#e9d1e9"/>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe606;</span>&nbsp;&nbsp;#}
+                            &nbsp;&nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">好友圈</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe601;</span>&nbsp;&nbsp;#}
+                            &nbsp;&nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">特别关注</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe606;</span>&nbsp;&nbsp;#}
+                            &nbsp;&nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">名人明星</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe602;</span>&nbsp;&nbsp;#}
+                            &nbsp;&nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">游戏</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe605;</span>&nbsp;&nbsp;#}
+                            &nbsp;&nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">英语</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe600;</span>&nbsp;&nbsp;#}
+                            &nbsp;&nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">群微博</em>
+                            {#                            <em class="Font_Hot" style="background-color: #60bcf0">NEW</em>#}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:(0)">
+                            {#                            <span class="iconfont">&#xe609;</span>#}
+                            &nbsp;&nbsp;
+                            <em class="Font_Correction" style="font-size: 12px">悄悄关注</em>
+                        </a>
+                    </li>
+                </div>
+            </ul>
         </div>
-        <ul class="Navigation">
-            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe607;</em>首页</a></li>
-            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe612;</em>视频</a></li>
-            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe617;</em>发现</a></li>
-            <li class="title_interval"><a href="javascript:(0)"><em class="iconfont_head">&#xe618;</em>游戏</a></li>
-            <li class="Login_Regist"><span><a href="javascript:(0)">注册</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span><a href="javascript:(0)">登录</a></span></li>
-        </ul>
-    </div>
-    <div class="bottom_tools" style="bottom: 40px;">
-        <a id="scrollUp" href="javascript:;" title="飞回顶部" style="display: none;"></a>
-    </div>
-    <div class="index_text">
-        <div class="Content clearfix">
-            <div class="Content_left">
-
-                <ul class="Left_Navigation">
-                    <div class="Left_Navigation_top">
-                        <li class="active">
-                            <a class="left_interval" href="javascript:(0)">
-    {#                            <span class="iconfont">&#xe607;</span>&nbsp;&nbsp;#}
-                                 &nbsp;
-                                <em class="Font_Correction">推荐</em>
-    {#                            <em class="Font_Hot">HOT</em>#}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-    {#                            <span class="iconfont">&#xe603;</span>&nbsp;&nbsp;#}
-                                 &nbsp;
-                                <em class="Font_Correction">我的收藏</em>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-    {#                            <span class="iconfont">&#xe608;</span>&nbsp;&nbsp;#}
-                                 &nbsp;
-                                <em class="Font_Correction">我的赞</em>
-                            </a>
-
-                        </li>
-                    </div>
-                    <hr noshade="noshade" size="1" color="#e9d1e9" />
-                    <div class="Font_Correction_h" style="font-size: 12px">
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe604;</span>&nbsp;&nbsp;#}
-                                 &nbsp;
-                                <em class="Font_Correction" style="font-size: 12px">热门微博</em>
-                            </a>
-                            <hr noshade="noshade" size="1" color="#e9d1e9" />
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe606;</span>&nbsp;&nbsp;#}
-                                 &nbsp;&nbsp;
-                                <em class="Font_Correction" style="font-size: 12px" >好友圈</em>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe601;</span>&nbsp;&nbsp;#}
-                                 &nbsp;&nbsp;
-                                <em class="Font_Correction" style="font-size: 12px">特别关注</em>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe606;</span>&nbsp;&nbsp;#}
-                                 &nbsp;&nbsp;
-                                <em class="Font_Correction"style="font-size: 12px">名人明星</em>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe602;</span>&nbsp;&nbsp;#}
-                                 &nbsp;&nbsp;
-                                <em class="Font_Correction"style="font-size: 12px">游戏</em>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe605;</span>&nbsp;&nbsp;#}
-                                 &nbsp;&nbsp;
-                                <em class="Font_Correction"style="font-size: 12px">英语</em>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe600;</span>&nbsp;&nbsp;#}
-                                 &nbsp;&nbsp;
-                                <em class="Font_Correction" style="font-size: 12px">群微博</em>
-        {#                            <em class="Font_Hot" style="background-color: #60bcf0">NEW</em>#}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:(0)">
-        {#                            <span class="iconfont">&#xe609;</span>#}
-                                &nbsp;&nbsp;
-                                <em class="Font_Correction"style="font-size: 12px" >悄悄关注</em>
-                            </a>
-                        </li>
-                    </div>
-                </ul>
-            </div>
-            <ul class="Content_Center_ul" id="Text">
-                <div class="Content_center_input" id="new_weibo_input">
-{#                    <span class="Content_center_input_zi_R">#}
-{#                        <em class="spac1">有什么新</em>#}
-{#                        <em class="spac2">鲜</em>#}
-{#                        <em class="spac3">事要告诉大家</em>#}
-{#                        <em class="spac4">？</em>#}
-{#                    </span>#}
-                    <div class="Content_center_input_zi_L" node-type="recommendTopic">
-                        <a href="http://huati.weibo.com/4181285?refer=homright" target="_blank">@广大财经大学 新住宿楼甲醛超标，数百名学生露宿天台</a>　
-                        <a href="http://hot.weibo.com?refer=homright" target="_blank">热门微博</a>
-                        <a href=";" style="position:absolute;top:-1000px;" title="微博内容列表"></a>
-                        <a href="" id="focus_feed_list" style="position:absolute;top:-1000px;"></a>
-                    </div>
-                    <div style="margin-left: -5px">
-                        <textarea id="Release_text"  class="Content_center_input_index" ></textarea>
-                    </div>
-                    <div class="Content_center_input_bq">
+        <ul class="Content_Center_ul" id="Text">
+            <div class="Content_center_input" id="new_weibo_input">
+                {#                    <span class="Content_center_input_zi_R">#}
+                {#                        <em class="spac1">有什么新</em>#}
+                {#                        <em class="spac2">鲜</em>#}
+                {#                        <em class="spac3">事要告诉大家</em>#}
+                {#                        <em class="spac4">？</em>#}
+                {#                    </span>#}
+                <div class="Content_center_input_zi_L" node-type="recommendTopic">
+                    <a href="http://huati.weibo.com/4181285?refer=homright" target="_blank">@广大财经大学
+                        新住宿楼甲醛超标，数百名学生露宿天台</a>　
+                    <a href="http://hot.weibo.com?refer=homright" target="_blank">热门微博</a>
+                    <a href=";" style="position:absolute;top:-1000px;" title="微博内容列表"></a>
+                    <a href="" id="focus_feed_list" style="position:absolute;top:-1000px;"></a>
+                </div>
+                <div style="margin-left: -5px">
+                    <textarea id="Release_text" class="Content_center_input_index"></textarea>
+                </div>
+                <div class="Content_center_input_bq">
                         <span class="Content_center_input_biaoq" id="face">
                             <span style="color: #ff9000;font-weight: bold" class="iconfont_weibo">&#xe60b;</span>
                             <span class="option_wb" style="margin-right: 15px">表情</span>
@@ -164,111 +166,89 @@
                             <span style="color: #ff6600;font-weight: bold" class="iconfont_weibo">&#xe610;</span>
                             <span class="option_wb">头条文章</span>
                         </span>
-                    </div>
-                    <button class="W_btn_a" onclick="Release()" diss-data="module=stissue" node-type="submit" style="color:#fff " title="发布微博按钮">发布</button>
-                    <div class="Content_center_input_fb">
-{#                        <div style="overflow: hidden;width: 45px;display: inline-block">#}
-{#                            <select style="border: 0;outline: none;">#}
-{#                                <option value="0">公开</option>#}
-{#                                <option value="1">好友圈</option>#}
-{#                                <option value="2">仅自己可见</option>#}
-{#                                <option value="3">群可见</option>#}
-{#                            </select>#}
-{#                        </div>#}
-                        <span class="Content_center_input_fb_qx ">公开</span>
-                        <em class="W_ficon ficon_arrow_down S_ficon iconfont_info">&#xe619;</em>
-                    </div>
                 </div>
-                <li class="index_center_img_SLQ" style="position: relative">
-                    <img href="" class="index_center_touxiang_SLQ"
-                                 src="/Static/img/test_img/005KvRRWjw8ezywugsozbj30a10873zw.jpg"/>
-                    <ul class="index_center_img_ul_SLQ">
-                        <li style="margin-top: 10px;"><a href="" class="index_center_img_name_SLQ">全球搞笑趣事集</a></li>
-                        <li>
-                            <a class="index_center_img_V_SLQ"></a>
-                            <a class="index_center_img_vip_SLQ"></a>
-                            <a class="index_center_img_lvxing_SLQ"></a>
-                        </li>
-                    </ul>
-                    <div class="index_center_img_time_from_SLQ">
-                        <span class="index_center_img_time_SLQ">今天 15:21 </span>
-                        <span class="index_cener_img_from_SLQ">来自</span>
-                        <span class="index_cener_img_from_add_SLQ">iPhone 9999plus</span>
-                    </div>
+                <button class="W_btn_a" onclick="Release()" diss-data="module=stissue" node-type="submit"
+                        style="color:#fff " title="发布微博按钮">发布
+                </button>
+                <div class="Content_center_input_fb">
+                    {#                        <div style="overflow: hidden;width: 45px;display: inline-block">#}
+                    {#                            <select style="border: 0;outline: none;">#}
+                    {#                                <option value="0">公开</option>#}
+                    {#                                <option value="1">好友圈</option>#}
+                    {#                                <option value="2">仅自己可见</option>#}
+                    {#                                <option value="3">群可见</option>#}
+                    {#                            </select>#}
+                    {#                        </div>#}
+                    <span class="Content_center_input_fb_qx ">公开</span>
+                    <em class="W_ficon ficon_arrow_down S_ficon iconfont_info">&#xe619;</em>
+                </div>
+            </div>
+            <li class="index_center_img_SLQ" style="position: relative">
+                <img href="" class="index_center_touxiang_SLQ"
+                     src="/Static/img/test_img/005KvRRWjw8ezywugsozbj30a10873zw.jpg"/>
+                <ul class="index_center_img_ul_SLQ">
+                    <li style="margin-top: 10px;"><a href="" class="index_center_img_name_SLQ">全球搞笑趣事集</a></li>
+                    <li>
+                        <a class="index_center_img_V_SLQ"></a>
+                        <a class="index_center_img_vip_SLQ"></a>
+                        <a class="index_center_img_lvxing_SLQ"></a>
+                    </li>
+                </ul>
+                <div class="index_center_img_time_from_SLQ">
+                    <span class="index_center_img_time_SLQ">今天 15:21 </span>
+                    <span class="index_cener_img_from_SLQ">来自</span>
+                    <span class="index_cener_img_from_add_SLQ">iPhone 9999plus</span>
+                </div>
                     <span class="index_center_readme_zhuanfa_SLQ">
                         妖怪，还我爷爷！！！
                     </span>
-                    <ul class="index_center_img_ul_zhuanfa_SLQ">
-                        <li class="index_center_img_li_SLQ">
-                            <a href="" class="index_center_img_name_zhuanfa_SLQ">@全球搞笑趣事集</a>
-                        </li>
-                    </ul>
+                <ul class="index_center_img_ul_zhuanfa_SLQ">
+                    <li class="index_center_img_li_SLQ">
+                        <a href="" class="index_center_img_name_zhuanfa_SLQ">@全球搞笑趣事集</a>
+                    </li>
+                </ul>
                     <span class="index_center_img_readme_SLQ">~~~~[心] ~~~~
                             你可以忽略我的感受 也可以肆意挥霍我的热情 甚至不理会于我的沮丧难过
                             可是有一点你必须得明白 每个人能付出的爱都是有限的 无论是对朋友还是爱
                             如果你让我感觉到力不从心了 迟早有一天我会离开你 那就再也回不来了</span>
 
-                    <div class="index_img_iii_SLQ">
-                        <div class="index_img_SLQ" id="pt">
-                            <a href="#" target="_blank"> <img src="/Static/img/hulu/172130a.jpg"></a>
-                            <a href="#" target="_blank"> <img src="/Static/img/hulu/314865b.jpg"></a>
-                            <a href="#" target="_blank"> <img src="/Static/img/hulu/314866c.jpg"></a>
-                            <a href="#" target="_blank"> <img src="/Static/img/hulu/314867d.jpg"></a>
-                            <a href="#" target="_blank"> <img src="/Static/img/hulu/314868e.jpg"></a>
-                            <a href="#" target="_blank"> <img src="/Static/img/hulu/314870f.jpg"></a>
-                            <a href="#" target="_blank"> <img src="/Static/img/hulu/314871g.jpg"></a>
-                        </div>
+                <div class="index_img_iii_SLQ">
+                    <div class="index_img_SLQ" id="pt">
+                        <a href="#" target="_blank"> <img src="/Static/img/hulu/172130a.jpg"></a>
+                        <a href="#" target="_blank"> <img src="/Static/img/hulu/314865b.jpg"></a>
+                        <a href="#" target="_blank"> <img src="/Static/img/hulu/314866c.jpg"></a>
+                        <a href="#" target="_blank"> <img src="/Static/img/hulu/314867d.jpg"></a>
+                        <a href="#" target="_blank"> <img src="/Static/img/hulu/314868e.jpg"></a>
+                        <a href="#" target="_blank"> <img src="/Static/img/hulu/314870f.jpg"></a>
+                        <a href="#" target="_blank"> <img src="/Static/img/hulu/314871g.jpg"></a>
                     </div>
-                </li>
-            </ul>
-{#            <div class=" Content_input_right_top_all_SLQ">#}
-{#                <span  class="Content_input_right_top"></span>#}
-{#                <span class="Content_input_right_top2"></span>#}
-{#                <span class="Content_center_right_top_img"></span>#}
-{#                <ul class="Content_center_vip_lv_name">#}
-{#                    <li><a class="Content_center_right_name">碗里的柠檬</a></li>#}
-{#                    <li><span class="Content_center_right_vip"/></li>#}
-{#                    <li><span class="Content_center_right_lv"/></li>#}
-{#                    <li><span class="Content_center_right_lv" title="微博等级4">Lv 4</span></li>#}
-{#                </ul>#}
-{#                <div class="Content_center_guanzhu_fans_weibo" style="display: inline;">#}
-{#                    <ul class="Content_center_guanzhu">#}
-{#                        <li><a class="Content_center_guanzhu_num">133</a></li>#}
-{#                        <li><a class="Content_center_guanzhu_hanzi">关注</a></li>#}
-{#                    </ul>#}
-{#                    <ul class="Content_center_fans">#}
-{#                        <li><a class="Content_center_fans_num">1</a></li>#}
-{#                        <li><a class="Content_center_fans_hanzi">粉丝</a></li>#}
-{#                    </ul>#}
-{#                    <ul class="Content_center_weibo">#}
-{#                        <li><a class="Content_center_weibo_num">13</a></li>#}
-{#                        <li><a class="Content_center_weibo_hanzi">微博</a></li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-            <div class=" Content_input_right_top_all_SLQ">
-                <span  class="Content_input_right_top"></span>
-                <span class="Content_input_right_top2"></span>
-                <span class="Content_center_right_top_img"></span>
-                <ul class="Content_center_vip_lv_name">
-                    <li><a href="" class="Content_center_right_name" id="nameinfo">name</a>
-                    <li><span class="Content_center_right_vip"/>
-                    <li><i><span class="Content_center_right_lv" title="微博等级" id="levelinfo">Lv.6</span></i>
-                </ul>
-                <div class="Content_center_right_dongtai_SLQ">
-                    <ul>
-                        <a href="" class="Content_center_right_dongtai_SLQ_num" id="follow_list_len">1</a>
-                        <li class="Content_center_right_dongtai_SLQ_wenzi">关注
-                    </ul>
-                    <ul>
-                        <a href="" class="Content_center_right_dongtai_SLQ_num" id="my_followers_len">1</a>
-                        <li class="Content_center_right_dongtai_SLQ_wenzi">粉丝
-                    </ul>
-                    <ul>
-                        <a href="" class="Content_center_right_dongtai_SLQ_num" id="weibo_len">1</a>
-                        <li class="Content_center_right_dongtai_SLQ_wenzi">微博
-                    </ul>
                 </div>
+            </li>
+        </ul>
+
+        <div class=" Content_input_right_top_all_SLQ">
+            <span class="Content_input_right_top"></span>
+            <span class="Content_input_right_top2"></span>
+            <span class="Content_center_right_top_img"></span>
+            <ul class="Content_center_vip_lv_name">
+                <li><a href="/home/user.html" class="Content_center_right_name" id="nameinfo">name</a>
+                <li><span class="Content_center_right_vip"/>
+                <li><i><span class="Content_center_right_lv" title="微博等级" id="levelinfo">Lv.6</span></i>
+            </ul>
+            <div class="Content_center_right_dongtai_SLQ">
+                <ul>
+                    <a href="" class="Content_center_right_dongtai_SLQ_num" id="follow_list_len">1</a>
+                    <li class="Content_center_right_dongtai_SLQ_wenzi">关注
+                </ul>
+                <ul>
+                    <a href="" class="Content_center_right_dongtai_SLQ_num" id="my_followers_len">1</a>
+                    <li class="Content_center_right_dongtai_SLQ_wenzi">粉丝
+                </ul>
+                <ul>
+                    <a href="" class="Content_center_right_dongtai_SLQ_num" id="weibo_len">1</a>
+                    <li class="Content_center_right_dongtai_SLQ_wenzi">微博
+                </ul>
+            </div>
 
 
         </div>
@@ -283,18 +263,63 @@
             <li><a href="">文章</a></li>
         </ul>
     </div>
+
+
+{#图片九宫格--by nick#}
+    <div class="W_layer W_layer_pop hide" id="layer_nick" style="position: absolute;
+    width: 284px; left: 338px; top: 241px; color: #333;text-decoration: none;">
+        <div style="position: relative;background: #fff;border-radius: 3px;border: 1px solid #ccc;
+        box-shadow: 0 4px 20px 1px rgba(0,0,0,0.2);">
+            <div class="W_layer_close">
+                <a href="javascript:void(0)" node-type="close" style="position: absolute;z-index: 2;
+                right: 6px;top: 5px;font-size: 18px;text-decoration: none;color: black;">
+                    X
+                </a>
+            </div>
+            <div node-type="inner">
+                <div style="width: 252px;overflow: hidden;padding: 16px 16px 10px 16px;" node-type="box">
+                    <div style="margin: -20px 0 0;padding: 28px 0 0;text-align: left;"><h3 style="margin: -11px 0 10px;">本地上传</h3>
+                        <h4 style="margin: 0 0 10px;line-height: 17px;"><span style="height: 26px;
+                        line-height: 26px;" node-type="picsInfo">
+                            共<em class="num_totla">1</em>张，还能上传
+                            <em class="num_remain">8</em>张</span><span
+                                style="float: right;top: 23px;right: 24px;position: absolute;" class="W_fr">
+                            <a href="javascript:void(0);" style="color: #fff;text-decoration: none;" class="W_btn_a" action-type="addTag"
+                                node-type="title_addTag" suda-data="key=pub_pic_upload&amp;value=main_pub_tag">
+                                <em class="W_ficon ficon_add S_ficon">
+                                    +
+                                </em>图片</a></span></h4></div>
+
+                            <!--image start-->
+                            <div style="background:url(http://ww1.sinaimg.cn/square/0065L7xHjw1f8bjq9mn3tj303c03cmwx.jpg) center center;
+width:80px;height:80px;float: left;margin: 1px;;"></div>
+                    <div style="background:url(http://ww1.sinaimg.cn/square/0065L7xHjw1f8bjq9mn3tj303c03cmwx.jpg) center center;
+width:80px;height:80px;float: left;margin: 1px;"></div>
+                            <!--image end-->
+                {#尖角#}
+                <div class="W_layer_arrow">
+                            <span node-type="arrow" class="W_arrow_bor W_arrow_bor_t" style="left: 81px;"><i class="S_line3"></i><em style="left: 81px" class="S_bg2_br"></em></span>
+                        <div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div></div>
     <script src="/Static/jQuery/jquery.cookie.js"></script>
     <script src="/Static/jQuery/Custom_JQ.js"></script>
     <script src="/Static/jQuery/user_mess.js"></script>
     <script>
         init_bq();
-        $(function(){
+        $(function () {
             $('#face').SinaEmotion($('#Release_text'));
             Hot_search();
             Request_login_content()
         });
-		var time = setInterval(move, 30000);
+        var time = setInterval(move, 30000);
     </script>
 </body>
 </html>

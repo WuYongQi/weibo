@@ -1,0 +1,78 @@
+{% extends './layout.html' %}
+
+{% block content %}
+
+    <div class="WB_frame">
+        <div class="WB_frame_a">
+            <div id="Pl_Official_Headerv6__1">
+                <div class="PCD_header">
+                    <div class="pf_wrap">
+                        <div class="cover_wrap banner_  transition">
+                            <div class="shadow">
+                                <!--头像显示-->
+                                <div class="portrait">
+                                    <p class="portrait_wrap">
+                                        <a href="javascript:void(0);" action-type="setPhoto" title="更换头像"
+                                           suda-uatrack="key=profile_head&amp;value=head_host">
+                                            <img src="/Static/img/0060U3qijw8f48w5350d9j30to0tpta1.jpg">
+                                        </a>
+                                    </p>
+                                </div>
+                                <!--昵称显示-->
+                                <div class="pf_username">
+                                    <h1 style="font-size: 22px;display: inline-block;font-weight: normal;">碗里的柠檬</h1>
+                                    <span class="icon_bed">
+                                        <a><i class="icon_img icon_pf_female  icon_pf_male"></i></a>
+                                    </span><a title="微博会员"><em class=" icon_img icon_member1"></em></a>
+                                </div>
+                                <div class="pf_intro">
+                                    <div class="pf_intro" title="96的小伙，爱笑爱闹，爱鼓捣！">
+						一句话介绍自己吧，让别人更了解你</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Pl_Official_Nav__2">
+                <div class="PCD_tab S_bg2">
+                    <table class="tab_1">
+                        <tbody>
+                            <tr>
+                                <td class="tab_one">
+                                    <a class="tab_link">
+                                        <span class="t_link S_txt1">我的主页</span>
+                                        <span class="ani_border"></span>
+                                    </a>
+                                </td>
+                                <td class=" ">
+                                    <a class="tab_link">
+                                        <span class="t_link S_txt1">我的相册</span>
+                                        <span class="ani_border"></span>
+                                    </a>
+                                </td>
+                                <td class=" ">
+                                    <a class="tab_link">
+                                        <span class="t_link S_txt1">管理空间</span>
+                                        <span class="ani_border"></span>
+                                    </a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% block homepage %}{% endblock %}
+
+
+
+    </div>
+
+
+
+
+
+{% endblock %}

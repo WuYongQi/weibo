@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^home/push/mess\.html', weibocontentviews.messpush),  # 推送消息心跳
     url(r'^home/upload/pv\.html', weibocontentviews.picture_video),  # 图片视频
     url(r'^emotions.json$', weibocontentviews.Expression_processing),  # 表情处理
-    url(r'^wechat\.html$', weibocontentviews.wechat),
+    url(r'^wechat\.html$', weibocontentviews.wechat),   # 聊天
+    url(r'^home/user\.html$', weibocontentviews.userhtml),   # 个人信息
 ]

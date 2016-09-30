@@ -393,3 +393,7 @@ def new_msg(request):
         return HttpResponse(json.dumps(msg_lists))
 
 
+def userhtml(request):
+
+    return render(request, 'home/main.html', {'context_instance': RequestContext(request)})
+

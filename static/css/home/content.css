@@ -1,0 +1,183 @@
+.WB_frame{
+    width: 920px;
+    min-height: 1000px;
+    margin: 0 auto;
+    padding: 70px 0 0 0;
+}
+.WB_frame_a{
+    width: 920px;
+    /*margin-left: 20px;*/
+}
+.PCD_header {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.PCD_header .pf_wrap {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+}
+.PCD_header .cover_wrap {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    -moz-transform: scaleX(1.05) scaleY(1.05);
+    -webkit-transform: scaleX(1.05) scaleY(1.05);
+    z-index: 1;
+    background-image: url('http://img.t.sinajs.cn/t5/skin/public/profile_cover/001.jpg');
+    border-radius: 54px;
+}
+.PCD_header .banner_transition {
+    -moz-transform: scaleX(1) scaleY(1);
+    -webkit-transform: scaleX(1) scaleY(1);
+    -moz-transition: -moz-transform 4s linear;
+    -webkit-transition: -webkit-transform 4s linear;
+}
+
+.PCD_header .shadow {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    z-index: 0;
+}
+.PCD_header .portrait{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 48px 44% 0 ;
+    padding: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+
+.PCD_header .portrait_wrap{
+    width: 100px;
+    height: 100px;
+    margin-top: -4px;
+    background: 50%;
+}
+.PCD_header .portrait_wrap img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.PCD_header .portrait_wrap img:hover{
+    box-shadow: 0 0 14px #f66214;
+}
+
+.pf_username{
+    margin: 6px;
+    color: white;
+    text-align: center;
+}
+.icon_bed{
+    margin-left: 3px;
+}
+.PCD_header .pf_username .icon_bed .W_icon {
+    margin-left: 0;
+}
+.icon_pf_male {
+     background-position: 3px 1px;
+}
+.icon_pf_female {
+    width: 16px;
+    height: 16px;
+    vertical-align: -2px;
+    margin-left: 2px;
+}
+
+
+.icon_img{
+    display: inline-block;
+    background-image: url("/statics/img/icon_out.png");
+    _background-image: url('/statics/img/icon_out.png');
+    background-repeat: no-repeat;
+}
+
+.icon_member1{
+    background-position: -24px 0px;
+}
+.icon_member1{
+    width: 16px;
+    height: 16px;
+    vertical-align: -2px;
+    vertical-align: text-bottom\9;
+    margin-left: 3px;
+}
+
+.pf_intro{
+    margin-top: 4px;
+    text-align: center;
+    color: #fff;
+    line-height: 18px;
+    text-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+
+.S_bg2{
+    background-color: #fff;
+}
+.PCD_tab{
+    min-width: 572px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+
+
+.tab_1{
+    width: 600px;
+    height: 40px;
+    margin: auto 185px;
+}
+
+.PCD_tab .tb_tab {
+    width: 100%;
+    table-layout: fixed;
+    text-align: center;
+}
+.tab_one{
+    width: 180px;
+    height: 40px;
+}
+.current .tab_link {
+    font-weight: bold;
+}
+.tab_link {
+    color: black;
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    margin: 0 62px;
+    line-height: 38px;
+    white-space: nowrap;
+}
+.tab_link:hover{
+    text-decoration: none;
+    font-weight: bold;
+}
+.t_link {
+    padding: 0 7px;
+    font-size: 14px;
+}
+.S_txt1{
+    color: #333;
+    text-decoration: none;
+}
+ .tab_link .ani_border {
+    bottom: 0px;
+    opacity: 1;
+}
+.tab_link .ani_border {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #f7691d;
+    z-index: 500;
+    transition: all .2s linear;
+    overflow: hidden;
+}

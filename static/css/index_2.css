@@ -586,7 +586,7 @@ line-height: 34px;
     top: 20px;
 }
 .Content .Content_Center_TXT_img .Userinfo_img{
-    height: 20px;
+    /*height: 20px;*/
     /*background-color: darkslategray;*/
     line-height: 20px;
     margin-top: 10px;
@@ -597,7 +597,7 @@ line-height: 34px;
     margin-right: 3px;
 }
 .Content .Content_Center_TXT_img .Picture_zone{
-    height: 122px;
+    /*height: 122px;*/
     width: 560px;
     /*background-color: #f98099;*/
     /*position: absolute;*/
@@ -614,7 +614,7 @@ line-height: 34px;
     width: 184px;
     height: 122px;
     float: left;
-    margin-left: 4px;
+    margin: 1px;
     overflow: hidden;
 }
 .Content .Content_Center_TXT_img .Picture_zone ul li .piccut_h{
@@ -631,7 +631,7 @@ line-height: 34px;
 }
 .Content .Content_Center_TXT_img .Text_info{
     line-height: 23px;
-    max-height: 46px;
+    /*max-height: 46px;*/
     _height: 46px;
     overflow: hidden;
     /*background-color: aqua;*/

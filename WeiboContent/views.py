@@ -216,7 +216,7 @@ def userhome(request):
                 if os.path.isdir(filepath):
                     if len(os.listdir(filepath)) != 0:
                         path = encryption(filepath)
-                        new_path = os.path.join(os.path.dirname(filepath), 'weibo_img', encryption(filepath))
+                        new_path = os.path.join(os.path.dirname(filepath), 'weibo_img', path)
                         os.rename(filepath, new_path)
                         data_dic['pictures'] = path
                 # 文件处理

@@ -116,8 +116,12 @@ function Request_login_content() {
             if (arg['status']) {
                 $.each(arg['content'], function (k, v) {
                     var pictures = v['pictures'];
+                    var video = v['video'];
                     if (pictures) {
                         var pictures = JSON.parse(v['pictures']);
+                    }
+                    if (video) {
+                        var video = JSON.parse(v['video']);
                     }
                     if(v['wb_type'] == 1){
                         console.log('发消息!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
@@ -143,11 +147,11 @@ function Request_login_content() {
                                     var img_list = JSON.parse(forw_info['content'][0]['pictures']);
                                     console.log(img_list);
                                     for(var i=0;img_list.length > i;i++) {
-                                        console.log(i,'aaaa');
+                                        // console.log(i,'aaaa');
                                         // if(i==10){
                                         //     break
                                         // }
-                                        console.log(img_list[i]);
+                                        // console.log(img_list[i]);
                                         $('<a href="#" target="_blank"><img src="/Static/user' + img_list[i] + '">').appendTo(img_text_content);
                                     }
                                     img_text_content.appendTo(img_text_title);
@@ -156,8 +160,25 @@ function Request_login_content() {
                                 }
                             }
                         });
+                        
+                    } else if (video.length == 1) {
+                        console.log(video);
+                        var div = $("<div class='index_center_img_SLQ' style='position: relative'>");
+                        var headimg = $('<img href="" class="index_center_touxiang_SLQ" src="/Static/user/' + v["head_img"] + '">').appendTo(div);
+                        var uldiv = $('<ul class="index_center_img_ul_SLQ">').appendTo(div);
+                        var user = $('<li><a href="" class="index_center_img_name_SLQ">' + v["user"] +'</a></li>').appendTo(uldiv);
+                        var imgtime = $('<div class="index_center_img_time_from_SLQ">').appendTo(div);
+                        var spantime = $('<span class="index_center_img_time_SLQ" style="margin: 72px 0px 0px 59px;">' + v["date"] + '</span>').appendTo(imgtime);
+                        var text = $('<span class="index_center_readme_zhuanfa_SLQ" style="position: absolute;margin: 15px 0px 0px 58px;">' + v["text"] + '</span>').appendTo(div);
+                        var video_div = $('<div class="index_center_img_wen"><video src="/Static/user' + video[0] + '" style="width: 569px;margin: 139px 0px 0px 6px;"></video></div>').appendTo(div);
+                        var Userinfo_img = $('<div class="Userinfo_img">').appendTo(div);
+                        $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Userinfo_img);//赞的个数
+                        $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Userinfo_img);//评论个数
+                        $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Userinfo_img);//转发个数
+                        div.appendTo($('#Text'))
 
-                    }else if (pictures.length > 1) {
+                    }
+                    else if (pictures.length > 1) {
                         var li = $("<li class='Content_Center_li_img clearfix'>");
                         var Center = $('<div class="Content_Center_TXT_img clearfix">').appendTo(li);
                         var Text_info = $('<div class="Text_info">').appendTo(Center);
@@ -165,8 +186,8 @@ function Request_login_content() {
                         // var Text_ = $('<span>'+v["text"]).appendTo(Text_info);
                         var Text_img = $('<div class="Picture_zone">').appendTo(Center);
                         var ul = $('<ul>');
-                        for (var i = 0; i < 3; i++) {
-                            li_list = $('<li><img class="piccut_v piccut_h" src="/Static/user/' + v["pictures"][i] + '">').appendTo(ul);
+                        for (var i = 0; i < pictures.length; i++) {
+                            li_list = $('<li><img class="piccut_v piccut_h" src="/Static/user/' + pictures[i] + '">').appendTo(ul);
                         }
                         ul.appendTo(Text_img);
                         var Userinfo_img = $('<div class="Userinfo_img">').appendTo(Center);
@@ -177,7 +198,8 @@ function Request_login_content() {
                         $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Userinfo_img);//评论个数
                         $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Userinfo_img);//转发个数
                         li.appendTo($('#Text'))
-                    } else if (pictures.length <= 1) {
+                        
+                    } else if (pictures.length == 1) {
                         console.log(AnalyticEmotion(v["text"]));
                         var li = $("<li class='Content_Center_li'>");
                         var Center = $('<div class="Content_Center_TXT">').appendTo(li);
@@ -199,12 +221,29 @@ function Request_login_content() {
                         var span_p = $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Content_Userinfo);//评论个数
                         var span_zf = $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Content_Userinfo);//转发个数
                         li.appendTo($('#Text'));
+                    } else if (pictures.length == 0){
+                        var li = $("<li class='Content_Center_li'>");
+                        var Center = $('<div class="Content_Center_TXT">').appendTo(li);
+                        var Text_right = $('<div class="Text_right">').appendTo(Center);
+                        var Coutent = $('<div class="Coutent">').html(AnalyticEmotion(v["text"])).appendTo(Text_right);
+                        var Content_Userinfo = $('<div class="Content_Userinfo">').appendTo(Text_right);
+                        var span = $('<span>').appendTo(Content_Userinfo);
+                        var MUser = $('<a href="javascript:(0)">').appendTo(span);//用户个人主页url
+                        var User_title_img = $('<img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18">').appendTo(MUser); //用户头像
+                        var span_User = $('<span>').appendTo(Content_Userinfo);
+                        var Userinfo = $('<a href="javascript:(0)">').appendTo(span_User);//用户个人主页url
+                        var Username = $('<span>&nbsp;@' + v["user"] + '</span>').appendTo(Userinfo);
+                        var span_time = $('<span>&nbsp;&nbsp;&nbsp;' + v["date"] + '</span>').appendTo(Content_Userinfo);
+                        var span_zan = $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Content_Userinfo);//赞的个数
+                        var span_p = $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Content_Userinfo);//评论个数
+                        var span_zf = $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Content_Userinfo);//转发个数
+                        li.appendTo($('#Text'));
                     } else {
-                        alert('服务器偷懒，获取信息失败，请重新获取！')
+                        console.log('服务器偷懒，获取信息失败，请重新获取！')
                     }
                 })
             } else {
-                alert('服务器偷懒，获取信息失败，请重新获取！')
+                console.log('服务器偷懒，获取信息失败，请重新获取！')
             }
         }
      })
@@ -417,13 +456,16 @@ function updata_pctert() {
                     img = arg['filepath'];
                     $('#picuter_one_s1').addClass('hide');
                     $('#layer_nick').removeClass('hide');
+                    // $('#partenimgnine').find('div').last().css('background', 'url("/Static/user/' + img + '") center center');
+                    // document.getElementById("partenimgnine").lastChild.firstChild.style.setProperty('background', 'url("/Static/user/' + img + '") center center');
                     $('#num_totla').text(Number($('#num_totla').text())+1);
                     $('#num_remain').text($('#num_remain').text()-1);
                     if ($('#num_remain').text() == 0){
-                        $('#Addimgnineid').css('color','#ffc09f').css('cursor','not-allowed').attr('onclick', "");
-                    // onclick="Addimgnine();"
+                        $('#Addimgnineid').css('background-color','#ffc09f').css('cursor','not-allowed').attr('onclick', "");
+                    } else {
+                        $('#Addimgnineid').css('background-color','#ff8140').css('cursor','auto').attr('onclick', "Addimgnine();");
                     }
-                    // for(var i=0;arg[''])
+
                 } else {
                     alert(arg['message'])
                 }
@@ -469,14 +511,9 @@ function handleFileSelect(evt) {
           var span = document.createElement('span');
           span.innerHTML =
           [
-           '<div style="background:url(' + e.target.result + ') center center;' + 
-          'width:80px;height:60px;float: left;margin: 1px;background-repeat: round;"></div>'
-            // '<img style="height: 75px; border: 1px solid #000; margin: 5px" src="',
-            // e.target.result,
-            // '" title="', escape(theFile.name),
-            // '"/>'
+           '<div style="background:url(' + e.target.result + ') center center;' +
+          'width:80px;height:59px;float: left;margin: 1px;background-repeat: round;"></div>'
           ].join('');
-            console.log("span::", span);
           document.getElementById('partenimgnine').insertBefore(span, null);
         };
       })(f);

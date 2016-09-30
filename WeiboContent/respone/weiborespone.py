@@ -28,6 +28,7 @@ class weibocontentrespone:
             imglist = []
             for item in os.listdir(new_path):
                 imglist.append(os.path.join(new_path, item).split('user')[-1])
+            print(imglist)
             return json.dumps(imglist)
         else:
             return json.dumps([])
@@ -46,7 +47,7 @@ class weibocontentrespone:
             "head_img": str(item.user.head_img),
             "perm": item.perm,
             "date": time_conversion.timeconversion(item.date).timeret,
-            "pictures": self.__new_path(str(item.user.user.username), item.pictures_link_id),
+            "pictures": self.__new_path(str(item.user.user.username), item.pictures_link_id) if item.pictures_link_id else '',
             "video": self.__new_path(str(item.user.user.username), item.video_link_id),
             "forward": str(item.forward_or_collect_from.id) if item.forward_or_collect_from else 0,    # url
             "to_weibo": item.id,

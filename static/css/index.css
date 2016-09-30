@@ -301,7 +301,7 @@ body{
     margin-right: 3px;
 }
 .Content .Content_Center_TXT_img .Picture_zone{
-    height: 122px;
+    /*height: 122px;*/
     width: 560px;
     /*background-color: #f98099;*/
     /*position: absolute;*/

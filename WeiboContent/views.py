@@ -107,7 +107,6 @@ def weibocontent(request):
         return HttpResponse(json.dumps(con_obj.con_dic))
 
 
-
 @login_required
 def userinfo(request):
     """用户信息视图"""
@@ -127,8 +126,6 @@ def userinfo(request):
         else:
             error_msg = request_form.errors.as_json()
             print(type(error_msg), error_msg)
-
-
 
 
 def login(request):
@@ -151,7 +148,8 @@ def login(request):
                 sessionrequestobj = sessionrespone.sessionrespone(user_id=user_id)
                 cache.set(user_id, sessionrequestobj.dic(), timeout=60 * 3)
                 usercollobj = models_server.UserCollection()
-                newmess_push.start('%s%s' % (str(usercollobj.mymess(ModelBackend().get_user(user_id=user_id)).id), 'mq'))
+                newmess_push.start(
+                    '%s%s' % (str(usercollobj.mymess(ModelBackend().get_user(user_id=user_id)).id), 'mq'))
             else:
                 loginrespone.status = False
                 loginrespone.message = "用户名或密码错误"
@@ -195,7 +193,6 @@ def userhome(request):
             userinfomessobj = userrespone.userinfomess(mymess)
             return HttpResponse(json.dumps(userinfomessobj.dic()))
 
-
         page = request.GET.get('home') if request.GET.get('home', None) else 1
         content_list, favor_list, comments_list, forwarding_conut = usercollectionobj.userweibo(userobj, page=page)
         con_obj = weiborespone.weibocontentrespone(content_list=content_list,
@@ -218,10 +215,10 @@ def userhome(request):
                 if os.path.isdir(filepath):
                     if len(os.listdir(filepath)) != 0:
                         path = encryption(filepath)
-                        new_path = os.path.join(os.path.dirname(filepath),'weibo_img',encryption(filepath))
+                        new_path = os.path.join(os.path.dirname(filepath), 'weibo_img', encryption(filepath))
                         os.rename(filepath, new_path)
                         data_dic['pictures'] = path
-                #文件处理
+                # 文件处理
                 weiborequestobj = weiborequest.newweibocontentrequest(**data_dic)
                 # 加队列返
                 obj = producers.producers()
@@ -243,7 +240,6 @@ def userhome(request):
                                                                             message='填写错误',
                                                                             connect_dic=formnewweiboret.errors)
             return HttpResponse(json.dumps(newweiboconresponeobj.dic()))
-
 
 
 @login_required
@@ -290,10 +286,11 @@ def messpush(request):
                                                              message="登录超时，请重新登录")
         return HttpResponse(json.dumps(pushmessresponeobj.dic()))
     followidlist = cacheuserdic['followlist']  # 关注的人ID
-    numyet = cache.get('numyet', 0)
-    weibo_id = cache.get('weibo_id', None)
+
+    weibo_id_list = request.POST.get('weibo_id_list', None)
+    weibo_id_list = json.loads(weibo_id_list)
     num = 0  # 个数初始化
-    li = []  # [{},{},]
+    li = []  # [1,{},{},]
     status = False
     for user_id in followidlist:
         cachedic = cache.get('%s%s' % (user_id, 'mq'), None)
@@ -303,8 +300,9 @@ def messpush(request):
                 if str(cachedic.index(i)) == '0':
                     num += int(i)
                     continue
-                li.append(str(i, encoding='utf-8'))
-            # li.append(cachedic)
+                if json.loads(str(i, encoding='utf-8'))['id'] not in weibo_id_list:
+                    li.append(str(i, encoding='utf-8'))
+                # li.append(cachedic)
     print("li:", li)
     pushmessresponeobj = pushmessrespone.pushmessrespone(count=li,
                                                          status=status,
@@ -336,8 +334,62 @@ def searchall(request):
             return HttpResponse(json.dumps(con_obj.con_dic))
 
 
-text_url = open(os.path.join(os.path.dirname(os.path.dirname(__file__)),'static','img','BQ_Url','emotions.json'),encoding='utf-8').read()
+# 表情文件读取
+text_url = open(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'img', 'BQ_Url', 'emotions.json'),
+                encoding='utf-8').read()
 def Expression_processing(req):
     """QQ表情"""
     return HttpResponse(text_url)
+
+
+def wechat(request):
+    pass
+
+
+def new_msg(request):
+    import queue
+    GLOBAL_MQ = {}
+    if request.method == 'POST':
+        print(request.POST.get('data'))
+
+        # 获取用户发过来的数据
+        data = json.loads(request.POST.get('data'))
+        send_to = data['to']
+        # 判断队列里是否有这个用户名,如果没有新建一个队列
+        if send_to not in GLOBAL_MQ:
+            GLOBAL_MQ[send_to] = queue.Queue()
+        data['timestamp'] = time.strftime("%Y-%m-%d %X", time.localtime())
+        GLOBAL_MQ[send_to].put(data)
+
+        return HttpResponse(GLOBAL_MQ[send_to].qsize())
+    else:
+        # 因为队列里目前存的是字符串所以我们需要先给他转换为字符串
+        request_user = str(request.user.userprofile.id)
+        msg_lists = []
+        # 判断是否在队列里
+        if request_user in GLOBAL_MQ:
+            # 判断有多少条消息
+            stored_msg_nums = GLOBAL_MQ[request_user].qsize()
+            try:
+                # 如果没有新消息
+                if stored_msg_nums == 0:
+                    print("\033[41;1m没有消息等待,15秒.....\033[0m")
+                    msg_lists.append(GLOBAL_MQ[request_user].get(timeout=15))
+                '''
+                    如果队列里面有没有消息,get就会阻塞,等待有新消息之后会继续往下走,这里如果阻塞到这里了,等有新消息过来之后,把消息加入到
+                    msg_lists中后,for循环还是不执行的因为,这个stored_msg_mums是在上面生成的变量下面for调用这个变量的时候他还是为0
+                    等返回之后再取得时候,现在stored_msg_nums不是0了,就执行执行for循环了,然后发送数据
+                '''
+            except Exception as e:
+                print('error:', e)
+                print("\033[43;1等待已超时......15秒.....\033[0m")
+
+            # 把消息循环加入到列表中并发送
+            for i in range(stored_msg_nums):
+                msg_lists.append(GLOBAL_MQ[request_user].get())
+        else:
+            # 创建一个新队列给这个用户
+            GLOBAL_MQ[str(request.user.userprofile.id)] = queue.Queue()
+        return HttpResponse(json.dumps(msg_lists))
+
 

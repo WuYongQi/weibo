@@ -31,7 +31,8 @@ class pushconsumers(BaseMQ.BaseMQ):
         self.channel.start_consuming()
 
     def callback(self, ch, method, properties, body):
-        print(" [x] %r" % body)
+        print(self.exchange, " [x] %rr" % body)
+        print("===================")
         beforecache = cache.get(self.exchange, None)
         print("beforecache:", beforecache)
         if beforecache:
@@ -41,6 +42,7 @@ class pushconsumers(BaseMQ.BaseMQ):
             print("beforecache222:", beforecache)
             cache.set(self.exchange, beforecache, timeout=config.cache['redis_timeout'])
         else:
+            print(self.exchange)
             cache.set(self.exchange, [1, body, ], timeout=config.cache['redis_timeout'])
 
 

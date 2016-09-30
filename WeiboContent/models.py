@@ -105,7 +105,7 @@ class UserProfile(models.Model):
     age = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name="年龄")
     email = models.EmailField(verbose_name="邮件")
     tags = models.ManyToManyField(Tags)
-    head_img = models.ImageField(upload_to='./static/user/', verbose_name="头像")
+    head_img = models.ImageField(upload_to='./static/user/admin/', verbose_name="头像")
 
     follow_list = models.ManyToManyField('self', blank=True, related_name="my_followers",
                                          symmetrical=False)

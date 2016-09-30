@@ -16,7 +16,7 @@ class pushmessrespone:
 
     def dic(self):
         d = {
-            'count': self.count,
+            'count': json.dumps(self.count),
             'num': self.num,
             'status': self.status,
             'message': self.message,

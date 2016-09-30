@@ -71,25 +71,28 @@ class consumers(BaseMQ.BaseMQ):
         # 写入数据库
         weibocountentobj = models_server.WeiboContent()
         ret = weibocountentobj.add(dicbody)
-        print("callback_ret:", ret)
+        print("callback_ret:", type(ret), ret.id, ret)
+        # 写入微博字典id
+        dicbody['id'] = ret.id
 
         # 检测在线粉丝并推送
         # 放入以用户命名的队列
         name = str(dicbody['user_id']) + 'mq'
 
         producersobj = producers()
+        print("set...", name)
         ret = producersobj.createadd(queue='',
                                      body=json.dumps(dicbody),
                                      exchange=name, )
         producersobj.closeconn()
 
-        if ret:
-            tarhas_list = getattr(push_followers.pushfollowers, dicbody['user_id'], None)
-            if not tarhas_list:
-                setattr(push_followers.pushfollowers, dicbody['user_id'], [name, ])
-            else:
-                list(tarhas_list).append(name)
-            print('tarhas_list', tarhas_list)
+        # if ret:
+        #     tarhas_list = getattr(push_followers.pushfollowers, dicbody['user_id'], None)
+        #     if not tarhas_list:
+        #         setattr(push_followers.pushfollowers, dicbody['user_id'], [name, ])
+        #     else:
+        #         list(tarhas_list).append(name)
+        #     print('tarhas_list', tarhas_list)
 
 
         # connection = pika.BlockingConnection(pika.ConnectionParameters(

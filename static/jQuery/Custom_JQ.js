@@ -209,6 +209,7 @@ function Request_login_content() {
         }
      })
 }
+
 function Login() {
     $('#Mo_T').attr('class', 'The_motel_dialog')
 }
@@ -425,19 +426,31 @@ function flush_Text() {
     $('#Text').empty().appendTo(weibo_input);
     Request_login_content()
 }
+
+/* 全局变量 by nick */
+weibo_id_list = [];
 function move() {
+    /* 心跳函数 by nick */
     $('#flush_text').remove();
     $.ajax({
         url: "/home/push/mess.html",
-        data: {"a": 1},
+        data: {"weibo_id_list": JSON.stringify(weibo_id_list)},
         type: "post",
         dataType: "json",
         success: function (arg) {
             console.log(arg);
             if (arg.status){
+                // {"perm": 0, "forward_or_collect_from": null, "video_link_id": "", "pictures_link_id": "",
+                // "text": "\u597d\u4e86\uff0c\u54c8", "user_id": "4", "date": "1\u5206\u949f\u524d",
+                // "wb_type": 0, 'id':666}
                 var num = arg.num;
                 var message = arg.message;
-                var count = arg.count;
+                var count = JSON.parse(arg.count);
+                console.log("CCCCCCCCCC", typeof (count), count);
+                $(count).each(function () {
+                    console.log($(this)[0]['id']);
+                    weibo_id_list.push($(this)[0]['id']);
+                });
                 title_info = $('<li id="flush_text"><a onclick="flush_Text()" href="" id="new_text" class="search_new_text_SLQ">有'+num+'条新微薄，点击刷新</a></li>');
                 $('#Text').children().eq(0).after(title_info);
                 console.log("您有", num, "新微薄");

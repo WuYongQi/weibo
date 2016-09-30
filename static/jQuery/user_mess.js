@@ -4,6 +4,7 @@
 
 
 $(function () {
+    /* 登录后获取用户信息 */
     $.ajax({
         url: '/home.html',
         type: 'GET',
@@ -30,4 +31,5 @@ $(function () {
         }
     });
 });
+
 

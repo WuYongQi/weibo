@@ -92,13 +92,35 @@ class WeiboContent:
     def delete(self, nid):
         """删除"""
 
+    def is_favor(self, weibo_id, userobj):
+        """点赞"""
+        favorobj = Comment.objects.create(to_weibo_id=weibo_id,
+                                          user=UserProfile.objects.get(user=userobj),
+                                          comment_type=1, )
+        return favorobj
+
+    def is_comment(self, weibo_id, userobj, comment, p_comment=None):
+        """评论"""
+        if p_comment:
+            commentobj = Comment.objects.create(to_weibo_id=weibo_id,
+                                                user=UserProfile.objects.get(user=userobj),
+                                                comment_type=0,
+                                                comment=comment,
+                                                p_comment=p_comment)
+        else:
+            commentobj = Comment.objects.create(to_weibo_id=weibo_id,
+                                                user=UserProfile.objects.get(user=userobj),
+                                                comment_type=0,
+                                                comment=comment)
+        return commentobj
+
 
 @singleton.singleton
 class UserCollection:
     """用户操作类"""
 
     def __init__(self):
-        pass
+        self.WeiboContent = WeiboContent()
 
     def __is_put(self, username, email, password):
         """新建用户"""
@@ -199,22 +221,21 @@ class UserCollection:
                    (int(page) * 10 if int(page) != 1 else 0):int(page) * 20]
 
         # 赞个数
-        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
-            .values('to_weibo').annotate(fav_conut=Count('id'))
+        favor_conut_list = self.WeiboContent.favorconut(obj_list)
         # 评论个数
-        comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
-            .values('to_weibo').annotate(com_conut=Count('id'))
+        comments_conut_list = self.WeiboContent.commentsconut(obj_list)
         # 转发个数
-        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from__in=list(obj_list), wb_type=1) \
-            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
+        forwarding_conut_list = self.WeiboContent.forwardingconut(obj_list)
 
         return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
 
 
+@singleton.singleton
 class Searchall:
     """搜索类"""
+
     def __init__(self):
-        pass
+        self.WeiboContent = WeiboContent()
 
     def add(self, adddic):
         # {
@@ -239,27 +260,20 @@ class Searchall:
         return retlist
 
     def weibo(self, searchtext):
+        # news=New.objects.filter(Q(question__startswith='What'))
+        # Q(  ~Q(pub_date__year=2005    否定
+        # Poll.objects.get(Q(question__startswith='Who'),Q(pub_date=date(2005, 5, 6)))
+
         obj_list = []
         # retlist.append(Weibo.objects.filter(text=searchtext).first())
         # retlist.extend(list(Weibo.objects.filter(text__istartswith=searchtext).all()))
         obj_list.extend(list(Weibo.objects.filter(text__icontains=searchtext).all()))
 
         # 赞个数
-        favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
-            .values('to_weibo').annotate(fav_conut=Count('id'))
+        favor_conut_list = self.WeiboContent.favorconut(obj_list)
         # 评论个数
-        comments_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=0) \
-            .values('to_weibo').annotate(com_conut=Count('id'))
+        comments_conut_list = self.WeiboContent.commentsconut(obj_list)
         # 转发个数
-        forwarding_conut_list = Weibo.objects.filter(forward_or_collect_from__in=list(obj_list), wb_type=1) \
-            .values('forward_or_collect_from').annotate(for_conut=Count('id'))
+        forwarding_conut_list = self.WeiboContent.forwardingconut(obj_list)
 
         return obj_list, favor_conut_list, comments_conut_list, forwarding_conut_list
-
-
-
-# news=New.objects.filter(Q(question__startswith='What'))
-# Q(  ~Q(pub_date__year=2005    否定
-# Poll.objects.get(Q(question__startswith='Who'),Q(pub_date=date(2005, 5, 6)))
-
-

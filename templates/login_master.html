@@ -30,6 +30,7 @@
                 href="javascript:(0)">登录</a></span></li>
     </ul>
 </div>
+
 <div class="bottom_tools" style="bottom: 40px;">
     <a id="scrollUp" href="javascript:;" title="飞回顶部" style="display: none;"></a>
 </div>
@@ -266,13 +267,13 @@
 
 
 {#图片九宫格--by nick#}
-    <div class="W_layer W_layer_pop hide" id="layer_nick" style="position: absolute;
+    <div class="hide" id="layer_nick" style="position: absolute;
     width: 284px; left: 338px; top: 241px; color: #333;text-decoration: none;">
         <div style="position: relative;background: #fff;border-radius: 3px;border: 1px solid #ccc;
         box-shadow: 0 4px 20px 1px rgba(0,0,0,0.2);">
             <div class="W_layer_close">
-                <a href="javascript:void(0)" node-type="close" style="position: absolute;z-index: 2;
-                right: 6px;top: 5px;font-size: 18px;text-decoration: none;color: black;">
+                <a onclick="Addhidex();" href="javascript:void(0)" node-type="close" style="position: absolute;z-index: 2;
+                right: 10px;top: 5px;font-size: 18px;text-decoration: none;color: black;">
                     X
                 </a>
             </div>
@@ -281,20 +282,22 @@
                     <div style="margin: -20px 0 0;padding: 28px 0 0;text-align: left;"><h3 style="margin: -11px 0 10px;">本地上传</h3>
                         <h4 style="margin: 0 0 10px;line-height: 17px;"><span style="height: 26px;
                         line-height: 26px;" node-type="picsInfo">
-                            共<em class="num_totla">1</em>张，还能上传
-                            <em class="num_remain">8</em>张</span><span
+                            共<em class="num_totla" id="num_totla">0</em>张，还能上传
+                            <em class="num_remain" id="num_remain">9</em>张</span><span
                                 style="float: right;top: 23px;right: 24px;position: absolute;" class="W_fr">
-                            <a href="javascript:void(0);" style="color: #fff;text-decoration: none;" class="W_btn_a" action-type="addTag"
+                            <a onclick="Addimgnine();" id="Addimgnineid" href="javascript:void(0);" style="color: #fff;text-decoration: none;
+                                padding: 0 29px 0 29px;margin-top: 13px;" class="W_btn_a" action-type="addTag"
                                 node-type="title_addTag" suda-data="key=pub_pic_upload&amp;value=main_pub_tag">
                                 <em class="W_ficon ficon_add S_ficon">
                                     +
                                 </em>图片</a></span></h4></div>
 
                             <!--image start-->
-                            <div style="background:url(http://ww1.sinaimg.cn/square/0065L7xHjw1f8bjq9mn3tj303c03cmwx.jpg) center center;
-width:80px;height:80px;float: left;margin: 1px;;"></div>
-                    <div style="background:url(http://ww1.sinaimg.cn/square/0065L7xHjw1f8bjq9mn3tj303c03cmwx.jpg) center center;
-width:80px;height:80px;float: left;margin: 1px;"></div>
+                            <div id="partenimgnine">
+{#                                <div style="#}
+{#                                background:url('') center center;#}
+{#                                width:80px;height:80px;float: left;margin: 1px;;"></div>#}
+                            </div>
                             <!--image end-->
                 {#尖角#}
                 <div class="W_layer_arrow">

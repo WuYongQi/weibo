@@ -52,6 +52,7 @@ def index(request):
             return render(request, 'master.html', {'context_instance': RequestContext(request)})
         elif not cacheret['is_login']:
             return render(request, 'master.html', {'context_instance': RequestContext(request)})
+
     # userobj = ModelBackend().get_user(user_id=userid)
     # a = ModelBackend().get_user(user_id=userid)
     # print(type(a), a, a.is_active)

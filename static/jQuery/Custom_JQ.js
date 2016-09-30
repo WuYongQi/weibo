@@ -336,6 +336,7 @@ function Release() {
         }
     })
 }
+
 function replace_em(str) {
     str = str.replace(/\</g, '&lt;');
     str = str.replace(/\>/g, '&gt;');
@@ -378,6 +379,7 @@ $('#prcuter_one').click(function (event) {
     $('#picuter_one_s1').appendTo(div);
     event.stopPropagation();
 });
+
 function updata_pctert() {
     $.ajax({
         url: '/home/upload/pv.html',
@@ -387,10 +389,12 @@ function updata_pctert() {
 
         }
     });
-    $('#upload_zp').remove();
-    $('<input type="file" class="hide" id="upload_zp" multiple>').appendTo($('#prcuter_one'));
+
+    // $('#upload_zp').remove();
+    // $('<input type="file" class="hide" id="upload_zp" multiple>').appendTo($('#prcuter_one'));
     $('#upload_zp').trigger('click');
     $('#upload_zp').bind('change', function () {
+        $('#picuter_one_s1').css('display', 'none');
         var file = $('#upload_zp')[0].files[0];
         var form = new FormData();
         form.append('PVFile', file);
@@ -411,7 +415,14 @@ function updata_pctert() {
             success: function (arg) {
                 if (arg['status']) {
                     img = arg['filepath'];
-                    alert('OK');
+                    $('#picuter_one_s1').addClass('hide');
+                    $('#layer_nick').removeClass('hide');
+                    $('#num_totla').text(Number($('#num_totla').text())+1);
+                    $('#num_remain').text($('#num_remain').text()-1);
+                    if ($('#num_remain').text() == 0){
+                        $('#Addimgnineid').css('color','#ffc09f').css('cursor','not-allowed').attr('onclick', "");
+                    // onclick="Addimgnine();"
+                    }
                     // for(var i=0;arg[''])
                 } else {
                     alert(arg['message'])
@@ -421,11 +432,62 @@ function updata_pctert() {
 
     })
 }
+
 function flush_Text() {
     var weibo_input = $('#new_weibo_input');
     $('#Text').empty().appendTo(weibo_input);
     Request_login_content()
 }
+
+
+
+
+/* 发微博上传图片九宫格隐藏 bu_nick */
+function Addhidex() {
+    $('#layer_nick').addClass('hide');
+}
+
+/* 发微博上传图片九宫格添加img框 by_nick */
+function Addimgnine(arg) {
+    $('#upload_zp').trigger('click');
+}
+
+/* 上传图片立即本地预览 by_nick */
+function handleFileSelect(evt) {
+    var files = evt.target.files;
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+      var reader = new FileReader();
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML =
+          [
+           '<div style="background:url(' + e.target.result + ') center center;' + 
+          'width:80px;height:60px;float: left;margin: 1px;background-repeat: round;"></div>'
+            // '<img style="height: 75px; border: 1px solid #000; margin: 5px" src="',
+            // e.target.result,
+            // '" title="', escape(theFile.name),
+            // '"/>'
+          ].join('');
+            console.log("span::", span);
+          document.getElementById('partenimgnine').insertBefore(span, null);
+        };
+      })(f);
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+
+document.getElementById('upload_zp').addEventListener('change', handleFileSelect, false);
+
+
 
 /* 全局变量 by nick */
 weibo_id_list = [];
@@ -458,3 +520,5 @@ function move() {
         }
     })
 }
+
+

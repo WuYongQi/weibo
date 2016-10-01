@@ -28,7 +28,6 @@ class weibocontentrespone:
             imglist = []
             for item in os.listdir(new_path):
                 imglist.append(os.path.join(new_path, item).split('user')[-1])
-            print(imglist)
             return json.dumps(imglist)
         else:
             return json.dumps([])

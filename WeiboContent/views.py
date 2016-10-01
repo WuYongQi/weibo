@@ -395,6 +395,25 @@ def new_msg(request):
 
 
 def userhtml(request):
-
+    """个人信息页"""
     return render(request, 'home/main.html', {'context_instance': RequestContext(request)})
+
+
+def favhtml(request):
+    userid = request.session.get('_auth_user_id', None)
+    cacheuserdic = cache.get(userid, None)
+    if not cacheuserdic:
+        return False
+    if not cacheuserdic['is_login']:
+        pushmessresponeobj = pushmessrespone.pushmessrespone(count='',
+                                                             status=False,
+                                                             message="登录超时，请重新登录")
+        return HttpResponse(json.dumps(pushmessresponeobj.dic()))
+
+    if request.method == 'GET':
+        favid = request.GET.get('id', None)
+        
+
+    if request.method == 'POST':
+        pass
 

@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^emotions.json$', weibocontentviews.Expression_processing),  # 表情处理
     url(r'^wechat\.html$', weibocontentviews.wechat),   # 聊天
     url(r'^home/user\.html$', weibocontentviews.userhtml),   # 个人信息
+    url(r'^home/fav\.html$', weibocontentviews.favhtml),   # 个人信息
 ]

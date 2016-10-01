@@ -57,6 +57,7 @@ class WeiboContent:
         """赞个数"""
         favor_conut_list = Comment.objects.filter(to_weibo__in=list(obj_list), comment_type=1) \
             .values('to_weibo').annotate(fav_conut=Count('id'))
+        print(favor_conut_list)
         return favor_conut_list
 
     def commentsconut(self, obj_list):
@@ -94,9 +95,13 @@ class WeiboContent:
 
     def is_favor(self, weibo_id, userobj):
         """点赞"""
-        favorobj = Comment.objects.create(to_weibo_id=weibo_id,
-                                          user=UserProfile.objects.get(user=userobj),
-                                          comment_type=1, )
+        userinfoobj = UserProfile.objects.get(user=userobj)
+        ret = Comment.objects.filter(user=userinfoobj, to_weibo_id=str(weibo_id), comment_type=1).first()
+        if ret:
+            return False
+        favorobj = Comment.objects.create(to_weibo_id=str(weibo_id),
+                                          user=userinfoobj,
+                                          comment_type=1)
         return favorobj
 
     def is_comment(self, weibo_id, userobj, comment, p_comment=None):

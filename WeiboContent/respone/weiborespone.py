@@ -4,6 +4,7 @@ __author__ = 'Nick Suo'
 
 from Common import time_conversion
 import os,config,json
+from WeiboContent import models
 
 
 class weibocontentrespone:
@@ -58,17 +59,17 @@ class weibocontentrespone:
         for item in self.favor_list:
             if item:
                 if item['to_weibo'] == d['to_weibo']:
-                    d['fav_conut'] = item['fav_conut']
+                    d['fav_count'] = item['fav_conut']
         # 评论个数
         for item in self.comments_list:
             if item:
                 if item['to_weibo'] == d['to_weibo']:
-                    d['com_conut'] = item['com_conut']
+                    d['for_count'] = item['com_conut']
         # 转发个数
         for item in self.forwarding_conut:
             if item:
                 if item['forward_or_collect_from'] == d['to_weibo']:
-                    d['for_conut'] = item['for_conut']
+                    d['for_count'] = item['for_conut']
         return d
 
 
@@ -77,9 +78,8 @@ class newweibocontentrespone:
         self.status = status
         self.message = message
         self.connect = connect_dic
-        from WeiboContent import models
         self.user = str(models.UserProfile.objects.filter(user=user_obj).first().name)
-        connect_dic['user'] = self.user
+        connect_dic['user'] = user_obj
         print(connect_dic)
 
     def dic(self):
@@ -105,5 +105,19 @@ class PVFile:
         }
         return d
 
+
+class is_favor:
+    def __init__(self, nid, status=True, message=''):
+        self.id = nid
+        self.status = status
+        self.message = message
+
+    def dic(self):
+        d = {
+            'id': self.id,
+            'status': self.status,
+            'message': self.message,
+        }
+        return d
 
 

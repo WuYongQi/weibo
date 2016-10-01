@@ -405,14 +405,20 @@ def favhtml(request):
     if not cacheuserdic:
         return False
     if not cacheuserdic['is_login']:
-        pushmessresponeobj = pushmessrespone.pushmessrespone(count='',
-                                                             status=False,
-                                                             message="登录超时，请重新登录")
-        return HttpResponse(json.dumps(pushmessresponeobj.dic()))
+        weiboresponeobj = weiborespone.is_favor(nid='', status=False, message="登录超时，请重新登录")
+        return HttpResponse(json.dumps(weiboresponeobj.dic()))
 
     if request.method == 'GET':
         favid = request.GET.get('id', None)
-        
+        userobj = ModelBackend().get_user(user_id=userid)
+        weibocontenobj = models_server.WeiboContent()
+        ret = weibocontenobj.is_favor(favid, userobj)
+        if not ret:
+            weiboresponeobj = weiborespone.is_favor(nid='', status=False, message="已经点过赞了亲")
+        else:
+            weiboresponeobj = weiborespone.is_favor(nid='', status=True, message="")
+        return HttpResponse(json.dumps(weiboresponeobj.dic()))
+
 
     if request.method == 'POST':
         pass

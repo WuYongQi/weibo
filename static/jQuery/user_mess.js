@@ -27,7 +27,8 @@ $(function () {
             $('#follow_list_len').text(follow_list_len);
             $('#my_followers_len').text(my_followers_len);
             $('#weibo_len').text(weibo_len);
-            $('.Content_center_right_top_img').css('background-image','url(/Static/user/' + head_img + ')')
+            $('.Content_center_right_top_img').css('background-image','url(/Static/user/' + head_img + ')');
+            $('#Content_center_right_top_img').attr('headimageurl','/Static/user/' + head_img);
         }
     });
 });

@@ -64,7 +64,7 @@ class weibocontentrespone:
         for item in self.comments_list:
             if item:
                 if item['to_weibo'] == d['to_weibo']:
-                    d['for_count'] = item['com_conut']
+                    d['com_count'] = item['com_conut']
         # 转发个数
         for item in self.forwarding_conut:
             if item:
@@ -119,5 +119,21 @@ class is_favor:
             'message': self.message,
         }
         return d
+
+
+class is_com:
+    def __init__(self, comlist, status=True, message=''):
+        self.id = list(comlist)
+        self.status = status
+        self.message = message
+
+    def dic(self):
+        d = {
+            'id': self.id,
+            'status': self.status,
+            'message': self.message,
+        }
+        return d
+
 
 

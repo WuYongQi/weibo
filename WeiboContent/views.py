@@ -400,6 +400,7 @@ def userhtml(request):
 
 
 def favhtml(request):
+    """点赞"""
     userid = request.session.get('_auth_user_id', None)
     cacheuserdic = cache.get(userid, None)
     if not cacheuserdic:
@@ -420,6 +421,32 @@ def favhtml(request):
         return HttpResponse(json.dumps(weiboresponeobj.dic()))
 
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
+        pass
+
+
+def comhtml(request):
+    """评论"""
+    userid = request.session.get('_auth_user_id', None)
+    cacheuserdic = cache.get(userid, None)
+    if not cacheuserdic:
+        return False
+    if not cacheuserdic['is_login']:
+        weiboresponeobj = weiborespone.is_com(comlist='', status=False, message="登录超时，请重新登录")
+        return HttpResponse(json.dumps(weiboresponeobj.dic()))
+
+    if request.method == 'GET':
+        comid = request.GET.get('id', None)
+        text = request.GET.get('text', None)
+        userobj = ModelBackend().get_user(user_id=userid)
+        weibocontenobj = models_server.WeiboContent()
+        if text:
+            ret = weibocontenobj.is_comment(weibo_id=comid, userobj=userobj, comment=text)
+        else:
+            ret = weibocontenobj.select_comment(comid)
+        weiboresponeobj = weiborespone.is_com(comlist=ret, status=True, message="")
+        return HttpResponse(json.dumps(weiboresponeobj.dic()))
+
+    elif request.method == 'POST':
         pass
 

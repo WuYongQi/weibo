@@ -1,0 +1,54 @@
+/* by nick */
+
+.div_com {
+    max-height: 500px;
+    width: 600px;
+    position: absolute;
+    top: 32px;
+    left: 0px;
+    background-color: #DEE;
+    z-index: 2;
+    padding-top: 15px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.img_com {
+    height: 30px;
+    width: 30px;
+    float: left;
+}
+
+.name_com {
+    float: left;
+    margin-left: 20px;
+}
+
+.time_com {
+    float: left;
+    margin-left: -23px;
+    margin-top: 18px;
+}
+
+.li_com {
+    height: 50px;
+}
+
+.text_com {
+    float: left;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+.booton_com {
+    height: 36px;
+    width: 60px;
+    background-color: #ff8140;
+    border: 0;
+    cursor: pointer;
+}
+
+
+

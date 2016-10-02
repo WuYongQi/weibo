@@ -104,6 +104,18 @@ class WeiboContent:
                                           comment_type=1)
         return favorobj
 
+    def select_comment(self, weibo_id):
+        """评论树"""
+        commentret = Comment.objects.filter(to_weibo_id=weibo_id, comment_type=0).order_by('-date')\
+            .values('id', 'comment', 'p_comment_id', 'user__user_id', 'user__name', 'user__head_img',
+                    'child_comments__child_comments__user')
+        # [{'user__user_id': 7, 'user__head_img': 'jenny/User_info/mm.jpeg', 'user__name': '珍妮', 'id': 14,
+        #   'comment': '这个视频屌爆了', 'p_comment_id': None},
+        #  {'user__user_id': 1, 'user__head_img': 'nick/User_info/mm.jpeg', 'user__name': 'nick', 'id': 15,
+        #   'comment': '碉堡了二', 'p_comment_id': 14}]
+        return commentret
+
+
     def is_comment(self, weibo_id, userobj, comment, p_comment=None):
         """评论"""
         if p_comment:
@@ -117,7 +129,10 @@ class WeiboContent:
                                                 user=UserProfile.objects.get(user=userobj),
                                                 comment_type=0,
                                                 comment=comment)
-        return commentobj
+        return [{"comment": commentobj.comment, "id": commentobj.id, "p_comment_id": commentobj.p_comment_id,
+                "user__head_img": str(commentobj.user.head_img), "user__name": str(commentobj.user.name),
+                "user__user_id": str(commentobj.user_id),
+                 "child_comments__child_comments__user": str(commentobj.child_comments.name)}, ]
 
 
 @singleton.singleton

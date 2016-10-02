@@ -10,6 +10,58 @@
     <link href="/Static/css/zhuanfa.css" rel="stylesheet">
     <script src="/Static/jQuery/jquery-1.12.4.js"></script>
     <script src="/Static/jQuery/jquery.sinaEmotion.js"></script>
+    <script src="/Static/css/collect_com.css" type="text/css" rel="stylesheet"></script>
+    <style>
+        .div_com {
+            max-height: 500px;
+            width: 600px;
+            position: absolute;
+            top: 32px;
+            left: 0px;
+            background-color: #DEE;
+            z-index: 2;
+            padding-top: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        .img_com {
+            height: 30px;
+            width: 30px;
+            float: left;
+        }
+
+        .name_com {
+            float: left;
+            margin-left: 20px;
+        }
+
+        .time_com {
+            float: left;
+            margin-left: -23px;
+            margin-top: 18px;
+        }
+
+        .li_com {
+            height: 50px;
+        }
+
+        .text_com {
+            float: left;
+            margin-left: 21px;
+            margin-top: 12px;
+        }
+
+        .booton_com {
+            height: 36px;
+            width: 60px;
+            background-color: #ff8140;
+            border: 0;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 {% csrf_token %}
@@ -230,7 +282,7 @@
         <div class=" Content_input_right_top_all_SLQ">
             <span class="Content_input_right_top"></span>
             <span class="Content_input_right_top2"></span>
-            <span class="Content_center_right_top_img"></span>
+            <span class="Content_center_right_top_img" id="Content_center_right_top_img"></span>
             <ul class="Content_center_vip_lv_name">
                 <li><a href="/home/user.html" class="Content_center_right_name" id="nameinfo">name</a>
                 <li><span class="Content_center_right_vip"/>
@@ -313,11 +365,39 @@
     </div>
 
 
+
+{#    /* 评论 */#}
+{#    <div class="div_com">#}
+{#        <ul>#}
+{#          <li class="li_com">#}
+{#                <img class="img_com" src="http://127.0.0.1:8000/Static/user/nick/weibo_img/100b883c84e1f3bdbaca434aeb0ed94d5d1c52e1/e70189cffc9433a3ef387e1a748481f774ef24e9.jpg">#}
+{#                <div class="name_com">小强</div>#}
+{#                <div class="time_com">几分钟前</div>#}
+{#                <div>#}
+{#                    <input style="height: 30px; width: 360px;margin-left: -1px;" type="text">#}
+{#                    <button class="booton_com" onclick="is_comments_submit(this);">评论</button>#}
+{#                </div>#}
+{#          </li>#}
+{#          <li>#}
+{#                <img class="img_com" src="http://127.0.0.1:8000/Static/user/nick/weibo_img/100b883c84e1f3bdbaca434aeb0ed94d5d1c52e1/e70189cffc9433a3ef387e1a748481f774ef24e9.jpg">#}
+{#                <div class="name_com">小强</div>#}
+{#                <div class="time_com">几分钟前</div>#}
+{#                <div class="text_com">#}
+{#                    <span>发送到发送到非师范生放水电费水电费水电费</span>#}
+{#                </div>#}
+{#          </li>#}
+{#        </ul>#}
+{#    </div>#}
+
+
+
+
     <div></div>
     <script src="/Static/jQuery/jquery.cookie.js"></script>
     <script src="/Static/jQuery/Custom_JQ.js"></script>
     <script src="/Static/jQuery/user_mess.js"></script>
     <script src="/Static/jQuery/collection.js"></script>
+
     <script>
         init_bq();
         $(function () {

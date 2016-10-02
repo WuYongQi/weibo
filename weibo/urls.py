@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^wechat\.html$', weibocontentviews.wechat),   # 聊天
     url(r'^home/user\.html$', weibocontentviews.userhtml),   # 个人信息
     url(r'^home/fav\.html$', weibocontentviews.favhtml),   # 点赞
+    url(r'^home/com\.html$', weibocontentviews.comhtml),   # 评论
 ]
 

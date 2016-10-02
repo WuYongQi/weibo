@@ -190,7 +190,7 @@ function Request_login_content() {
                         var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscollection(this);" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -198,7 +198,7 @@ function Request_login_content() {
                         var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="isforwarding(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
@@ -206,7 +206,7 @@ function Request_login_content() {
                         var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscomments(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
@@ -214,7 +214,7 @@ function Request_login_content() {
                         var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="islike(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -254,7 +254,7 @@ function Request_login_content() {
                         var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscollection(this);" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -262,7 +262,7 @@ function Request_login_content() {
                         var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="isforwarding(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
@@ -270,7 +270,7 @@ function Request_login_content() {
                         var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscomments(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
@@ -278,7 +278,7 @@ function Request_login_content() {
                         var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="islike(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -318,7 +318,7 @@ function Request_login_content() {
                         var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscollection(this);" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -326,7 +326,7 @@ function Request_login_content() {
                         var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="isforwarding(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
@@ -334,7 +334,7 @@ function Request_login_content() {
                         var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscomments(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
@@ -342,7 +342,7 @@ function Request_login_content() {
                         var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="islike(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -382,7 +382,7 @@ function Request_login_content() {
                         var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscollection(this);" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -390,7 +390,7 @@ function Request_login_content() {
                         var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="isforwarding(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
@@ -398,7 +398,7 @@ function Request_login_content() {
                         var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="iscomments(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
@@ -406,7 +406,7 @@ function Request_login_content() {
                         var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
                         var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
                         var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
-                        var span_coll_two = $('<span onclick="islike(this);" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
                         var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
                         var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
                         $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
@@ -526,6 +526,9 @@ function Login_Server() {
 function Login_G() {
     $('#Mo_T').attr('class', 'The_motel_dialog hide')
 }
+
+
+
 function Release() {
     var text = $('#Release_text').val();
     console.log(text);
@@ -537,7 +540,7 @@ function Release() {
         success: function (arg) {
             $('#Release_text').val(' ');
             if (arg['status']) {
-                console.log(arg['connect']);
+
                 var li = $("<li class='Content_Center_li'>");
                 var Center = $('<div class="Content_Center_TXT">').appendTo(li);
                 var Center_left = $('<div class="Text_left">').appendTo(Center);

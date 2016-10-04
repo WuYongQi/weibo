@@ -30,6 +30,7 @@ class userinfomess:
         d = {
             'count': {
                 'user': self.count.user.username,
+                'user_id': self.count.user.id,
                 'name': self.count.name,
                 'brief': self.count.brief,
                 'sex': self.count.sex,
@@ -54,6 +55,7 @@ class userinfomess:
         li = []
         for i in follow_list:
             d = {
+                'id': i.user.id,
                 'user': i.user.username,
                 'name': i.name,
                 'brief': i.brief,

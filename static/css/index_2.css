@@ -464,7 +464,8 @@ line-height: 34px;
 }
 .Content_center_input{
     background-color: white;
-    height: 150px;
+    height: 175px;
+    /*height: 150px;*/
     width: 582px;
     border-radius: 3px;
     padding: 20px 9px;

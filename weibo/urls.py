@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^home/upload/pv\.html', weibocontentviews.picture_video),  # 图片视频
     url(r'^emotions.json$', weibocontentviews.Expression_processing),  # 表情处理
     url(r'^wechat\.html$', weibocontentviews.wechat),   # 聊天
+    url(r'^save_hostinfo\.html$', weibocontentviews.new_msg),   # 聊天
     url(r'^home/user\.html$', weibocontentviews.userhtml),   # 个人信息
     url(r'^home/fav\.html$', weibocontentviews.favhtml),   # 点赞
     url(r'^home/com\.html$', weibocontentviews.comhtml),   # 评论

@@ -6,6 +6,7 @@ import json
 import datetime
 import time
 import shutil
+import queue
 
 import config
 from django.core.cache import cache
@@ -41,7 +42,7 @@ from WeiboContent import newmess_server
 
 
 def index(request):
-    obj = models_server.UserCollection()
+    # obj = models_server.UserCollection()
     # ret = obj.is_login(request=request, username="nick", password="nicknick")
     userid = request.session.get('_auth_user_id')
     if not userid:
@@ -147,7 +148,7 @@ def login(request):
                 request.session['id_login'] = True
                 loginrespone.status = True
                 sessionrequestobj = sessionrespone.sessionrespone(user_id=user_id)
-                cache.set(user_id, sessionrequestobj.dic(), timeout=60 * 3)
+                cache.set(user_id, sessionrequestobj.dic(), timeout=config.cache['redis_timeout'])
                 usercollobj = models_server.UserCollection()
                 newmess_push.start(
                     '%s%s' % (str(usercollobj.mymess(ModelBackend().get_user(user_id=user_id)).id), 'mq'))
@@ -346,22 +347,22 @@ def Expression_processing(req):
 def wechat(request):
     pass
 
-
+GLOBAL_MQ = {}
 def new_msg(request):
-    import queue
-    GLOBAL_MQ = {}
+    print("AAAAA ", GLOBAL_MQ)
     if request.method == 'POST':
         print(request.POST.get('data'))
 
         # 获取用户发过来的数据
         data = json.loads(request.POST.get('data'))
+
         send_to = data['to']
         # 判断队列里是否有这个用户名,如果没有新建一个队列
         if send_to not in GLOBAL_MQ:
             GLOBAL_MQ[send_to] = queue.Queue()
         data['timestamp'] = time.strftime("%Y-%m-%d %X", time.localtime())
         GLOBAL_MQ[send_to].put(data)
-
+        print(data)
         return HttpResponse(GLOBAL_MQ[send_to].qsize())
     else:
         # 因为队列里目前存的是字符串所以我们需要先给他转换为字符串
@@ -391,6 +392,7 @@ def new_msg(request):
         else:
             # 创建一个新队列给这个用户
             GLOBAL_MQ[str(request.user.userprofile.id)] = queue.Queue()
+        print(request_user, msg_lists, "rrrrrrrrrrrrrrr")
         return HttpResponse(json.dumps(msg_lists))
 
 

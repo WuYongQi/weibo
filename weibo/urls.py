@@ -36,6 +36,6 @@ urlpatterns = [
     url(r'^home/fav\.html$', weibocontentviews.favhtml),   # 点赞
     url(r'^home/com\.html$', weibocontentviews.comhtml),   # 评论
 
-    url(r'', weibocontentviews.index),
+    # url(r'', weibocontentviews.index),
 ]
 

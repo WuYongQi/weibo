@@ -446,9 +446,7 @@ def comhtml(request):
     """评论"""
     userid = request.session.get('_auth_user_id', None)
     cacheuserdic = cache.get(userid, None)
-    if not cacheuserdic:
-        return False
-    if not cacheuserdic['is_login']:
+    if not cacheuserdic or not cacheuserdic['is_login']:
         weiboresponeobj = weiborespone.is_com(comlist='', status=False, message="登录超时，请重新登录")
         return HttpResponse(json.dumps(weiboresponeobj.dic()))
 

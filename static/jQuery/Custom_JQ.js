@@ -57,59 +57,360 @@ function Request_content() {
         success: function (arg) {
             console.log(arg);
             if (arg['status']) {
+                // $.each(arg['content'], function (k, v) {
+                //     var pictures = v['pictures'];
+                //     if (pictures) {
+                //         var pictures = JSON.parse(v['pictures']);
+                //     }
+                //     if (pictures.length > 1) {
+                //         var li = $("<li class='Content_Center_li_img clearfix'>");
+                //         var Center = $('<div class="Content_Center_TXT_img clearfix">').appendTo(li);
+                //         var Text_info = $('<div class="Text_info">').appendTo(Center);
+                //         var Text = $('<span>').html(AnalyticEmotion(v["text"])).appendTo(Text_info);
+                //         // var Text_ = $('<span>'+v["text"]).appendTo(Text_info);
+                //         var Text_img = $('<div class="Picture_zone">').appendTo(Center);
+                //         var ul = $('<ul>');
+                //         for (var i = 0; i < 3; i++) {
+                //             li_list = $('<li><img class="piccut_v piccut_h" src="/Static/user/' + v["pictures"][i] + '">').appendTo(ul);
+                //         }
+                //         ul.appendTo(Text_img);
+                //         var Userinfo_img = $('<div class="Userinfo_img">').appendTo(Center);
+                //         $('<span><a href="javascript:(0)"><img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18"></a></span>').appendTo(Userinfo_img);//用户头像
+                //         $('<span><a href="javascript:(0)"><span>&nbsp;@' + v["user"] + '</span></a></span>').appendTo(Userinfo_img);//用户名
+                //         $('<span>&nbsp;&nbsp;&nbsp;' + v['date'] + '</span>').appendTo(Userinfo_img);//时间
+                //         $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Userinfo_img);//赞的个数
+                //         $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Userinfo_img);//评论个数
+                //         $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Userinfo_img);//转发个数
+                //         li.appendTo($('#Text'))
+                //     } else if (pictures.length == 0) {
+                //         console.log(AnalyticEmotion(v["text"]));
+                //         var li = $("<li class='Content_Center_li'>");
+                //         var Center = $('<div class="Content_Center_TXT">').appendTo(li);
+                //         var Center_left = $('<div class="Text_left">').appendTo(Center);
+                //         // $('<img src="/Static/user/nick/weibo_img/1/123.png" width="106" height="70">').appendTo(Center_left);   //后期修改
+                //         $('<img src="/Static/user/'+pictures[0]+'"'+' width="106" height="70">').appendTo(Center_left);
+                //         var Text_right = $('<div class="Text_right">').appendTo(Center);
+                //         var Coutent = $('<div class="Coutent">').html(AnalyticEmotion(v["text"])).appendTo(Text_right);
+                //         // var Coutent = $('<div class="Coutent">' + v['text'] + '</div>').appendTo(Text_right);
+                //         var Content_Userinfo = $('<div class="Content_Userinfo">').appendTo(Text_right);
+                //         var span = $('<span>').appendTo(Content_Userinfo);
+                //         var MUser = $('<a href="javascript:(0)">').appendTo(span);//用户个人主页url
+                //         var User_title_img = $('<img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18">').appendTo(MUser); //用户头像
+                //         var span_User = $('<span>').appendTo(Content_Userinfo);
+                //         var Userinfo = $('<a href="javascript:(0)">').appendTo(span_User);//用户个人主页url
+                //         var Username = $('<span>&nbsp;@' + v["user"] + '</span>').appendTo(Userinfo);
+                //         var span_time = $('<span>&nbsp;&nbsp;&nbsp;' + v["date"] + '</span>').appendTo(Content_Userinfo);
+                //         var span_zan = $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Content_Userinfo);//赞的个数
+                //         var span_p = $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Content_Userinfo);//评论个数
+                //         var span_zf = $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Content_Userinfo);//转发个数
+                //         li.appendTo($('#Text'));
+                //     } else {
+                //
+                //     }
+                // })
                 $.each(arg['content'], function (k, v) {
                     var pictures = v['pictures'];
+                    var video = v['video'];
                     if (pictures) {
                         var pictures = JSON.parse(v['pictures']);
                     }
-                    if (pictures.length > 1) {
-                        var li = $("<li class='Content_Center_li_img clearfix'>");
-                        var Center = $('<div class="Content_Center_TXT_img clearfix">').appendTo(li);
-                        var Text_info = $('<div class="Text_info">').appendTo(Center);
-                        var Text = $('<span>').html(AnalyticEmotion(v["text"])).appendTo(Text_info);
-                        // var Text_ = $('<span>'+v["text"]).appendTo(Text_info);
-                        var Text_img = $('<div class="Picture_zone">').appendTo(Center);
-                        var ul = $('<ul>');
-                        for (var i = 0; i < 3; i++) {
-                            li_list = $('<li><img class="piccut_v piccut_h" src="/Static/user/' + v["pictures"][i] + '">').appendTo(ul);
+                    if (video) {
+                        var video = JSON.parse(v['video']);
+                    }
+                    if(v['wb_type'] == 1){
+                        $.ajax({
+                            url:'/index/weibocontent.html',
+                            type:'post',
+                            data:{'weibo_id':v['forward'], 'Cookie':document.cookie},
+                            dataType: 'json',
+                            success: function (arg) {
+                                var forw_info = arg ;
+                                console.log(forw_info);
+                                if (forw_info['status']){
+                                    li = $('<li class="index_center_img_SLQ" id="' + v['to_weibo'] + '" style="position: relative">');
+                                    $('<img href="" class="index_center_touxiang_SLQ" src="/Static/img/test_img/005KvRRWjw8ezywugsozbj30a10873zw.jpg"/>').appendTo(li);
+                                    $('<ul class="index_center_img_ul_SLQ"><li style="margin-top: 10px;"><a href="" class="index_center_img_name_SLQ">'+v['user']+'</a></li><li><a class="index_center_img_V_SLQ"></a> <a class="index_center_img_vip_SLQ"></a><a class="index_center_img_lvxing_SLQ"></a></li>').appendTo(li);
+                                    $('<div style="margin-top: 72px;margin-left: 60px;" class="index_center_img_time_from_SLQ"><span class="index_center_img_time_SLQ">'+v['date']+'</span><span class="index_cener_img_from_SLQ">来自</span><span class="index_cener_img_from_add_SLQ">iPhone 9999plus</span></div>').appendTo(li);
+                                    $('<span class="index_center_readme_zhuanfa_SLQ">'+v['text']).appendTo(li);
+                                    $('<ul style="margin-top: 115px;list-style-type: none;" class="index_center_img_ul_zhuanfa_SLQ"><li class="index_center_img_li_SLQ"><a href="" class="index_center_img_name_zhuanfa_SLQ">@'+forw_info['content'][0]["user"]+'</a></li></ul>').appendTo(li);
+                                    $('<span style="margin-left: 60px;margin-top: 10px;" class="index_center_img_readme_SLQ">'+AnalyticEmotion(forw_info['content'][0]["text"])+'</span>').appendTo(li);
+                                    var img_text_title = $('<div style="margin-top: 45px;margin-bottom: 15px;" class="index_img_iii_SLQ">');
+                                    var img_text_content = $('<div class="index_img_SLQ" id="pt">');
+                                    var img_list = JSON.parse(forw_info['content'][0]['pictures']);
+                                    for(var i=0;img_list.length > i;i++) {
+                                        // console.log(i,'aaaa');
+                                        // if(i==10){
+                                        //     break
+                                        // }
+                                        // console.log(img_list[i]);
+                                        $('<a href="#" style="margin: 0 1px; display: inline-block;" target="_blank"><img style="width: 110px; height: 110px;" src="/Static/user' + img_list[i] + '">').appendTo(img_text_content);
+                                    }
+                                    img_text_content.appendTo(img_text_title);
+                                    img_text_title.appendTo(li);
+                                    li.appendTo($('#Text'))
+                                }
+                            }
+                        });
+
+                    } else if (video.length == 1) {
+                        var div = $("<div class='index_center_img_SLQ' id='" + v['to_weibo'] + "' style='position: relative;height: 489px;'>");
+                        var headimg = $('<img href="" class="index_center_touxiang_SLQ" src="/Static/user/' + v["head_img"] + '">').appendTo(div);
+                        var uldiv = $('<ul class="index_center_img_ul_SLQ">').appendTo(div);
+                        var user = $('<li><a href="" class="index_center_img_name_SLQ">' + v["user"] +'</a></li>').appendTo(uldiv);
+                        var imgtime = $('<div class="index_center_img_time_from_SLQ" style="margin: 65px 0 0 2px;">').appendTo(div);
+                        var spantime = $('<span class="index_center_img_time_SLQ" style="margin: 72px 0px 0px 59px;">' + v["date"] + '</span>').appendTo(imgtime);
+                        var text = $('<span class="index_center_readme_zhuanfa_SLQ" style="position: absolute;margin: 15px 0px 0px 58px;">').html(AnalyticEmotion(v["text"])).appendTo(div);
+                        var video_div = $('<div class="index_center_img_wen"><video src="/Static/user' + video[0] + '" controls="controls" autoplay style="width: 481px;margin: 49px 0px 0px 45px;"></video></div>').appendTo(div);
+                        // var Userinfo_img = $('<div class="Userinfo_img">').appendTo(div);
+                        // $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Userinfo_img);//赞的个数
+                        // $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Userinfo_img);//评论个数
+                        // $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Userinfo_img);//转发个数
+                        var OperatingCollection = $('<ul style="border-top-width: 1px;border-top-style: solid;border-color: #f2f2f5;position: absolute;position: absolute;bottom: -1px;width: 554px;left: 2px;">').appendTo(div);
+                        var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>收藏</em>').appendTo(span_coll_stree);
+                        var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["for_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["com_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["fav_count"] + '</em>').appendTo(span_coll_stree);
+                        div.appendTo($('#Text'))
+
+                    }
+                    else if (pictures.length > 1) {
+                        var li = $("<li class='Content_Center_li_img clearfix' style='list-style-type: none;' id='" + v['to_weibo'] + "'>");
+
+                        var div = $("<div class='Content_Center_TXT_img clearfix' style='position: relative;min-height: 100px;top: 0;'>").appendTo(li);
+                        var headimg = $('<img href="" class="index_center_touxiang_SLQ" src="/Static/user/' + v["head_img"] + '">').appendTo(div);
+                        var uldiv = $('<ul class="index_center_img_ul_SLQ">').appendTo(div);
+                        var user = $('<li><a href="" class="index_center_img_name_SLQ">' + v["user"] +'</a></li>').appendTo(uldiv);
+                        var imgtime = $('<div class="index_center_img_time_from_SLQ" style="margin: 65px 0 0 2px;">').appendTo(div);
+                        var spantime = $('<span class="index_center_img_time_SLQ" style="margin: 72px 0px 0px 59px;">' + v["date"] + '</span>').appendTo(imgtime);
+                        var text = $('<span class="index_center_readme_zhuanfa_SLQ" style="position: absolute;margin: 15px 0px 0px 58px;">').html(AnalyticEmotion(v["text"])).appendTo(div);
+                        // var img = $('<img src="/Static/user/'+pictures[0]+'"'+' width="266" height="180" style="margin-top: 56px;margin-left: 50px;margin-bottom: 26px;">').appendTo(div);
+
+                        // var Text_img = $('<div class="Picture_zone">').appendTo(div);
+                        // var ul = $('<ul>');
+                        // for (var i = 0; i < pictures.length; i++) {
+                        //     var li_list = $('<li style="list-style-type:none;"><img class="piccut_v piccut_h" src="/Static/user/' + pictures[i] + '">').appendTo(ul);
+                        // }
+                        // ul.appendTo(Text_img);
+                        var img_text_title = $('<div class="index_img_iii_SLQ" style="margin: -17px 0 24px 0;">');
+                        var img_text_content = $('<div class="index_img_SLQ" id="pt">');
+                        // var img_list = JSON.parse(forw_info['content'][0]['pictures']);
+                        for(var i=0;pictures.length > i;i++) {
+                            $('<a href="#" style="margin: 0 1px; display: inline-block;" target="_blank"><img style="height: 110px;width: 110px;" src="/Static/user' + pictures[i] + '">').appendTo(img_text_content);
                         }
-                        ul.appendTo(Text_img);
-                        var Userinfo_img = $('<div class="Userinfo_img">').appendTo(Center);
-                        $('<span><a href="javascript:(0)"><img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18"></a></span>').appendTo(Userinfo_img);//用户头像
-                        $('<span><a href="javascript:(0)"><span>&nbsp;@' + v["user"] + '</span></a></span>').appendTo(Userinfo_img);//用户名
-                        $('<span>&nbsp;&nbsp;&nbsp;' + v['date'] + '</span>').appendTo(Userinfo_img);//时间
-                        $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Userinfo_img);//赞的个数
-                        $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Userinfo_img);//评论个数
-                        $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Userinfo_img);//转发个数
+                        img_text_content.appendTo(img_text_title);
+                        img_text_title.appendTo(li);
+
+
+                        var OperatingCollection = $('<ul style="border-top-width: 1px;border-top-style: solid;border-color: #f2f2f5;position: absolute;position: absolute;bottom: -2px;width: 554px;left: 0;">').appendTo(li);
+                        var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>收藏</em>').appendTo(span_coll_stree);
+                        var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["for_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["com_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["fav_count"] + '</em>').appendTo(span_coll_stree);
+
+                        // var Center = $('<div class="Content_Center_TXT_img clearfix">').appendTo(li);
+                        // var Text_info = $('<div class="Text_info">').appendTo(Center);
+                        // var Text = $('<span>').html(AnalyticEmotion(v["text"])).appendTo(Text_info);
+                        // // var Text_ = $('<span>'+v["text"]).appendTo(Text_info);
+                        // var Text_img = $('<div class="Picture_zone">').appendTo(Center);
+                        // var ul = $('<ul>');
+                        // for (var i = 0; i < pictures.length; i++) {
+                        //     li_list = $('<li><img class="piccut_v piccut_h" src="/Static/user/' + pictures[i] + '">').appendTo(ul);
+                        // }
+                        // ul.appendTo(Text_img);
+                        // var Userinfo_img = $('<div class="Userinfo_img">').appendTo(Center);
+                        // $('<span><a href="javascript:(0)"><img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18"></a></span>').appendTo(Userinfo_img);//用户头像
+                        // $('<span><a href="javascript:(0)"><span>&nbsp;@' + v["user"] + '</span></a></span>').appendTo(Userinfo_img);//用户名
+                        // $('<span>&nbsp;&nbsp;&nbsp;' + v['date'] + '</span>').appendTo(Userinfo_img);//时间
+                        // $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Userinfo_img);//赞的个数
+                        // $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Userinfo_img);//评论个数
+                        // $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Userinfo_img);//转发个数
                         li.appendTo($('#Text'))
-                    } else if (pictures.length == 0) {
-                        console.log(AnalyticEmotion(v["text"]));
-                        var li = $("<li class='Content_Center_li'>");
-                        var Center = $('<div class="Content_Center_TXT">').appendTo(li);
-                        var Center_left = $('<div class="Text_left">').appendTo(Center);
-                        // $('<img src="/Static/user/nick/weibo_img/1/123.png" width="106" height="70">').appendTo(Center_left);   //后期修改
-                        $('<img src="/Static/user/'+pictures[0]+'"'+' width="106" height="70">').appendTo(Center_left);
-                        var Text_right = $('<div class="Text_right">').appendTo(Center);
-                        var Coutent = $('<div class="Coutent">').html(AnalyticEmotion(v["text"])).appendTo(Text_right);
-                        // var Coutent = $('<div class="Coutent">' + v['text'] + '</div>').appendTo(Text_right);
-                        var Content_Userinfo = $('<div class="Content_Userinfo">').appendTo(Text_right);
-                        var span = $('<span>').appendTo(Content_Userinfo);
-                        var MUser = $('<a href="javascript:(0)">').appendTo(span);//用户个人主页url
-                        var User_title_img = $('<img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18">').appendTo(MUser); //用户头像
-                        var span_User = $('<span>').appendTo(Content_Userinfo);
-                        var Userinfo = $('<a href="javascript:(0)">').appendTo(span_User);//用户个人主页url
-                        var Username = $('<span>&nbsp;@' + v["user"] + '</span>').appendTo(Userinfo);
-                        var span_time = $('<span>&nbsp;&nbsp;&nbsp;' + v["date"] + '</span>').appendTo(Content_Userinfo);
-                        var span_zan = $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Content_Userinfo);//赞的个数
-                        var span_p = $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Content_Userinfo);//评论个数
-                        var span_zf = $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Content_Userinfo);//转发个数
+
+                    } else if (pictures.length == 1) {
+                        var li = $("<li class='Content_Center_li' id='" + v['to_weibo'] + "' style='min-height: 70px;'>");
+                        var div = $("<div class='.Content_Center_TXT' style='position: relative;min-height: 130px;'>").appendTo(li);
+                        var headimg = $('<img href="" class="index_center_touxiang_SLQ" src="/Static/user/' + v["head_img"] + '">').appendTo(div);
+                        var uldiv = $('<ul class="index_center_img_ul_SLQ">').appendTo(div);
+                        var user = $('<li><a href="" class="index_center_img_name_SLQ">' + v["user"] +'</a></li>').appendTo(uldiv);
+                        var imgtime = $('<div class="index_center_img_time_from_SLQ" style="margin: 65px 0 0 2px;">').appendTo(div);
+                        var spantime = $('<span class="index_center_img_time_SLQ" style="margin: 72px 0px 0px 59px;">' + v["date"] + '</span>').appendTo(imgtime);
+                        var text = $('<span class="index_center_readme_zhuanfa_SLQ" style="position: absolute;margin: 15px 0px 0px 58px;">').html(AnalyticEmotion(v["text"])).appendTo(div);
+                        var img = $('<img src="/Static/user/'+pictures[0]+'"'+' width="266" height="180" style="margin-top: 56px;margin-left: 50px;margin-bottom: 26px;">').appendTo(div);
+
+                        var OperatingCollection = $('<ul style="border-top-width: 1px;border-top-style: solid;border-color: #f2f2f5;position: absolute;position: absolute;bottom: -18px;width: 554px;left: -20px;">').appendTo(div);
+                        var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>收藏</em>').appendTo(span_coll_stree);
+                        var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["for_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["com_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["fav_count"] + '</em>').appendTo(span_coll_stree);
+                        // var li = $("<li class='Content_Center_li'>");
+                        // var Center = $('<div class="Content_Center_TXT">').appendTo(li);
+                        // var Center_left = $('<div class="Text_left">').appendTo(Center);
+                        // // $('<img src="/Static/user/nick/weibo_img/1/123.png" width="106" height="70">').appendTo(Center_left);   //后期修改
+                        // $('<img src="/Static/user/'+pictures[0]+'"'+' width="106" height="70">').appendTo(Center_left);
+                        // var Text_right = $('<div class="Text_right">').appendTo(Center);
+                        // var Coutent = $('<div class="Coutent">').html(AnalyticEmotion(v["text"])).appendTo(Text_right);
+                        // // var Coutent = $('<div class="Coutent">' + v['text'] + '</div>').appendTo(Text_right);
+                        // var Content_Userinfo = $('<div class="Content_Userinfo">').appendTo(Text_right);
+                        // var span = $('<span>').appendTo(Content_Userinfo);
+                        // var MUser = $('<a href="javascript:(0)">').appendTo(span);//用户个人主页url
+                        // var User_title_img = $('<img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18">').appendTo(MUser); //用户头像
+                        // var span_User = $('<span>').appendTo(Content_Userinfo);
+                        // var Userinfo = $('<a href="javascript:(0)">').appendTo(span_User);//用户个人主页url
+                        // var Username = $('<span>&nbsp;@' + v["user"] + '</span>').appendTo(Userinfo);
+                        // var span_time = $('<span>&nbsp;&nbsp;&nbsp;' + v["date"] + '</span>').appendTo(Content_Userinfo);
+                        // var span_zan = $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Content_Userinfo);//赞的个数
+                        // var span_p = $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Content_Userinfo);//评论个数
+                        // var span_zf = $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Content_Userinfo);//转发个数
+                        li.appendTo($('#Text'));
+
+                    } else if (pictures.length == 0){
+                        var li = $("<li class='Content_Center_li' id='" + v['to_weibo'] + "'  style='min-height: 70px;'>");
+                        var div = $("<div class='.Content_Center_TXT' style='position: relative;min-height: 130px;'>").appendTo(li);
+                        var headimg = $('<img href="" class="index_center_touxiang_SLQ" src="/Static/user/' + v["head_img"] + '">').appendTo(div);
+                        var uldiv = $('<ul class="index_center_img_ul_SLQ">').appendTo(div);
+                        var user = $('<li><a href="" class="index_center_img_name_SLQ">' + v["user"] +'</a></li>').appendTo(uldiv);
+                        var imgtime = $('<div class="index_center_img_time_from_SLQ" style="margin: 65px 0 0 2px;">').appendTo(div);
+                        var spantime = $('<span class="index_center_img_time_SLQ" style="margin: 72px 0px 0px 59px;">' + v["date"] + '</span>').appendTo(imgtime);
+                        var text = $('<span class="index_center_readme_zhuanfa_SLQ" style="position: absolute;margin: 15px 0px 0px 58px;">').html(AnalyticEmotion(v["text"])).appendTo(div);
+
+                        var OperatingCollection = $('<ul style="border-top-width: 1px;border-top-style: solid;border-color: #f2f2f5;position: absolute;position: absolute;bottom: -18px;width: 554px;left: -20px;">').appendTo(div);
+                        var li_coll_one = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_one);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscollection(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>收藏</em>').appendTo(span_coll_stree);
+                        var li_coll_two = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_two);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="isforwarding(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe611;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["for_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_stree = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_stree);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="iscomments(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info ">&#xe60e;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["com_count"] + '</em>').appendTo(span_coll_stree);
+                        var li_coll_four = $('<li style="width: 25%;float: left;height: 38px;list-style-type: none;">').appendTo(OperatingCollection);
+                        var a_coll = $('<a style="display: block;margin: 0 0 0 1px;padding: 1px 0;text-align: center;color: #808080;text-decoration: none;-webkit-tap-highlight-color: rgba(0,0,0,0);">').appendTo(li_coll_four);
+                        var span_coll_one = $('<span style="display: block;margin-left: -1px;text-align: center;color: #808080;">').appendTo(a_coll);
+                        var span_coll_two = $('<span onclick="islike(this,' + v['to_weibo'] + ');" style="display: block;height: 22px;margin: 7px 0;border-left-width: 1px;border-left-style: solid;line-height: 22px;border-color: #d9d9d9;text-align: center;color: #808080;cursor: pointer;">').appendTo(span_coll_one);
+                        var span_coll_stree = $('<span style="line-height: 22px;">').appendTo(span_coll_two);
+                        var em_coll_one = $('<em style="font-size: 15px;vertical-align: top;margin-left: 2px;margin-right: 3px;color: #696e78;display: inline-block; -webkit-font-smoothing: antialiased;font-style: normal;font-weight: normal;">').appendTo(span_coll_stree);
+                        $('<em class="iconfont_info">&#xe60f;</em>').appendTo(em_coll_one);
+                        $('<em>' + v["fav_count"] + '</em>').appendTo(span_coll_stree);
+                        // var Center = $('<div class="Content_Center_TXT">').appendTo(li);
+                        // var Text_right = $('<div class="Text_right">').appendTo(Center);
+                        // var Coutent = $('<div class="Coutent">').html(AnalyticEmotion(v["text"])).appendTo(Text_right);
+                        // var Content_Userinfo = $('<div class="Content_Userinfo">').appendTo(Text_right);
+                        // var span = $('<span>').appendTo(Content_Userinfo);
+                        // var MUser = $('<a href="javascript:(0)">').appendTo(span);//用户个人主页url
+                        // var User_title_img = $('<img src="/Static/user/' + v["head_img"] + '" style="vertical-align: top;" width="18" height="18">').appendTo(MUser); //用户头像
+                        // var span_User = $('<span>').appendTo(Content_Userinfo);
+                        // var Userinfo = $('<a href="javascript:(0)">').appendTo(span_User);//用户个人主页url
+                        // var Username = $('<span>&nbsp;@' + v["user"] + '</span>').appendTo(Userinfo);
+                        // var span_time = $('<span>&nbsp;&nbsp;&nbsp;' + v["date"] + '</span>').appendTo(Content_Userinfo);
+                        // var span_zan = $('<span class="Txt_operation_z iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info">&#xe60f;</em><em>' + v["fav_count"] + '</em>').appendTo(Content_Userinfo);//赞的个数
+                        // var span_p = $('<span class="Txt_operation_p iconfont_info"><em class="iconfont_info">&#xe60a;</em><em class="iconfont_info ">&#xe60e;</em><em>' + v["com_count"] + '</em>').appendTo(Content_Userinfo);//评论个数
+                        // var span_zf = $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>' + v["for_count"] + '</em>').appendTo(Content_Userinfo);//转发个数
                         li.appendTo($('#Text'));
                     } else {
-
+                        console.log('服务器偷懒，获取信息失败，请重新获取！')
                     }
                 })
             } else {
-                alert('服务器偷懒，获取信息失败，请重新获取！')
+                console.log('服务器偷懒，获取信息失败，请重新获取！')
             }
         }
     })
@@ -137,8 +438,6 @@ function Request_login_content() {
                         var video = JSON.parse(v['video']);
                     }
                     if(v['wb_type'] == 1){
-                        console.log('发消息!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                        console.log(v['forward']);
                         $.ajax({
                             url:'/index/weibocontent.html',
                             type:'post',
@@ -174,7 +473,7 @@ function Request_login_content() {
                         });
                         
                     } else if (video.length == 1) {
-                        var div = $("<div class='index_center_img_SLQ' id='" + v['to_weibo'] + "' style='position: relative;height: 462px;'>");
+                        var div = $("<div class='index_center_img_SLQ' id='" + v['to_weibo'] + "' style='position: relative;height: 489px;'>");
                         var headimg = $('<img href="" class="index_center_touxiang_SLQ" src="/Static/user/' + v["head_img"] + '">').appendTo(div);
                         var uldiv = $('<ul class="index_center_img_ul_SLQ">').appendTo(div);
                         var user = $('<li><a href="" class="index_center_img_name_SLQ">' + v["user"] +'</a></li>').appendTo(uldiv);
@@ -244,7 +543,7 @@ function Request_login_content() {
                         var img_text_content = $('<div class="index_img_SLQ" id="pt">');
                         // var img_list = JSON.parse(forw_info['content'][0]['pictures']);
                         for(var i=0;pictures.length > i;i++) {
-                            $('<a href="#" target="_blank"><img src="/Static/user' + pictures[i] + '">').appendTo(img_text_content);
+                            $('<a href="#" target="_blank"><img style="width: 110px;height: 110px;" src="/Static/user' + pictures[i] + '">').appendTo(img_text_content);
                         }
                         img_text_content.appendTo(img_text_title);
                         img_text_title.appendTo(li);
@@ -477,6 +776,7 @@ $.ajaxSetup({
         }
     }
 });
+
 function Login_Server() {
     if ($('#username').val()) {
         var error_null_name_id = $('#error_null_name');
@@ -523,6 +823,7 @@ function Login_Server() {
         }
     })
 }
+
 function Login_G() {
     $('#Mo_T').attr('class', 'The_motel_dialog hide')
 }
@@ -540,7 +841,8 @@ function Release() {
         success: function (arg) {
             $('#Release_text').val(' ');
             if (arg['status']) {
-
+// {'text': 'hahha', 'perm': 0, 'user_id': '1', 'wb_type': 0, 'user': 'nick', 'video_link_id': '', 
+// 'date': '1分钟前', 'forward_or_collect_from': None, 'pictures_link_id': ''}
                 var li = $("<li class='Content_Center_li'>");
                 var Center = $('<div class="Content_Center_TXT">').appendTo(li);
                 var Center_left = $('<div class="Text_left">').appendTo(Center);
@@ -560,7 +862,7 @@ function Release() {
                 $('<span class="Txt_operation_zf"><em class="iconfont_info">&#xe611;</em><em>0</em>').appendTo(Content_Userinfo);//转发个数
                 $('#Text').children().eq(0).after(li)
             } else {
-                alert(arg['message'])
+                console.log(arg['message'])
             }
         }
     })
@@ -718,8 +1020,8 @@ document.getElementById('upload_zp').addEventListener('change', handleFileSelect
 
 /* 全局变量 by nick */
 weibo_id_list = [];
+/* 心跳函数 by nick */
 function move() {
-    /* 心跳函数 by nick */
     $('#flush_text').remove();
     $.ajax({
         url: "/home/push/mess.html",
@@ -748,4 +1050,32 @@ function move() {
     })
 }
 
+
+/* 搜索 by nick */
+$('.Seek_img').bind("click", function () {
+    var search_values = $('.index_seek [name="seek"]').val();
+    $.ajax({
+        type: 'GET',
+        url: '/index/search.html/',
+        data: {'type': 'user', 'text': search_values},
+        dataType: 'json',
+        success: function (arg) {
+            console.log(arg);
+            console.log(arg['status']);
+            if (arg['status']){
+                location.href = ''
+                var countlist = arg['count'];
+                for(var i=0;i<countlist.length;i++){
+                    var st = '<li><div class="search_body_L_flag"><img class="search_user_img" src="/Static' +
+                            countlist[i]['head_img'] + '"><a  href="" class="search_user_name" >' + countlist[i]['name'] +
+                            '</a><a href="" class="search_user_V"></a><span class="search_user_sex"></span><span class="search_user_address">'
+                            + countlist[i]['sex'] + '<a href="http://weibo.com/chenchiaoen"> http://weibo.com/chenchiaoen</a>' +
+                            '<span class="search_user_job">' + countlist[i]['tags'] + '</span><span class="search_user_inf">关注 450  |  粉丝 5265万  |  微博 4284 </span>'
+                            + '<a class="search_user_trends">' + countlist[i]['brief'] + '</a><span>.......</span></span></div></li>';
+                    $('#ulcount').append(st);
+                }
+            }
+        }
+    })
+})
 

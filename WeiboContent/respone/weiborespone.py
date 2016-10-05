@@ -79,8 +79,21 @@ class newweibocontentrespone:
         self.message = message
         self.connect = connect_dic
         self.user = str(models.UserProfile.objects.filter(user=user_obj).first().name)
-        connect_dic['user'] = user_obj
+        connect_dic['user'] = self.user
+        # "pictures": self.__new_path(str(item.user.user.username),
+        #                             item.pictures_link_id) if item.pictures_link_id else '',
+        # "video": self.__new_path(str(item.user.user.username), item.video_link_id),
         print(connect_dic)
+
+    def __new_path(self, username, img_path):
+        new_path = os.path.join(config.PATH, 'static', 'user', username, "weibo_img", img_path)
+        if os.path.isdir(new_path):
+            imglist = []
+            for item in os.listdir(new_path):
+                imglist.append(os.path.join(new_path, item).split('user')[-1])
+            return json.dumps(imglist)
+        else:
+            return json.dumps([])
 
     def dic(self):
         d = {

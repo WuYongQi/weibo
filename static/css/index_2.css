@@ -311,6 +311,7 @@ body{
     list-style: none;
     margin: 0;
     font-size: 14px;
+    margin-right: 28px;
 }
 .index_head .Navigation a{
     text-decoration: none;
@@ -466,7 +467,7 @@ line-height: 34px;
     background-color: white;
     height: 175px;
     /*height: 150px;*/
-    width: 582px;
+    width: 586px;
     border-radius: 3px;
     padding: 20px 9px;
     margin-bottom: 10px;
@@ -531,7 +532,7 @@ line-height: 34px;
 .Content .Content_Center_li{
     padding: 20px 20px;
     margin-bottom: 10px;
-    width: 560px;
+    width: 586px;
     /*height: 70px;*/
     background-color: #fff;
     cursor: pointer;
@@ -543,7 +544,7 @@ line-height: 34px;
 .Content .Content_Center_li_img{
     padding: 20px 20px 16px 20px;
     margin-bottom: 10px;
-    width: 560px;
+    width: 586px;
     /*height: 181px;*/
     background-color: #fff;
     cursor: pointer;

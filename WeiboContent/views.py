@@ -314,25 +314,41 @@ def messpush(request):
     return HttpResponse(json.dumps(pushmessresponeobj.dic()))
 
 
+def search(request):
+    userid = request.session.get('_auth_user_id', None)
+    cacheuserdic = cache.get(userid, None)
+    if not cacheuserdic or not cacheuserdic['is_login']:
+        return render(request, 'search_no_login.html', {'context_instance': RequestContext(request)})
+    return render(request, 'search.html', {'context_instance': RequestContext(request)})
+
+
 def searchall(request):
     """搜索视图"""
     if request.method == 'GET':
         searchtype = request.GET.get('type', None)
         searchtext = request.GET.get('text', None)
         searchallobj = models_server.Searchall()
+        try:
+            if searchtype == 'user':
+                ret = searchallobj.name(searchtext)
+                if ret:
+                    searchresponeobj = searchrespone.searchrespone(ret)
+                    return HttpResponse(json.dumps(searchresponeobj.dic()))
+            else:
+                content_list, favor_list, comments_list, forwarding_conut = searchallobj.weibo(searchtext)
 
-        if searchtype == 'user':
-            ret = searchallobj.name(searchtext)
-            if ret:
-                searchresponeobj = searchrespone.searchrespone(ret)
-                return HttpResponse(json.dumps(searchresponeobj.dic()))
-        else:
-            content_list, favor_list, comments_list, forwarding_conut = searchallobj.weibo(searchtext)
-
-            con_obj = weiborespone.weibocontentrespone(content_list=content_list,
-                                                       favor_list=favor_list,
-                                                       comments_list=comments_list,
-                                                       forwarding_conut=forwarding_conut)
+                con_obj = weiborespone.weibocontentrespone(content_list=content_list,
+                                                           favor_list=favor_list,
+                                                           comments_list=comments_list,
+                                                           forwarding_conut=forwarding_conut)
+                return HttpResponse(json.dumps(con_obj.con_dic))
+        except ValueError as e:
+            con_obj = weiborespone.weibocontentrespone(content_list='',
+                                                       favor_list='',
+                                                       comments_list='',
+                                                       forwarding_conut='',
+                                                       status=False,
+                                                       message="没有找到与之匹配的")
             return HttpResponse(json.dumps(con_obj.con_dic))
 
 
@@ -344,15 +360,12 @@ def Expression_processing(req):
     return HttpResponse(text_url)
 
 
-def wechat(request):
-    pass
-
+# 存放消息队列全局变量
 GLOBAL_MQ = {}
+@login_required
 def new_msg(request):
-    print("AAAAA ", GLOBAL_MQ)
+    """聊天视图"""
     if request.method == 'POST':
-        print(request.POST.get('data'))
-
         # 获取用户发过来的数据
         data = json.loads(request.POST.get('data'))
 
@@ -362,11 +375,10 @@ def new_msg(request):
             GLOBAL_MQ[send_to] = queue.Queue()
         data['timestamp'] = time.strftime("%Y-%m-%d %X", time.localtime())
         GLOBAL_MQ[send_to].put(data)
-        print(data)
         return HttpResponse(GLOBAL_MQ[send_to].qsize())
     else:
         # 因为队列里目前存的是字符串所以我们需要先给他转换为字符串
-        request_user = str(request.user.userprofile.id)
+        request_user = str(request.user.id)
         msg_lists = []
         # 判断是否在队列里
         if request_user in GLOBAL_MQ:
@@ -396,11 +408,13 @@ def new_msg(request):
         return HttpResponse(json.dumps(msg_lists))
 
 
+@login_required
 def userhtml(request):
     """个人信息页"""
     return render(request, 'home/main.html', {'context_instance': RequestContext(request)})
 
 
+@login_required
 def favhtml(request):
     """点赞"""
     userid = request.session.get('_auth_user_id', None)
@@ -427,6 +441,7 @@ def favhtml(request):
         pass
 
 
+@login_required
 def comhtml(request):
     """评论"""
     userid = request.session.get('_auth_user_id', None)

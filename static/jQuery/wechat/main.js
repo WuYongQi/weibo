@@ -164,6 +164,9 @@ $(document).ready(function() {
   $(document).on("click", ".contact", function(e) {
     if (animating) return;
     animating = true;
+
+    $(this).children().last().removeClass('online');
+
     $(document).off("click", closeSidebar);
     var that = this,
         name = $(this).find(".contact__name").text(),
@@ -172,6 +175,7 @@ $(document).ready(function() {
     $(".chat__name").text(name);
     $(".chat__name").attr('id', id);
     $(".chat__online").removeClass("active");
+
     if (online) $(".chat__online").addClass("active");
     ripple($(that),e);
     setTimeout(function() {
@@ -195,6 +199,7 @@ $(document).ready(function() {
     
     $('#chat__messages').empty();
     LoadSession(id, 'single_contact');
+
     
   });
 

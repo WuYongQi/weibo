@@ -30,7 +30,7 @@ class userinfomess:
         d = {
             'count': {
                 'user': self.count.user.username,
-                'user_id': self.count.user.id,
+                'user_id': self.count.user_id,
                 'name': self.count.name,
                 'brief': self.count.brief,
                 'sex': self.count.sex,

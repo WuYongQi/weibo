@@ -21,20 +21,21 @@ from WeiboContent import views as weibocontentviews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'', weibocontentviews.index),
     url(r'^index/$', weibocontentviews.index),
 
     url(r'^index/weibocontent\.html', weibocontentviews.weibocontent),  # 未登录微博内容
+    url(r'^search', weibocontentviews.search),  # 搜索
     url(r'^index/search\.html', weibocontentviews.searchall),  # 搜索
     url(r'^home\.html$', weibocontentviews.userhome),  # 登录关注好友微博内容
     url(r'^login/', weibocontentviews.login),  # 登录函数
     url(r'^home/push/mess\.html', weibocontentviews.messpush),  # 推送消息心跳
     url(r'^home/upload/pv\.html', weibocontentviews.picture_video),  # 图片视频
     url(r'^emotions.json$', weibocontentviews.Expression_processing),  # 表情处理
-    url(r'^wechat\.html$', weibocontentviews.wechat),   # 聊天
     url(r'^save_hostinfo\.html$', weibocontentviews.new_msg),   # 聊天
     url(r'^home/user\.html$', weibocontentviews.userhtml),   # 个人信息
     url(r'^home/fav\.html$', weibocontentviews.favhtml),   # 点赞
     url(r'^home/com\.html$', weibocontentviews.comhtml),   # 评论
+
+    url(r'', weibocontentviews.index),
 ]
 

@@ -114,6 +114,8 @@ function GetNewMsgs() {
             //判断挡墙打开ID接收
             if (msg_item.from == current_open_session_id) {
                 AddRecvMsgToChatBox(msg_item.mess, msg_item.to)
+            } else {
+                $("div[id="+msg_item.from+"]").children().last().addClass('online');
             }
             DumpSession2(msg_item.from, 'single_contact', msg_item)
         });//结束循环

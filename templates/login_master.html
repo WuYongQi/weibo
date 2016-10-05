@@ -66,13 +66,13 @@
     </style>
 </head>
 <body>
+
 {% csrf_token %}
 <div class="index_head clearfix">
     <a href="/index/"><span class="logo_img"></span></a>
     <div class="index_seek">
         <span id="Hot_search" onfocus="" onchange="" style="font-size: 6px;"></span>
-        <input type="text" name="seek">
-        <a title="搜索"></a>
+        <input type="text" name="seek" style="height: 29px; width: 469px;">
         <span class="Seek_img"></span>
     </div>
     <ul class="Navigation">
@@ -310,16 +310,16 @@
 
         </div>
     </div>
-    <div class="Content_center_backround">
-        <ul class="Content_center_backround_hanzi">
-            <li><a href="">全部</a></li>
-            <li><a href="">原创</a></li>
-            <li><a href="">图片</a></li>
-            <li><a href="">视频</a></li>
-            <li><a href="">音乐</a></li>
-            <li><a href="">文章</a></li>
-        </ul>
-    </div>
+{#    <div class="Content_center_backround">#}
+{#        <ul class="Content_center_backround_hanzi">#}
+{#            <li><a href="">全部</a></li>#}
+{#            <li><a href="">原创</a></li>#}
+{#            <li><a href="">图片</a></li>#}
+{#            <li><a href="">视频</a></li>#}
+{#            <li><a href="">音乐</a></li>#}
+{#            <li><a href="">文章</a></li>#}
+{#        </ul>#}
+{#    </div>#}
 
 
 
@@ -336,7 +336,7 @@
                 </a>
             </div>
             <div node-type="inner">
-                <div style="width: 252px;overflow: hidden;padding: 16px 16px 10px 16px;" node-type="box">
+                <div style="width: 288px;overflow: hidden;padding: 16px 16px 10px 16px;" node-type="box">
                     <div style="margin: -20px 0 0;padding: 28px 0 0;text-align: left;"><h3 style="margin: -11px 0 10px;">本地上传</h3>
                         <h4 style="margin: 0 0 10px;line-height: 17px;"><span style="height: 26px;
                         line-height: 26px;" node-type="picsInfo">

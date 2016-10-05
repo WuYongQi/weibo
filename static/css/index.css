@@ -252,7 +252,22 @@ body{
     float: left;
     padding: 0;
     margin: 15px 0 0 150px;
+    width: 602px;
+    list-style-type: none;
 }
+
+.index_center_touxiang_SLQ{
+    display: inline-block;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.index_center_img_ul_SLQ{
+    list-style: none;
+}
+
+
 .Content .Content_Center_li{
     padding: 20px 20px;
     margin-bottom: 10px;
@@ -389,7 +404,26 @@ body{
 .Content_Center_ul a{
     text-decoration: none;
     color: #eb7350;
+    text-decoration: none;
+    margin-right: 2px;
+    display: block;
+    margin: -61px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    /*color: #333;*/
 }
+.index_img_SLQ {
+    width: 350px;
+    max-height: 338px;
+    /* background: red; */
+    padding: 4px 0 0 56px;
+}
+.index_center_img_SLQ {
+    background-color: #fff;
+    padding: 10px 0 10px 10px;
+    margin-bottom: 10px;
+}
+
 .Content .Content_right{
     width: 230px;
     height: 372px;

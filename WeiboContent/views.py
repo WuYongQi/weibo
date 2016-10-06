@@ -85,8 +85,9 @@ def weibocontent(request):
     """微博内容视图"""
     if request.method == 'GET':
         """未登录首页微博内容"""
-
+        print(request.GET.get('home', None))
         page = request.GET.get('home') if request.GET.get('home', None) else 1
+        print(page)
         obj = models_server.WeiboContent()
         content_list, favor_list, comments_list, forwarding_conut = obj.all(page)
 

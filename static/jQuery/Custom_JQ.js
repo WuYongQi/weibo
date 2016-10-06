@@ -1328,30 +1328,12 @@ function move() {
 /* 搜索 by nick */
 $('.Seek_img').bind("click", function () {
     var search_values = $('.index_seek [name="seek"]').val();
-    location.href='/index/search.html/?type=user';
-    $.ajax({
-        type: 'GET',
-        url: '/index/search.html/',
-        data: {'type': 'user', 'text': search_values},
-        dataType: 'json',
-        success: function (arg) {
-            console.log(arg);
-            console.log(arg['status']);
-            if (arg['status']){
-                location.href = ''
-                var countlist = arg['count'];
-                for(var i=0;i<countlist.length;i++){
-                    var st = '<li><div class="search_body_L_flag"><img class="search_user_img" src="/Static' +
-                            countlist[i]['head_img'] + '"><a  href="" class="search_user_name" >' + countlist[i]['name'] +
-                            '</a><a href="" class="search_user_V"></a><span class="search_user_sex"></span><span class="search_user_address">'
-                            + countlist[i]['sex'] + '<a href="http://weibo.com/chenchiaoen"> http://weibo.com/chenchiaoen</a>' +
-                            '<span class="search_user_job">' + countlist[i]['tags'] + '</span><span class="search_user_inf">关注 450  |  粉丝 5265万  |  微博 4284 </span>'
-                            + '<a class="search_user_trends">' + countlist[i]['brief'] + '</a><span>.......</span></span></div></li>';
-                    $('#ulcount').append(st);
-                }
-            }
-        }
-    })
+
+    var form = $("<form action='/search/' method='get' name=formx1 style='display:none'>");
+    $("<input type='text' name='text' value='"+search_values+"'>").appendTo(form);
+    var sub = $("<input type='submit'>").appendTo(form);
+    $(form).submit();
+
 })
 
 

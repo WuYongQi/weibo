@@ -43,7 +43,7 @@
                 </ul>
             </div>
 
-            <input type="text" id="text" class="search_input"/>
+            <input type="text" id="texts" class="search_input"/>
             <a class="search_butten" id="search_butten">搜索</a>
 
             <ul class="search_qita">
@@ -154,8 +154,9 @@
 
     <script src="/Static/jQuery/jquery-1.12.4.js"></script>
     <script>
-        var search_values = $('#text').val();
+
         $('#search_butten').bind("click", function () {
+             var search_values = $('#texts').val();
             $.ajax({
                 type: 'GET',
                 url: '/index/search.html/',
@@ -179,6 +180,16 @@
                     }
                 }
             })
+        });
+
+        $(function () {
+            var text = '{{ text }}';
+            var type = '{{ type }}';
+
+            if (text){
+                $('#texts').val(text);
+                $("#search_butten").trigger("click");
+            }
         })
     </script>
 </body>

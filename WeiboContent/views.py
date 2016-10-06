@@ -320,7 +320,10 @@ def search(request):
     cacheuserdic = cache.get(userid, None)
     if not cacheuserdic or not cacheuserdic['is_login']:
         return render(request, 'search_no_login.html', {'context_instance': RequestContext(request)})
-    return render(request, 'search.html', {'context_instance': RequestContext(request)})
+    searchtype = request.GET.get('type', None)
+    searchtext = request.GET.get('text', None)
+    return render(request, 'search.html', {'context_instance': RequestContext(request),
+                                           'type': searchtype, 'text': searchtext})
 
 
 def searchall(request):

@@ -33,7 +33,7 @@ session = {
     # 'passwd': '',
     'passwd': 'wuyongqi123',
     'name': 'xja9sqa9sniul8',
-    'time_out': 60 * 2,      # 单位秒
+    'time_out': 60 * 5,      # 单位秒
 }
 
 # redis缓存配置
@@ -42,7 +42,7 @@ cache = {
     'redis_host': [
         "redis://:wuyongqi123@144.48.127.122:6379",
     ],   # 连接主机列表
-    'redis_timeout': 60 * 2,   # 连接超时时间
+    'redis_timeout': 60 * 5,   # 连接超时时间
 }
 
 # 消费者线程

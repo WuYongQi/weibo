@@ -124,9 +124,10 @@ function GetNewMsgs() {
 }//接收消息结束
 
 //循环接收消息
-setInterval(function () {
-    GetNewMsgs();
-}, 10000);
+GetNewMsgs();
+// setInterval(function () {
+//     GetNewMsgs();
+// }, 10000);
 
 
 //定义一个全局变量存储用户信息

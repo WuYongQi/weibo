@@ -171,9 +171,11 @@ if cache['cache_type'] == 'redis':
             "OPTIONS": {
                 # "CLIENT_CLASS": "django_redis.client.DefaultClient",
                 "CONNECTION_POOL_KWARGS": {"max_connections": 100},     # 连接池
+                # ====================================================================
                 # "PARSER_CLASS": "redis.connection.HiredisParser",       # hiredis解释器
                 # 2 apt-get install python-dev  3 apt-get install python3-dev
                 # easy_install hiredis
+                # ====================================================================
             }
         }
     }
@@ -192,5 +194,8 @@ elif cache['cache_type'] == 'cache':
             # 'KEY_FUNCTION',   # 生成key的函数（默认函数会生成为：【前缀:版本:key】）
         }
     }
+
+
+
 
 
